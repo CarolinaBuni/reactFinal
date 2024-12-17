@@ -1,0 +1,95 @@
+.navigation {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  bottom: 20px;
+  z-index: 1000;
+}
+
+.menuTogle {
+  position: relative;
+  width: 65px;
+  height: 65px;
+  background-color: #ff4886;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  transform: translateY(-30px);
+  box-shadow: 0px 6px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.menuTogle::before {
+  content: "+";
+  position: absolute;
+  z-index: 10;
+  font-size: 3em;
+  color: white;
+  transition: 0.5s;
+}
+
+.menuTogle.active::before {
+  transform: rotate(225deg);
+}
+
+.menu {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  background-color: #282b33;
+  border-radius: 70px;
+  transform: translateY(-30px);
+  transition: transform 0.5s, width 0.5s, height 0.5s;
+  transition-delay: 1s, 0.5s, 0.5s;
+  box-shadow: 0px 6px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.menuTogle.active ~ .menu {
+  width: 360px;
+  height: 70px;
+  transform: translateY(0px);
+  transition-delay: 0s, 0.5s, 0.5s;
+}
+
+.menu ul {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+  margin-top: 15px;
+}
+
+.menu ul li {
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.25s;
+  transition-delay: calc(0s + var(--i));
+  transform: translateY(-30px);
+}
+
+.menuTogle.active ~ .menu ul li {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: calc(0.75s + var(--i));
+  transform: translateY(0px);
+}
+
+.menu ul li a {
+  display: block;
+  font-size: 2em;
+  color: floralwhite;
+  transition: all 0.5s ease-in-out;
+}
+
+.menu ul li:hover a {
+  color: #ff4886;
+}
