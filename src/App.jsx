@@ -1,5 +1,6 @@
 // App.jsx
 
+import { useState } from 'react';
 import './App.css';
 import MapContainer from './components/MapContainer/MapContainer';
 import Toolbar from './components/Toolbar/Toolbar';
@@ -7,18 +8,20 @@ import useFetchEvents from './hooks/useFetchEvents';
 
 const App = () => {
   const { events, error, fetchEvents } = useFetchEvents();
+  const [showMarkers, setShowMarkers] = useState(false);
 
-  console.log("App Render Start", { events, error });
+  console.log('App Render Start', { events, error });
 
-  const result = (
+  const toggleMarkers = () => {
+    setShowMarkers((prev) => !prev);
+  };
+
+  return (
     <div>
-      <MapContainer events={events} error={error} />
-      <Toolbar onFetchEvents={fetchEvents} />
+      <MapContainer events={events} showMarkers={showMarkers} error={error} />
+      <Toolbar onFetchEvents={fetchEvents} onToggleMarkers={toggleMarkers} events={events} />
     </div>
   );
-
-  console.log("App Render End");
-  return result;
 };
 
 export default App;

@@ -1,4 +1,4 @@
- // useFetchEvents.js
+// useFetchEvents.js
 
 import { useState, useEffect, useCallback } from "react";
 
@@ -7,7 +7,7 @@ const useFetchEvents = () => {
   const [ error, setError ] = useState( null );
 
   const fetchEvents = useCallback( async () => {
-    console.log("fetchEvents called");
+    console.log( "fetchEvents called" );
 
     try {
       const response = await fetch(
@@ -39,15 +39,15 @@ const useFetchEvents = () => {
       //   return [...fetchedEvents];
       // } );
 
-      setEvents((prevEvents) => {
-        if (prevEvents === fetchedEvents) {
-          console.log("State unchanged, skipping setEvents");
+      setEvents( ( prevEvents ) => {
+        if ( prevEvents === fetchedEvents ) {
+          console.log( "State unchanged, skipping setEvents" );
           return prevEvents; // No actualiza si las referencias son iguales
         }
-        console.log("State updated");
+        console.log( "State updated" );
         return fetchedEvents; // Actualiza solo si la referencia cambia
-      });
-      
+      } );
+
     } catch ( err ) {
       setError( "Error fetching events" );
       console.error( err );
