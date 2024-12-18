@@ -3,7 +3,7 @@
 import React, { memo, useRef } from 'react';
 import './Toolbar.css';
 
-const Toolbar = memo( ( { onFetchEvents, onToggleMarkers, events } ) => {
+const Toolbar = memo( ( { onFetchEvents, onToggleMarkers, events, showMarkers  } ) => {
      console.log( 'Toolbar Render', { events } );
      const refToggle = useRef();
 
@@ -25,7 +25,11 @@ const Toolbar = memo( ( { onFetchEvents, onToggleMarkers, events } ) => {
                </div>
                <div className="menu">
                     <ul>
-                         <li style={ { '--i': '0.1s' } } onClick={ handleFetchAndToggleMarkers }>
+                         <li 
+                         style={ { '--i': '0.1s' } } 
+                         onClick={ handleFetchAndToggleMarkers }
+                         className={showMarkers ? 'active-button' : ''}
+                         >
                               <a href="#">
                                    <ion-icon name="musical-notes-outline"></ion-icon>
                               </a>
@@ -44,7 +48,8 @@ const Toolbar = memo( ( { onFetchEvents, onToggleMarkers, events } ) => {
 }, ( prevProps, nextProps ) => {
      return (
           prevProps.onFetchEvents === nextProps.onFetchEvents &&
-          prevProps.events === nextProps.events
+          prevProps.events === nextProps.events &&
+          prevProps.showMarkers === nextProps.showMarkers
      );
 } );
 
