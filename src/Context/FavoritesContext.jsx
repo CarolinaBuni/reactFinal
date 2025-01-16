@@ -25,7 +25,6 @@ export const FavoritesProvider = ({ children }) => {
     }, [favorites]);
 
     const toggleFavorite = useCallback((event) => {
-     //    console.log('toggleFavorite called with event:', event);
         setFavorites(prev => {
             const isFavorite = prev.some(fav => fav.id === event.id);
             const newFavorites = isFavorite 
@@ -36,11 +35,7 @@ export const FavoritesProvider = ({ children }) => {
     }, []);
 
     const toggleShowingFavorites = useCallback((show = false) => {
-     //    console.log('Toggling showing favorites:', show);
         setShowingFavorites(show);
-        if (show) {
-            window.location.reload();
-        }
     }, []);
 
     const isFavorite = useCallback((eventId) => {

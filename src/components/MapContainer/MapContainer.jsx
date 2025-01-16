@@ -16,10 +16,11 @@ const MapContainer = memo(({ events, showMarkers, error, upcomingEvents, showing
     const mapContainer = useRef(null);
     const mapRef = useRef(null);
     const { favorites } = useFavorites();
-
+    
     const eventsToDisplay = useMemo(() => {
+        console.log('Calculando eventsToDisplay:', { showingFavorites, events: events.length, favorites: favorites.length });
         return showingFavorites ? favorites : events;
-    }, [events, favorites, showingFavorites]);
+    }, [events, showingFavorites, showingFavorites ? favorites : null]);
 
     useMapInitialization(mapContainer, mapRef);
     useGlobeAnimation(mapRef);
@@ -41,14 +42,14 @@ const MapContainer = memo(({ events, showMarkers, error, upcomingEvents, showing
         </>
     ), [mapRef.current, eventsToDisplay, showMarkers]);
 
-    if (showingFavorites && (!favorites || favorites.length === 0)) {
-        console.log('No hay favoritos para mostrar');
-        // Aquí podrías mostrar un mensaje al usuario
-    }
+    // if (showingFavorites && (!favorites || favorites.length === 0)) {
+    //     console.log('No hay favoritos para mostrar');
+    //     // Aquí podrías mostrar un mensaje al usuario
+    // }
 
     return useMemo(() => (
         <div ref={mapContainer} style={{ width: '100%', height: '100vh' }}>
-            <IntroText />
+            {/* <IntroText /> */}
             {mapContent}
             <UpcomingEvents
                 events={upcomingEvents}
@@ -57,16 +58,14 @@ const MapContainer = memo(({ events, showMarkers, error, upcomingEvents, showing
         </div>
     ), [mapContent, upcomingEvents, mapRef.current, showingFavorites]);
 }, (prev, next) => {
-    // Si no estamos mostrando favoritos, solo comparar las props que realmente afectan
-    if (!next.showingFavorites) {
-        return prev.events === next.events &&
-               prev.showMarkers === next.showMarkers &&
-               prev.upcomingEvents === next.upcomingEvents;
+    // Siempre comparar showingFavorites si ha cambiado
+    if (prev.showingFavorites !== next.showingFavorites) {
+        return false; // Forzar re-render cuando cambia showingFavorites
     }
-    // Si estamos mostrando favoritos, entonces sí necesitamos re-renderizar cuando cambien
+
+    // Resto de comparaciones
     return prev.events === next.events &&
            prev.showMarkers === next.showMarkers &&
-           prev.showingFavorites === next.showingFavorites &&
            prev.upcomingEvents === next.upcomingEvents;
 });
 

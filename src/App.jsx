@@ -28,7 +28,6 @@ const AppContent = memo(() => {
     }, [events]);
 
     const handleToggleMarkers = useCallback((showFavorites = false) => {
-        // console.log('handleToggleMarkers llamado con:', { showFavorites, favorites });
         setShowingFavorites(showFavorites);
         setShowMarkers(true);
     }, []);
