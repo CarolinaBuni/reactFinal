@@ -18,7 +18,7 @@ const MapContainer = memo(({ events, showMarkers, error, upcomingEvents, showing
     const { favorites } = useFavorites();
     
     const eventsToDisplay = useMemo(() => {
-        console.log('Calculando eventsToDisplay:', { showingFavorites, events: events.length, favorites: favorites.length });
+        // console.log('Calculando eventsToDisplay:', { showingFavorites, events: events.length, favorites: favorites.length });
         return showingFavorites ? favorites : events;
     }, [events, showingFavorites, showingFavorites ? favorites : null]);
 
