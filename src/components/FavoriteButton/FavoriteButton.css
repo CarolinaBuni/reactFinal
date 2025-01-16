@@ -1,0 +1,39 @@
+.favorite-button {
+     position: absolute;
+     top: 10px;
+     left: 15px;
+     background: transparent;
+     border: none;
+     font-size: 28px;
+     color: #ff00ff;
+     cursor: pointer;
+     transition: all 0.3s ease;
+     z-index: 99999;
+     text-shadow: 0 0 7px #ff00ff,
+                 0 0 10px #ff00ff,
+                 0 0 21px #ff00ff,
+                 0 0 42px #bc13fe;
+}
+
+.favorite-button:hover {
+     transform: scale(1.1);
+     color: #fff;
+     text-shadow: 0 0 7px #fff,
+                 0 0 10px #fff,
+                 0 0 21px #fff,
+                 0 0 42px #ff00ff,
+                 0 0 82px #ff00ff;
+}
+
+.favorite-button.active {
+     color: #ff00ff;
+     animation: heartBeat 1.5s ease-in-out;
+}
+
+@keyframes heartBeat {
+     0% { transform: scale(1); }
+     14% { transform: scale(1.3); }
+     28% { transform: scale(1); }
+     42% { transform: scale(1.3); }
+     70% { transform: scale(1); }
+} 

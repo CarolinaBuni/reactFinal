@@ -1,56 +1,66 @@
 //Toolbar.jsx
 
-import React, { memo, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import './Toolbar.css';
+import { useFavorites } from '../../Context/FavoritesContext';
 
-const Toolbar = memo( ( { onFetchEvents, onToggleMarkers, events, showMarkers  } ) => {
-     console.log( 'Toolbar Render', { events } );
-     const refToggle = useRef();
+const Toolbar = ({ onFetchEvents, onToggleMarkers, showMarkers, events, showingFavorites }) => {
+    console.log('Toolbar Render', showingFavorites);
+    
+    const menuRef = useRef(null);
+    const { favorites } = useFavorites();
 
-     const activeButton = () => {
-          refToggle.current.classList.toggle( 'active' );
-     };
+    // console.log('Toolbar favorites:', favorites);
 
-     const handleFetchAndToggleMarkers = async () => {
-          if ( events.length === 0 ) {
-               await onFetchEvents(); // Si no hay eventos, los cargamos
-          }
-          onToggleMarkers(); // Toggle para mostrar/ocultar marcadores
-     };
+    const handleFetchAndToggleMarkers = async () => {
+        if (events.length === 0) {
+            await onFetchEvents();
+        }
+        onToggleMarkers(false);
+    };
 
-     return (
-          <div className="navigation">
-               <div className="menuTogle" ref={ refToggle } onClick={ activeButton }>
-                    <i></i>
-               </div>
-               <div className="menu">
-                    <ul>
-                         <li 
-                         style={ { '--i': '0.1s' } } 
-                         onClick={ handleFetchAndToggleMarkers }
-                         className={showMarkers ? 'active-button' : ''}
-                         >
-                              <a href="#">
-                                   <ion-icon name="musical-notes-outline"></ion-icon>
-                              </a>
-                         </li>
-                         <li></li>
-                         <li></li>
-                         <li style={ { '--i': '0.2s' } }>
-                              <a href="#">
-                                   <ion-icon name="heart-outline"></ion-icon>
-                              </a>
-                         </li>
-                    </ul>
-               </div>
-          </div>
-     );
-}, ( prevProps, nextProps ) => {
-     return (
-          prevProps.onFetchEvents === nextProps.onFetchEvents &&
-          prevProps.events === nextProps.events &&
-          prevProps.showMarkers === nextProps.showMarkers
-     );
-} );
+    const handleFavoritesClick = useCallback(() => {
+        // console.log('handleFavoritesClick llamado', { favorites });
+        if (favorites && favorites.length > 0) {
+            onToggleMarkers(true);
+        }
+    }, [favorites, onToggleMarkers]);
+
+    const toggleMenu = () => {
+        menuRef.current.classList.toggle('active');
+    };
+
+    return (
+        <div className="navigation">
+            <div className="menuTogle" ref={menuRef} onClick={toggleMenu}>
+                <i></i>
+            </div>
+            <div className="menu">
+                <ul>
+                    <li style={{ '--i': '0.1s' }}>
+                        <a 
+                            href="#" 
+                            onClick={handleFetchAndToggleMarkers}
+                            className={showMarkers && !showingFavorites ? 'active' : ''}
+                        >
+                            <ion-icon name="musical-notes-outline"></ion-icon>
+                        </a>
+                    </li>
+                    <li></li>
+                    <li></li>
+                    <li style={{ '--i': '0.2s' }}>
+                        <a 
+                            href="#" 
+                            onClick={handleFavoritesClick}
+                            className={showingFavorites ? 'active' : ''}
+                        >
+                            <ion-icon name="heart-outline"></ion-icon>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    );
+};
 
 export default Toolbar;

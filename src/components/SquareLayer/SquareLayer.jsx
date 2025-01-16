@@ -1,77 +1,84 @@
 // SquareLayer.jsx
 
-import { useEffect } from "react";
+import { memo, useMemo } from "react";
+import mapboxgl from 'mapbox-gl';
+import { useTooltip } from './hooks/useTooltip';
+import { useExtrusion } from './hooks/useExtrusion';
+import { useZoomHandler } from './hooks/useZoomHandler';
+import { useClickHandler } from './hooks/useClickHandler';
 
-const SquareLayer = ( { map, event, showMarkers } ) => {
-     console.log( "SquareLayer Render Start" );
+const SquareLayer = memo(({ map, event, showMarkers, onLayerClick }) => {
+     console.log("SquareLayer Render Start");
 
-     const sourceId = `source-${ event.id }`;
-     const layerId = `layer-${ event.id }`;
+     const sourceId = `source-${event.id}`;
+     const layerId = `layer-${event.id}`;
      const coordinates = event.coordinates;
 
-     useEffect( () => {
-          if ( !map || !coordinates ) return;
+     // Función para calcular el desplazamiento basado en el zoom
+     const calculateOffset = (index, totalEvents, zoom) => {
+          const angle = (index * 2 * Math.PI) / totalEvents;
+          // Radio base que se ajusta según el zoom
+          const baseRadius = 0.0002;
+          const zoomFactor = Math.max(0.1, (20 - zoom) / 20); // Ajusta el radio según el zoom
+          const radius = baseRadius * zoomFactor;
+          
+          return [
+               Math.cos(angle) * radius,
+               Math.sin(angle) * radius
+          ];
+     };
 
-          const colorMap = {
-               300: "#ff5733",
-               600: "#33ff57",
-               900: "#ff4886",
-               1200: "#3357ff",
+     // Calcular las coordenadas y el GeoJSON
+     const { offsetCoordinates, squareGeoJSON } = useMemo(() => {
+          if (!map || !coordinates) return { offsetCoordinates: coordinates, squareGeoJSON: null };
+
+          const eventsAtSameLocation = map.getStyle().layers
+               .filter(layer => layer.type === 'fill-extrusion')
+               .filter(layer => {
+                    const source = map.getSource(layer.id.replace('layer-', 'source-'));
+                    if (!source) return false;
+                    const sourceData = source._data;
+                    return sourceData.geometry.coordinates[0][0][0] === coordinates[0] &&
+                           sourceData.geometry.coordinates[0][0][1] === coordinates[1];
+               });
+
+          const currentZoom = map.getZoom();
+          const index = eventsAtSameLocation.length;
+          const [offsetX, offsetY] = calculateOffset(index, index + 1, currentZoom);
+          const newOffsetCoordinates = [
+               coordinates[0] + offsetX,
+               coordinates[1] + offsetY
+          ];
+
+          const newSquareGeoJSON = {
+               type: "Feature",
+               geometry: {
+                    type: "Polygon",
+                    coordinates: [[
+                         [newOffsetCoordinates[0] - 0.0005, newOffsetCoordinates[1] - 0.0005],
+                         [newOffsetCoordinates[0] + 0.0005, newOffsetCoordinates[1] - 0.0005],
+                         [newOffsetCoordinates[0] + 0.0005, newOffsetCoordinates[1] + 0.0005],
+                         [newOffsetCoordinates[0] - 0.0005, newOffsetCoordinates[1] + 0.0005],
+                         [newOffsetCoordinates[0] - 0.0005, newOffsetCoordinates[1] - 0.0005],
+                    ]],
+               },
+               properties: { 
+                    height: event.height,
+                    name: event.name,
+                    date: event.startDate
+               },
           };
 
-          const createLayerAndSource = () => {
-               const squareGeoJSON = {
-                    type: "Feature",
-                    geometry: {
-                         type: "Polygon",
-                         coordinates: [
-                              [
-                                   [ coordinates[ 0 ] - 0.0005, coordinates[ 1 ] - 0.0005 ],
-                                   [ coordinates[ 0 ] + 0.0005, coordinates[ 1 ] - 0.0005 ],
-                                   [ coordinates[ 0 ] + 0.0005, coordinates[ 1 ] + 0.0005 ],
-                                   [ coordinates[ 0 ] - 0.0005, coordinates[ 1 ] + 0.0005 ],
-                                   [ coordinates[ 0 ] - 0.0005, coordinates[ 1 ] - 0.0005 ],
-                              ],
-                         ],
-                    },
-                    properties: { height: event.height || 300 },
-               };
+          return { offsetCoordinates: newOffsetCoordinates, squareGeoJSON: newSquareGeoJSON };
+     }, [map, coordinates, event]);
 
-               if ( !map.getSource( sourceId ) ) {
-                    map.addSource( sourceId, { type: "geojson", data: squareGeoJSON } );
-               } else {
-                    map.getSource( sourceId ).setData( squareGeoJSON );
-               }
-
-               if ( !map.getLayer( layerId ) ) {
-                    map.addLayer( {
-                         id: layerId,
-                         type: "fill-extrusion",
-                         source: sourceId,
-                         paint: {
-                              "fill-extrusion-color": colorMap[ event.height ] || "#ff69b4",
-                              "fill-extrusion-height": [ "get", "height" ],
-                              "fill-extrusion-base": 0,
-                              "fill-extrusion-opacity": 0.8,
-                         },
-                         layout: {
-                              visibility: showMarkers ? "visible" : "none",
-                         },
-                    } );
-               }
-          };
-
-          createLayerAndSource();
-          map.on( "style.load", createLayerAndSource );
-
-          return () => {
-               map.off( "style.load", createLayerAndSource );
-               if ( map.getLayer( layerId ) ) map.removeLayer( layerId );
-               if ( map.getSource( sourceId ) ) map.removeSource( sourceId );
-          };
-     }, [ map, event, showMarkers ] );
+     // Usar todos los hooks
+     useTooltip(map, layerId, offsetCoordinates, event);
+     useExtrusion(map, sourceId, layerId, squareGeoJSON, event, showMarkers);
+     useZoomHandler(map, sourceId, coordinates, squareGeoJSON, calculateOffset);
+     useClickHandler(map, layerId, event, onLayerClick);
 
      return null;
-};
+});
 
 export default SquareLayer;

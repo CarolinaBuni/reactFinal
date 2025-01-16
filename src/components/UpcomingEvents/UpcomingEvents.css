@@ -1,0 +1,78 @@
+.upcoming-events-container {
+     position: absolute;
+     bottom: 20px;
+     left: 20px;
+     width: 300px;
+     background: rgba(27, 32, 40, 0.95);
+     border-radius: 10px;
+     padding: 15px;
+     color: white;
+     z-index: 1000;
+     backdrop-filter: blur(10px);
+     border: 1px solid rgba(255, 0, 255, 0.1);
+     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.upcoming-events-container h3 {
+     color: #ff00ff;
+     margin-bottom: 15px;
+     font-size: 1.2rem;
+     text-shadow: 0 0 7px #ff00ff,
+                 0 0 10px #ff00ff;
+}
+
+.upcoming-events-list {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+}
+
+.upcoming-event-item {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     padding: 8px;
+     border-radius: 8px;
+     transition: all 0.3s ease;
+     background: rgba(255, 0, 255, 0.05);
+     cursor: pointer;
+}
+
+.upcoming-event-item:hover {
+     background: rgba(255, 0, 255, 0.1);
+     transform: translateX(5px);
+     box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
+}
+
+.upcoming-event-item:active {
+     transform: translateX(5px) scale(0.98);
+}
+
+.upcoming-event-item img {
+     width: 50px;
+     height: 50px;
+     border-radius: 5px;
+     object-fit: cover;
+}
+
+.event-info {
+     flex: 1;
+}
+
+.event-info h4 {
+     font-size: 0.9rem;
+     margin: 0;
+     color: #fff;
+}
+
+.event-date {
+     font-size: 0.8rem;
+     color: #ff00ff;
+     margin: 2px 0;
+}
+
+.event-venue {
+     font-size: 0.8rem;
+     color: #ccc;
+     margin: 0;
+} 

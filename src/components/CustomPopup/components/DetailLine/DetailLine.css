@@ -1,0 +1,29 @@
+.event-detail-line {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: rgba(255, 0, 255, 0.05);
+    border-radius: var(--border-radius-sm);
+    transition: var(--transition-fast);
+    margin: calc(var(--spacing-xs)/2) 0;
+}
+
+.detail-label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: var(--neon-primary);
+    margin-right: var(--spacing-xs);
+    font-weight: 400;
+}
+
+.detail-value {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    text-shadow: 0 0 5px rgba(244, 238, 255, 0.7);
+} 

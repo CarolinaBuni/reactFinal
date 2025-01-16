@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:100');
+
+.intro-container {
+     position: absolute;
+     top: 0;
+     left: 0;
+     height: 100%;
+     width: 100%;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     z-index: 1000;
+     background: rgba(33, 33, 33, 0.8);
+     font-family: 'Roboto Mono', monospace;
+}
+
+.text {
+     font-weight: 100;
+     font-size: 28px;
+     color: #FAFAFA;
+}
+
+.dud {
+     color: #757575;
+} 

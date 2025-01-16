@@ -1,99 +1,73 @@
-// MapContainer.jsx
-
-import React, { useEffect, useRef, memo } from "react";
+import React, { useRef, memo, useMemo } from "react";
 import mapboxgl from "mapbox-gl";
-import MarkerLayer from "../MarkersLayer.jsx/MarkerLayer";
+import MarkerLayer from "../MarkerLayer/MarkerLayer";
+import PopupManager from "../PopupManager/PopupManager";
+import IntroText from '../IntroText/IntroText';
+import UpcomingEvents from '../UpcomingEvents/UpcomingEvents';
+import { useMapInitialization } from './hooks/useMapInitialization';
+import { useGlobeAnimation } from './hooks/useGlobeAnimation';
+import { useMapBounds } from './hooks/useMapBounds';
+import { useFavorites } from '../../Context/FavoritesContext';
 
 mapboxgl.accessToken = "pk.eyJ1IjoiY2Fyb3VzaW5oYSIsImEiOiJjbTIxbTh2cWgwcmNrMm9xdDIzbnVvem05In0.pO_vgJgRtaADjpSLFcLTuw";
 
-const MapContainer = memo( ( { events, showMarkers } ) => {
-     console.log( "MapContainer Render Start", { events, showMarkers } );
+const MapContainer = memo(({ events, showMarkers, error, upcomingEvents, showingFavorites }) => {
+    console.log('MapContainer Render', { showingFavorites });
+    const mapContainer = useRef(null);
+    const mapRef = useRef(null);
+    const { favorites } = useFavorites();
 
-     const mapContainer = useRef( null );
-     const mapRef = useRef( null );
+    const eventsToDisplay = useMemo(() => {
+        return showingFavorites ? favorites : events;
+    }, [events, favorites, showingFavorites]);
 
-     useEffect( () => {
-          mapRef.current = new mapboxgl.Map( {
-               container: mapContainer.current,
-               style: "mapbox://styles/carousinha/cm42ryp6b00wa01sdbeg7gedb",
-               center: [ 30, 15 ],
-               zoom: 1.5,
-          } );
+    useMapInitialization(mapContainer, mapRef);
+    useGlobeAnimation(mapRef);
+    useMapBounds(mapRef, eventsToDisplay, showMarkers);
 
-          mapRef.current.addControl( new mapboxgl.NavigationControl( { visualizePitch: true } ) );
-          mapRef.current.scrollZoom.disable();
-
-          mapRef.current.on( "style.load", () => {
-               mapRef.current.setFog( {
-                    color: "rgba(8, 236, 194, 0.548)",
-                    "high-color": "rgb(8, 236, 194)",
-                    "horizon-blend": 0.04,
-                    "space-color": "rgba(4, 1, 14, 0.959)",
-                    "star-intensity": 0.9,
-               } );
-          } );
-
-          let userInteracting = false;
-          const spinGlobe = () => {
-               const secondsPerRevolution = 240;
-               const maxSpinZoom = 5;
-               const slowSpinZoom = 3;
-               const zoom = mapRef.current.getZoom();
-
-               if ( zoom < maxSpinZoom ) {
-                    let distancePerSecond = 360 / secondsPerRevolution;
-                    if ( zoom > slowSpinZoom ) {
-                         const zoomDif = ( maxSpinZoom - zoom ) / ( maxSpinZoom - slowSpinZoom );
-                         distancePerSecond *= zoomDif;
-                    }
-                    const center = mapRef.current.getCenter();
-                    center.lng -= distancePerSecond;
-                    mapRef.current.easeTo( { center, duration: 1000, easing: ( n ) => n } );
-               }
-          };
-
-          mapRef.current.on( "mousedown", () => ( userInteracting = true ) );
-          mapRef.current.on( "dragstart", () => ( userInteracting = true ) );
-          mapRef.current.on( "moveend", spinGlobe );
-          spinGlobe();
-
-          return () => {
-               mapRef.current.remove();
-          };
-     }, [] );
-
-     useEffect( () => {
-          if ( showMarkers && mapRef.current && events.length > 0 ) {
-               const bounds = new mapboxgl.LngLatBounds();
-               events.forEach( ( event ) => bounds.extend( event.coordinates ) );
-
-               mapRef.current.fitBounds( bounds, {
-                    padding: 50,
-                    maxZoom: 15,
-                    duration: 1000,
-               } ).once( "moveend", () => {
-                    mapRef.current.easeTo( {
-                         pitch: 60,
-                         bearing: 0,
-                         duration: 1000,
-                    } );
-               } );
-          }
-     }, [ showMarkers, events ] );
-
-     console.log( "MapContainer Render End" );
-     return (
-          <div style={ { width: "100%", height: "100vh" } } ref={ mapContainer }>
-               { mapRef.current && (
+    const mapContent = useMemo(() => (
+        <>
+            {/* <IntroText /> */}
+            {mapRef.current && (
+                <>
                     <MarkerLayer
-                         map={ mapRef.current }
-                         events={ events }
-                         showMarkers={ showMarkers }
-                         key={ `${ events.length }-${ showMarkers }` }
+                        map={mapRef.current}
+                        events={eventsToDisplay}
+                        showMarkers={showMarkers}
                     />
-               ) }
-          </div>
-     );
-} );
+                    <PopupManager />
+                </>
+            )}
+        </>
+    ), [mapRef.current, eventsToDisplay, showMarkers]);
+
+    if (showingFavorites && (!favorites || favorites.length === 0)) {
+        console.log('No hay favoritos para mostrar');
+        // Aquí podrías mostrar un mensaje al usuario
+    }
+
+    return useMemo(() => (
+        <div ref={mapContainer} style={{ width: '100%', height: '100vh' }}>
+            <IntroText />
+            {mapContent}
+            <UpcomingEvents
+                events={upcomingEvents}
+                map={mapRef.current}
+            />
+        </div>
+    ), [mapContent, upcomingEvents, mapRef.current, showingFavorites]);
+}, (prev, next) => {
+    // Si no estamos mostrando favoritos, solo comparar las props que realmente afectan
+    if (!next.showingFavorites) {
+        return prev.events === next.events &&
+               prev.showMarkers === next.showMarkers &&
+               prev.upcomingEvents === next.upcomingEvents;
+    }
+    // Si estamos mostrando favoritos, entonces sí necesitamos re-renderizar cuando cambien
+    return prev.events === next.events &&
+           prev.showMarkers === next.showMarkers &&
+           prev.showingFavorites === next.showingFavorites &&
+           prev.upcomingEvents === next.upcomingEvents;
+});
 
 export default MapContainer;

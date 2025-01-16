@@ -1,34 +1,64 @@
 // App.jsx
-
-import { useState } from 'react';
+import React, { memo, useMemo, useState, useCallback, useEffect } from 'react';
 import './App.css';
 import MapContainer from './components/MapContainer/MapContainer';
 import Toolbar from './components/Toolbar/Toolbar';
 import useFetchEvents from './hooks/useFetchEvents';
+import { PopupProvider } from './Context/PopupContext';
+import { FavoritesProvider, useFavorites } from './Context/FavoritesContext';
 
-const App = () => {
-  const { events, error, fetchEvents } = useFetchEvents();
-  const [ showMarkers, setShowMarkers ] = useState( false );
+const AppContent = memo(() => {
+    console.log('AppContent Render');
+    
+    const { events, error, fetchEvents } = useFetchEvents();
+    const [showMarkers, setShowMarkers] = useState(false);
+    const [showingFavorites, setShowingFavorites] = useState(false);
+    const { favorites } = useFavorites();
 
-  console.log( 'App Render Start', { events, error } );
+    // useEffect(() => {
+    //     console.log('App detectó cambio en favoritos:', favorites);
+    // }, [favorites]);
 
-  const toggleMarkers = () => {
-    setShowMarkers( ( prev ) => !prev );
-  };
+    const upcomingEvents = useMemo(() => {
+        const now = new Date();
+        return events
+            .filter(event => new Date(event.startDate) > now)
+            .sort((a, b) => new Date(a.startDate) - new Date(b.startDate))
+            .slice(0, 5);
+    }, [events]);
 
-  return (
-    <div>
-      <MapContainer
-        events={ events }
-        showMarkers={ showMarkers }
-        error={ error } />
-      <Toolbar
-        onFetchEvents={ fetchEvents }
-        onToggleMarkers={ toggleMarkers }
-        showMarkers={showMarkers}
-        events={ events } />
-    </div>
-  );
-};
+    const handleToggleMarkers = useCallback((showFavorites = false) => {
+        // console.log('handleToggleMarkers llamado con:', { showFavorites, favorites });
+        setShowingFavorites(showFavorites);
+        setShowMarkers(true);
+    }, []);
+
+    return (
+        <div className="app-container">
+            <MapContainer
+                events={events}
+                showMarkers={showMarkers}
+                error={error}
+                upcomingEvents={upcomingEvents}
+                showingFavorites={showingFavorites}
+            />
+            <Toolbar
+                onFetchEvents={fetchEvents}
+                onToggleMarkers={handleToggleMarkers}
+                showMarkers={showMarkers}
+                events={events}
+                showingFavorites={showingFavorites}
+            />
+        </div>
+    );
+});
+
+const App = () => (
+    <FavoritesProvider>
+        <PopupProvider>
+            <AppContent />
+        </PopupProvider>
+    </FavoritesProvider>
+);
 
 export default App;
