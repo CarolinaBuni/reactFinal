@@ -16,7 +16,12 @@ const Toolbar = ({ onFetchEvents, onToggleMarkers, showMarkers, events, showingF
         if (events.length === 0) {
             await onFetchEvents();
         }
-        onToggleMarkers(false);
+        // Si ya están visibles y no estamos en modo favoritos, los ocultamos
+        if (showMarkers && !showingFavorites) {
+            onToggleMarkers(false, false); // El segundo false es para ocultar los marcadores
+        } else {
+            onToggleMarkers(false); // Mostrar todos los eventos
+        }
     };
 
     const handleFavoritesClick = useCallback(() => {

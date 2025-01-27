@@ -7,6 +7,8 @@ import useFetchEvents from './hooks/useFetchEvents';
 import { PopupProvider } from './Context/PopupContext';
 import { FavoritesProvider, useFavorites } from './Context/FavoritesContext';
 
+
+
 const AppContent = memo(() => {
     console.log('AppContent Render');
     
@@ -27,9 +29,9 @@ const AppContent = memo(() => {
             .slice(0, 5);
     }, [events]);
 
-    const handleToggleMarkers = useCallback((showFavorites = false) => {
+    const handleToggleMarkers = useCallback((showFavorites = false, show = true) => {
         setShowingFavorites(showFavorites);
-        setShowMarkers(true);
+        setShowMarkers(show);
     }, []);
 
     return (
@@ -49,6 +51,7 @@ const AppContent = memo(() => {
                 showingFavorites={showingFavorites}
             />
         </div>
+     
     );
 });
 

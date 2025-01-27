@@ -48,7 +48,7 @@ const MapContainer = memo(({ events, showMarkers, error, upcomingEvents, showing
     // }
 
     return useMemo(() => (
-        <div ref={mapContainer} style={{ width: '100%', height: '100vh' }}>
+        <div ref={mapContainer} style={{ width: '100%', top: '0', bottom: '0', position: 'absolute' }}>
             {/* <IntroText /> */}
             {mapContent}
             <UpcomingEvents
