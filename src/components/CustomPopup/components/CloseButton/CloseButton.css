@@ -1,0 +1,21 @@
+/* Botones y controles */
+.close-button {
+     position: absolute;
+     background: transparent;
+     border: none;
+     font-size: 28px;
+     color: var(--color-primary);
+     cursor: pointer;
+     transition: var(--transition-fast);
+     z-index: 99999;
+     top: var(--spacing-sm);
+     right: var(--spacing-sm);
+     text-shadow: var(--neon-primary);
+}
+
+
+.close-button:hover {
+     color: var(--text-light);
+     transform: scale(1.1);
+     text-shadow: var(--neon-white);
+}

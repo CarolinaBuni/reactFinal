@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import CustomPopup from '../CustomPopup/CustomPopup';
-// import { usePopupState } from './hooks/usePopupState';
 import { usePopupAnimation } from './hooks/usePopupAnimation';
 import { usePopup } from '../../Context/PopupContext';
 

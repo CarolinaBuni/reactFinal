@@ -9,7 +9,9 @@ import { useGlobeAnimation } from './hooks/useGlobeAnimation';
 import { useMapBounds } from './hooks/useMapBounds';
 import { useFavorites } from '../../Context/FavoritesContext';
 
-mapboxgl.accessToken = "pk.eyJ1IjoiY2Fyb3VzaW5oYSIsImEiOiJjbTIxbTh2cWgwcmNrMm9xdDIzbnVvem05In0.pO_vgJgRtaADjpSLFcLTuw";
+
+
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const MapContainer = memo(({ events, showMarkers, error, upcomingEvents, showingFavorites }) => {
     console.log('MapContainer Render', { showingFavorites });
@@ -25,6 +27,7 @@ const MapContainer = memo(({ events, showMarkers, error, upcomingEvents, showing
     useMapInitialization(mapContainer, mapRef);
     useGlobeAnimation(mapRef);
     useMapBounds(mapRef, eventsToDisplay, showMarkers);
+    
 
     const mapContent = useMemo(() => (
         <>

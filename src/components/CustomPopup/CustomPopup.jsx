@@ -3,11 +3,17 @@ import './CustomPopup.css';
 import FavoriteButton from '../FavoriteButton/FavoriteButton';
 import EventHeader from './components/EventHeader/EventHeader.jsx';
 import EventDetails from './components/EventDetails/EventDetails.jsx';
+import CloseButton from './components/CloseButton/CloseButton.jsx';
+import CancelledBanner from '../CancelledBanner/CancelledBanner.jsx';
+import PupupImage from './components/PupupImage/PupupImage.jsx';
+import PopupLink from './components/PopupLink/PopupLink.jsx';
 
 const CustomPopup = ({ popupInfo, onClose }) => {
     console.log('CustomPopup Render');
     
     if (!popupInfo) return null;
+
+    const isCancelled = popupInfo.status === 'cancelled';
 
     const {
         name, startDate, genreName, venueName, cityName, address, image, url,
@@ -15,9 +21,10 @@ const CustomPopup = ({ popupInfo, onClose }) => {
 
     return (
         <div className="custom-popup-container">
-            <button className="close-button" onClick={onClose}>&times;</button>
+            {isCancelled && <CancelledBanner />}
+            <CloseButton onClose={onClose} />
             <FavoriteButton event={popupInfo} />
-            <img src={image} alt={`Imagen de ${name}`} className="popup-image" />
+            <PupupImage image={image} name={name} />
             <EventHeader name={name} />
             <EventDetails 
                 startDate={startDate}
@@ -26,9 +33,7 @@ const CustomPopup = ({ popupInfo, onClose }) => {
                 cityName={cityName}
                 address={address}
             />
-            <a href={url} target="_blank" rel="noopener noreferrer" className="popup-link">
-                Más información
-            </a>
+            <PopupLink url={url} />
         </div>
     );
 };

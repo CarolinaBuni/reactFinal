@@ -7,11 +7,14 @@ const FavoriteButton = memo(({ event }) => {
      
      const { toggleFavorite, isFavorite } = useFavorites();
      const isEventFavorite = isFavorite(event.id);
+     const isCancelled = event.status === 'cancelled';; 
 
      return (
           <button 
-               className={`favorite-button ${isEventFavorite ? 'active' : ''}`}
-               onClick={() => toggleFavorite(event)}
+               className={`favorite-button ${isEventFavorite ? 'active' : ''} ${isCancelled ? 'disabled' : ''}`}
+               onClick={() => !isCancelled && toggleFavorite(event)}
+               disabled={isCancelled}
+               title={isCancelled ? 'No disponible - Evento cancelado' : 'Guardar en favoritos'}  
           >
                <ion-icon name={isEventFavorite ? "heart" : "heart-outline"}></ion-icon>
           </button>

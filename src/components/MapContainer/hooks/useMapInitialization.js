@@ -41,17 +41,17 @@ export const useMapInitialization = ( mapContainer, mapRef ) => {
                     ];
                };
 
-               mapRef.current.setSnow({
-                    density: zoomBasedReveal(0.85),
-                    intensity: 1.0,
-                    'center-thinning': 0.1,
-                    direction: [0, 50],
-                    opacity: 1.0,
-                    color: '#ffffff',
-                    'flake-size': 0.71,
-                    vignette: zoomBasedReveal(0.3),
-                    'vignette-color': '#ffffff'
-               });
+               // mapRef.current.setSnow({
+               //      density: zoomBasedReveal(0.85),
+               //      intensity: 1.0,
+               //      'center-thinning': 0.1,
+               //      direction: [0, 50],
+               //      opacity: 1.0,
+               //      color: '#ffffff',
+               //      'flake-size': 0.71,
+               //      vignette: zoomBasedReveal(0.3),
+               //      'vignette-color': '#ffffff'
+               // });
           } );
 
           return () => {

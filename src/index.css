@@ -3,43 +3,50 @@
     --color-primary: #ff00ff;
     --color-secondary: #ff4886;
     --color-accent: #bc13fe;
-    
+
     /* Colores de fondo */
     --bg-dark: #1b2028;
     --bg-darker: rgba(27, 32, 40, 0.95);
-    
+
     /* Colores de texto */
     --text-light: #fff;
     --text-muted: #ccc;
     --text-highlight: #ffeba7;
-    
+
     /* Efectos de neón */
     --neon-primary: 0 0 7px var(--color-primary),
-                    0 0 10px var(--color-primary),
-                    0 0 21px var(--color-primary),
-                    0 0 42px var(--color-accent);
-    
+        0 0 10px var(--color-primary),
+        0 0 21px var(--color-primary),
+        0 0 42px var(--color-accent);
+
     --neon-white: 0 0 7px #fff,
-                  0 0 10px #fff,
-                  0 0 21px #fff,
-                  0 0 42px var(--color-primary),
-                  0 0 82px var(--color-primary);
-    
+        0 0 10px #fff,
+        0 0 21px #fff,
+        0 0 42px var(--color-primary),
+        0 0 82px var(--color-primary);
+
     /* Bordes y sombras */
     --border-glow: 1px solid rgba(255, 0, 255, 0.1);
     --shadow-primary: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    
+
     /* Transiciones */
     --transition-fast: all 0.3s ease;
     --transition-medium: all 0.5s ease;
-    
+
     /* Espaciado */
     --spacing-xs: 0.5rem;
     --spacing-sm: 0.8rem;
     --spacing-md: 1rem;
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
-    
+
+    /* Espaciado en píxeles */
+    --spacing-10: 10px;
+    --spacing-15: 15px;
+    --spacing-20: 20px;
+    --spacing-25: 25px;
+    --spacing-30: 30px;
+
     /* Bordes redondeados */
     --border-radius-sm: 4px;
     --border-radius-md: 8px;
@@ -76,13 +83,25 @@
 
 /* Utilidades de animación */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes slideIn {
-    from { transform: translateY(-20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 /* Clases de utilidad */
@@ -108,4 +127,3 @@
     border: var(--border-glow);
     box-shadow: var(--shadow-primary);
 }
-

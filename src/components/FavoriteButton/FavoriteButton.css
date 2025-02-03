@@ -1,39 +1,86 @@
 .favorite-button {
-     position: absolute;
-     top: 10px;
-     left: 15px;
      background: transparent;
      border: none;
-     font-size: 28px;
-     color: #ff00ff;
+     color: var(--color-primary);
      cursor: pointer;
-     transition: all 0.3s ease;
+     font-size: 28px;
+     position: absolute;
+     left: var(--spacing-15);
+     top: var(--spacing-10);
+     transition: var(--transition-fast);
      z-index: 99999;
-     text-shadow: 0 0 7px #ff00ff,
-                 0 0 10px #ff00ff,
-                 0 0 21px #ff00ff,
-                 0 0 42px #bc13fe;
+     text-shadow: var(--neon-primary);
 }
 
 .favorite-button:hover {
+     color: var(--text-light);
      transform: scale(1.1);
-     color: #fff;
-     text-shadow: 0 0 7px #fff,
-                 0 0 10px #fff,
-                 0 0 21px #fff,
-                 0 0 42px #ff00ff,
-                 0 0 82px #ff00ff;
+     text-shadow: var(--neon-white);
 }
 
 .favorite-button.active {
-     color: #ff00ff;
+     color: var(--color-primary);
      animation: heartBeat 1.5s ease-in-out;
 }
 
+/* Estilos cuando está deshabilitado */
+.favorite-button.disabled,
+.favorite-button.disabled:hover {
+     /* 👈 Importante: sobreescribir también el hover */
+     color: var(--text-muted);
+     /* Color gris */
+     opacity: 0.5;
+     cursor: not-allowed;
+     transform: none;
+     /* Sin transformación en hover */
+     text-shadow: none;
+     /* Sin efecto neón */
+     pointer-events: none;
+     /* Previene cualquier interacción */
+}
+
 @keyframes heartBeat {
-     0% { transform: scale(1); }
-     14% { transform: scale(1.3); }
-     28% { transform: scale(1); }
-     42% { transform: scale(1.3); }
-     70% { transform: scale(1); }
-} 
+     0% {
+          transform: scale(1);
+     }
+
+     14% {
+          transform: scale(1.3);
+     }
+
+     28% {
+          transform: scale(1);
+     }
+
+     42% {
+          transform: scale(1.3);
+     }
+
+     70% {
+          transform: scale(1);
+     }
+}
+
+@keyframes pulsate {
+     100% {
+          text-shadow: 0 0 4px #fff,
+               0 0 11px #fff,
+               0 0 19px #fff,
+               0 0 40px #bc13fe,
+               0 0 80px #bc13fe,
+               0 0 90px #bc13fe,
+               0 0 100px #bc13fe,
+               0 0 150px #bc13fe;
+     }
+
+     0% {
+          text-shadow: 0 0 2px #fff,
+               0 0 4px #fff,
+               0 0 6px #fff,
+               0 0 10px #bc13fe,
+               0 0 45px #bc13fe,
+               0 0 55px #bc13fe,
+               0 0 70px #bc13fe,
+               0 0 80px #bc13fe;
+     }
+}

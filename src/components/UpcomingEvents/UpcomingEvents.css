@@ -1,24 +1,44 @@
 .upcoming-events-container {
-     position: absolute;
-     bottom: 20px;
-     left: 20px;
-     width: 300px;
+     backdrop-filter: blur(10px);
      background: rgba(27, 32, 40, 0.95);
      border-radius: 10px;
-     padding: 15px;
-     color: white;
-     z-index: 1000;
-     backdrop-filter: blur(10px);
      border: 1px solid rgba(255, 0, 255, 0.1);
+     bottom: 20px;
      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+     color: white;
+     left: 20px;
+     max-height: 40vh;
+     overflow-y: auto;
+     padding: 15px;
+     position: absolute;
+     width: 300px;
+     z-index: 1000;
+}
+
+.upcoming-events-container::-webkit-scrollbar {
+     width: 6px;
+}
+
+.upcoming-events-container::-webkit-scrollbar-track {
+     background: rgba(255, 0, 255, 0.05);
+     border-radius: 3px;
+}
+
+.upcoming-events-container::-webkit-scrollbar-thumb {
+     background: rgba(255, 0, 255, 0.3);
+     border-radius: 3px;
+}
+
+.upcoming-events-container::-webkit-scrollbar-thumb:hover {
+     background: rgba(255, 0, 255, 0.5);
 }
 
 .upcoming-events-container h3 {
      color: #ff00ff;
-     margin-bottom: 15px;
      font-size: 1.2rem;
+     margin-bottom: 15px;
      text-shadow: 0 0 7px #ff00ff,
-                 0 0 10px #ff00ff;
+          0 0 10px #ff00ff;
 }
 
 .upcoming-events-list {
@@ -28,20 +48,20 @@
 }
 
 .upcoming-event-item {
-     display: flex;
      align-items: center;
+     background: rgba(255, 0, 255, 0.05);
+     border-radius: 8px;
+     cursor: pointer;
+     display: flex;
      gap: 10px;
      padding: 8px;
-     border-radius: 8px;
      transition: all 0.3s ease;
-     background: rgba(255, 0, 255, 0.05);
-     cursor: pointer;
 }
 
 .upcoming-event-item:hover {
      background: rgba(255, 0, 255, 0.1);
-     transform: translateX(5px);
      box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
+     transform: translateX(5px);
 }
 
 .upcoming-event-item:active {
@@ -49,10 +69,10 @@
 }
 
 .upcoming-event-item img {
-     width: 50px;
-     height: 50px;
      border-radius: 5px;
+     height: 50px;
      object-fit: cover;
+     width: 50px;
 }
 
 .event-info {
@@ -60,19 +80,129 @@
 }
 
 .event-info h4 {
+     color: #fff;
      font-size: 0.9rem;
      margin: 0;
-     color: #fff;
 }
 
 .event-date {
-     font-size: 0.8rem;
      color: #ff00ff;
+     font-size: 0.8rem;
      margin: 2px 0;
 }
 
 .event-venue {
-     font-size: 0.8rem;
      color: #ccc;
+     font-size: 0.8rem;
      margin: 0;
-} 
+}
+
+
+@media screen and (max-width: 1110px) {
+     .upcoming-events-container {
+          left: 10px;
+          max-height: auto;
+          max-width: none;
+          padding: 8px 15px;
+          top: 10px;
+          transform: none;
+          transition: all 0.3s ease;
+          width: calc(100% - 60px);
+     }
+
+     .upcoming-events-container.collapsed {
+          cursor: pointer;
+          max-height: 40px;
+          overflow: hidden;
+          width: 200px;
+     }
+
+     .upcoming-events-container h3 {
+          align-items: center;
+          cursor: pointer;
+          display: flex;
+          font-size: 1rem;
+          justify-content: space-between;
+          margin-bottom: 8px;
+     }
+
+     .upcoming-events-container h3::after {
+          content: '▼';
+          font-size: 0.8rem;
+          transition: transform 0.3s ease;
+     }
+
+     .upcoming-events-container.collapsed h3::after {
+          transform: rotate(-90deg);
+     }
+
+     .upcoming-events-list {
+          max-height: 30vh;
+          transition: all 0.3s ease;
+     }
+
+     .upcoming-event-item {
+          padding: 5px;
+     }
+
+     .upcoming-event-item img {
+          width: 35px;
+          height: 35px;
+     }
+
+     .event-info h4 {
+          font-size: 0.8rem;
+     }
+
+     .event-date,
+     .event-venue {
+          font-size: 0.7rem;
+     }
+}
+
+@media screen and (max-width: 480px) {
+     .upcoming-events-container {
+          max-height: 25vh;
+          padding: 10px;
+     }
+
+     .upcoming-events-container h3 {
+          font-size: 1rem;
+          margin-bottom: 10px;
+     }
+
+     .upcoming-event-item {
+          padding: 5px;
+     }
+
+     .upcoming-event-item img {
+          width: 35px;
+          height: 35px;
+     }
+
+     .event-info h4 {
+          font-size: 0.8rem;
+     }
+
+     .event-date,
+     .event-venue {
+          font-size: 0.7rem;
+     }
+}
+
+/* Animación de entrada */
+@keyframes slideIn {
+     from {
+          opacity: 0;
+          transform: translateX(-100%);
+     }
+
+     to {
+          transform: translateX(0);
+          opacity: 1;
+     }
+}
+
+.upcoming-events-container {
+     animation: slideIn 0.3s ease-out forwards;
+}
