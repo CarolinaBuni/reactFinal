@@ -1,26 +1,26 @@
 /* Enlace "Más información" */
 .popup-link {
-     margin-top: var(--spacing-xl);
-     padding: var(--spacing-sm) var(--spacing-xl);
+     animation: pulsate 1.5s infinite alternate;
      background: transparent;
-     border: none;
      border-radius: var(--border-radius-sm);
+     border: none;
+     bottom: var(--spacing-xl);
+     color: var(--text-light);
      font-family: 'Roboto Mono', monospace;
      font-size: 0.9rem;
-     color: var(--text-light);
-     text-transform: uppercase;
-     letter-spacing: 2px;
-     transition: var(--transition-fast);
-     position: absolute;
-     bottom: var(--spacing-xl);
      left: 50%;
-     transform: translateX(-50%);
-     width: auto;
+     letter-spacing: 2px;
+     margin-top: var(--spacing-xl);
+     padding: var(--spacing-sm) var(--spacing-xl);
+     position: absolute;
      text-shadow: var(--neon-white);
-     animation: pulsate 1.5s infinite alternate;
+     text-transform: uppercase;
+     transform: translateX(-50%);
+     transition: var(--transition-fast);
+     width: auto;
 }
 
 .popup-link:hover {
-     transform: translateX(-50%) scale(1.1);
      text-shadow: var(--neon-primary);
+     transform: translateX(-50%) scale(1.1);
 }

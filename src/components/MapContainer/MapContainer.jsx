@@ -9,67 +9,61 @@ import { useGlobeAnimation } from './hooks/useGlobeAnimation';
 import { useMapBounds } from './hooks/useMapBounds';
 import { useFavorites } from '../../Context/FavoritesContext';
 
-
-
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-const MapContainer = memo(({ events, showMarkers, error, upcomingEvents, showingFavorites }) => {
-    console.log('MapContainer Render', { showingFavorites });
-    const mapContainer = useRef(null);
-    const mapRef = useRef(null);
+const MapContainer = memo( ( { events, showMarkers, error, upcomingEvents, showingFavorites } ) => {
+    console.log( 'MapContainer Render' );
+    const mapContainer = useRef( null );
+    const mapRef = useRef( null );
     const { favorites } = useFavorites();
-    
-    const eventsToDisplay = useMemo(() => {
-        // console.log('Calculando eventsToDisplay:', { showingFavorites, events: events.length, favorites: favorites.length });
+
+    const eventsToDisplay = useMemo( () => {
+
         return showingFavorites ? favorites : events;
-    }, [events, showingFavorites, showingFavorites ? favorites : null]);
+    }, [ events, showingFavorites, showingFavorites ? favorites : null ] );
 
-    useMapInitialization(mapContainer, mapRef);
-    useGlobeAnimation(mapRef);
-    useMapBounds(mapRef, eventsToDisplay, showMarkers);
-    
+    useMapInitialization( mapContainer, mapRef );
+    useGlobeAnimation( mapRef );
+    useMapBounds( mapRef, eventsToDisplay, showMarkers );
 
-    const mapContent = useMemo(() => (
+
+    const mapContent = useMemo( () => (
         <>
-            {/* <IntroText /> */}
-            {mapRef.current && (
+            {/* <IntroText /> */ }
+            { mapRef.current && (
                 <>
                     <MarkerLayer
-                        map={mapRef.current}
-                        events={eventsToDisplay}
-                        showMarkers={showMarkers}
+                        map={ mapRef.current }
+                        events={ eventsToDisplay }
+                        showMarkers={ showMarkers }
                     />
                     <PopupManager />
                 </>
-            )}
+            ) }
         </>
-    ), [mapRef.current, eventsToDisplay, showMarkers]);
+    ), [ mapRef.current, eventsToDisplay, showMarkers ] );
 
-    // if (showingFavorites && (!favorites || favorites.length === 0)) {
-    //     console.log('No hay favoritos para mostrar');
-    //     // Aquí podrías mostrar un mensaje al usuario
-    // }
-
-    return useMemo(() => (
-        <div ref={mapContainer} style={{ width: '100%', top: '0', bottom: '0', position: 'absolute' }}>
-            {/* <IntroText /> */}
-            {mapContent}
+    return useMemo( () => (
+        <div ref={ mapContainer } style={ { width: '100%', top: '0', bottom: '0', position: 'absolute' } }>
+            {/* <IntroText /> */ }
+            { mapContent }
             <UpcomingEvents
-                events={upcomingEvents}
-                map={mapRef.current}
+                events={ upcomingEvents }
+                map={ mapRef.current }
+                showingFavorites={ showingFavorites }
+                showMarkers={ showMarkers }
             />
         </div>
-    ), [mapContent, upcomingEvents, mapRef.current, showingFavorites]);
-}, (prev, next) => {
-    // Siempre comparar showingFavorites si ha cambiado
-    if (prev.showingFavorites !== next.showingFavorites) {
-        return false; // Forzar re-render cuando cambia showingFavorites
+    ), [ mapContent, upcomingEvents, mapRef.current, showingFavorites, showMarkers ] );
+}, ( prev, next ) => {
+    if ( prev.showingFavorites !== next.showingFavorites ) {
+        return false; 
     }
 
     // Resto de comparaciones
     return prev.events === next.events &&
-           prev.showMarkers === next.showMarkers &&
-           prev.upcomingEvents === next.upcomingEvents;
-});
+        prev.showMarkers === next.showMarkers &&
+        prev.upcomingEvents === next.upcomingEvents;
+} );
 
 export default MapContainer;

@@ -5,21 +5,19 @@ import Toolbar from '../Toolbar/Toolbar';
 import useFetchEvents from '../../hooks/useFetchEvents';
 import { useFavorites } from '../../Context/FavoritesContext';
 
-
 const AppContent = memo( () => {
      console.log( 'AppContent Render' );
 
      const { events, error, fetchEvents } = useFetchEvents();
      const [ showMarkers, setShowMarkers ] = useState( false );
      const [ showingFavorites, setShowingFavorites ] = useState( false );
-     const { favorites } = useFavorites();
+     // const { favorites } = useFavorites();
 
      const upcomingEvents = useMemo( () => {
           const now = new Date();
           return events
                .filter( event => new Date( event.startDate ) > now )
-               .sort( ( a, b ) => new Date( a.startDate ) - new Date( b.startDate ) )
-               .slice( 0, 5 );
+               .sort( ( a, b ) => new Date( a.startDate ) - new Date( b.startDate ) );
      }, [ events ] );
 
      const handleToggleMarkers = useCallback( ( showFavorites = false, show = true ) => {

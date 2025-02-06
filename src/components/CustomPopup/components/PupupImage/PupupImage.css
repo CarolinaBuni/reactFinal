@@ -1,7 +1,8 @@
 .popup-image {
-     width: 120px;
-     height: 120px;
      border-radius: 50%;
+     height: 120px;
      margin-bottom: var(--spacing-sm);
      object-fit: cover;
+     width: 120px;
 }
+

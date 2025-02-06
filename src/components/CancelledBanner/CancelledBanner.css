@@ -1,48 +1,22 @@
-/* Banner de cancelado */
-/* .cancelled-banner {
-     position: absolute;
-     top: 0;
-     left: 0;
-     width: 100%;
-     background-color: var(--color-secondary);
-     text-align: center;
-     padding: var(--spacing-sm);
-     font-weight: bold;
-     font-size: 1.2rem;
-     text-transform: uppercase;
-     z-index: 20;
-     animation: slideIn 0.5s ease-out;
-}
-
-@keyframes slideIn {
-     from {
-          transform: translateY(-100%);
-     }
-
-     to {
-          transform: translateY(0);
-     }
-} */
-
 .cancelled-banner {
-     position: absolute;
-     top: 0;
-     left: 0;
-     width: 100%;
-     background: rgba(255, 0, 255, 0.1);
-     backdrop-filter: blur(8px);
-     border-bottom: 2px solid var(--color-primary);
-     text-align: center;
-     padding: var(--spacing-sm);
-     font-family: 'Roboto Mono', monospace;
-     font-weight: bold;
-     font-size: 1.2rem;
-     letter-spacing: 4px;
-     text-transform: uppercase;
-     color: var(--text-light);
-     text-shadow: var(--neon-primary);
-     z-index: 20;
      animation: slideIn 0.5s ease-out, glowPulse 2s infinite alternate;
+     backdrop-filter: blur(8px);
+     background: var(--color-primary-transparent);
+     border-bottom: 2px solid var(--color-primary);
+     color: var(--text-light);
+     font-family: 'Roboto Mono', monospace;
+     font-size: var(--font-size-md);
+     font-weight: bold;
+     left: 0;
+     letter-spacing: 4px;
+     padding: var(--spacing-sm);
+     position: absolute;
+     text-align: center;
+     text-shadow: var(--neon-primary);
+     text-transform: uppercase;
+     top: 0;
+     width: 100%;
+     z-index: 20;
 }
 
 @keyframes slideIn {
@@ -60,7 +34,7 @@
           text-shadow: 0 0 7px var(--color-primary),
                0 0 10px var(--color-primary),
                0 0 21px var(--color-primary);
-          border-bottom-color: rgba(255, 0, 255, 0.5);
+          border-bottom-color: var(--color-primary-semi);
      }
 
      to {

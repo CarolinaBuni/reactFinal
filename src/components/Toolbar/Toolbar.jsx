@@ -4,60 +4,58 @@ import React, { useCallback, useRef } from 'react';
 import './Toolbar.css';
 import { useFavorites } from '../../Context/FavoritesContext';
 
-const Toolbar = ({ onFetchEvents, onToggleMarkers, showMarkers, events, showingFavorites }) => {
-    console.log('Toolbar Render', showingFavorites);
-    
-    const menuRef = useRef(null);
+const Toolbar = ( { onFetchEvents, onToggleMarkers, showMarkers, events, showingFavorites } ) => {
+    console.log( 'Toolbar Render');
+
+    const menuRef = useRef( null );
     const { favorites } = useFavorites();
 
-    // console.log('Toolbar favorites:', favorites);
-
     const handleFetchAndToggleMarkers = async () => {
-        if (events.length === 0) {
+        if ( events.length === 0 ) {
             await onFetchEvents();
         }
-        // Si ya están visibles y no estamos en modo favoritos, los ocultamos
-        if (showMarkers && !showingFavorites) {
-            onToggleMarkers(false, false); // El segundo false es para ocultar los marcadores
+
+        if ( showMarkers && !showingFavorites ) {
+            onToggleMarkers( false, false );
         } else {
-            onToggleMarkers(false); // Mostrar todos los eventos
+            onToggleMarkers( false );
         }
     };
 
-    const handleFavoritesClick = useCallback(() => {
-        // console.log('handleFavoritesClick llamado', { favorites });
-        if (favorites && favorites.length > 0) {
-            onToggleMarkers(true);
+    const handleFavoritesClick = useCallback( () => {
+
+        if ( favorites && favorites.length > 0 ) {
+            onToggleMarkers( true );
         }
-    }, [favorites, onToggleMarkers]);
+    }, [ favorites, onToggleMarkers ] );
 
     const toggleMenu = () => {
-        menuRef.current.classList.toggle('active');
+        menuRef.current.classList.toggle( 'active' );
     };
 
     return (
         <div className="navigation">
-            <div className="menuTogle" ref={menuRef} onClick={toggleMenu}>
+            <div className="menuTogle" ref={ menuRef } onClick={ toggleMenu }>
                 <i></i>
             </div>
             <div className="menu">
                 <ul>
-                    <li style={{ '--i': '0.1s' }}>
-                        <a 
-                            href="#" 
-                            onClick={handleFetchAndToggleMarkers}
-                            className={showMarkers && !showingFavorites ? 'active' : ''}
+                    <li style={ { '--i': '0.1s' } }>
+                        <a
+                            href="#"
+                            onClick={ handleFetchAndToggleMarkers }
+                            className={ showMarkers && !showingFavorites ? 'active' : '' }
                         >
                             <ion-icon name="musical-notes-outline"></ion-icon>
                         </a>
                     </li>
                     <li></li>
                     <li></li>
-                    <li style={{ '--i': '0.2s' }}>
-                        <a 
-                            href="#" 
-                            onClick={handleFavoritesClick}
-                            className={showingFavorites ? 'active' : ''}
+                    <li style={ { '--i': '0.2s' } }>
+                        <a
+                            href="#"
+                            onClick={ handleFavoritesClick }
+                            className={ showingFavorites ? 'active' : '' }
                         >
                             <ion-icon name="heart-outline"></ion-icon>
                         </a>

@@ -1,16 +1,16 @@
 /* Logo y efectos de texto */
 .logo {
-     text-align: center;
-     margin: var(--spacing-xs) auto;
-     user-select: none;
-     position: relative;
      height: auto;
+     margin: var(--spacing-xs) auto;
+     position: relative;
+     text-align: center;
+     user-select: none;
      width: 100%;
 }
 
 .logo b {
-     font: 400 1.8rem "Vibur";
      color: var(--text-light);
+     font: 400 1.8rem "Vibur";
      text-shadow: var(--neon-primary);
 }
 
@@ -29,7 +29,7 @@
      }
 
      79% {
-          color: #2a0a29;
+          color: var(--color-blink-dark);
      }
 
      80% {
@@ -42,7 +42,7 @@
      }
 
      82% {
-          color: #2a0a29;
+          color: var(--color-blink-dark);
           text-shadow: none;
      }
 
@@ -52,7 +52,7 @@
      }
 
      92% {
-          color: #2a0a29;
+          color: var(--color-blink-dark);
           text-shadow: none;
      }
 

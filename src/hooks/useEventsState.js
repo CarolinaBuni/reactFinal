@@ -5,7 +5,7 @@ export const useEventsState = () => {
     const [showMarkers, setShowMarkers] = useState(false);
     const [showingFavorites, setShowingFavorites] = useState(false);
 
-    // Memoizar los eventos próximos para evitar recálculos innecesarios
+    // Se memoizan los eventos próximos para evitar recalcular
     const upcomingEvents = useMemo(() => {
         return events
             .filter(event => new Date(event.startDate) > new Date())

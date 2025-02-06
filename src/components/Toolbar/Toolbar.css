@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  bottom: 20px;
+  bottom: var(--spacing-20);
   z-index: 1000;
 }
 
@@ -13,7 +13,7 @@
   position: relative;
   width: 65px;
   height: 65px;
-  background-color: #ff4886;
+  background-color: var(--color-secondary);
   border-radius: 50%;
   cursor: pointer;
   display: flex;
@@ -29,8 +29,8 @@
   position: absolute;
   z-index: 10;
   font-size: 3em;
-  color: white;
-  transition: 0.5s;
+  color: var(--text-light);
+  transition: var(--transition-medium);
 }
 
 .menuTogle.active::before {
@@ -87,20 +87,15 @@
 .menu ul li a {
   display: block;
   font-size: 2em;
-  color: floralwhite;
+  color: var(--text-light);
   transition: all 0.5s ease-in-out;
 }
 
-/* .menu ul li.active-button a {
-  color: #ff4886 !important; 
-  transition: color 0.3s ease;
-} */
-
 .menu ul li a.active {
-  color: #ff4886;
+  color: var(--color-secondary);
   transition: color 0.3s ease;
 }
 
 .menu ul li:hover a {
-  color: #ff4886;
+  color: var(--color-secondary);
 }

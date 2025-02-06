@@ -16,9 +16,7 @@ const useFetchEvents = () => {
                 throw new Error(`Error fetching events: ${response.statusText}`);
             }
 
-            const data = await response.json();
-            console.log(data);
-            
+            const data = await response.json();         
             const heights = [100, 300, 600, 900, 1200, 1500];
 
             const fetchedEvents = data._embedded.events.map((event) => {

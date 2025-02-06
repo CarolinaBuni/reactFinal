@@ -1,15 +1,8 @@
-.map-container {
-     position: absolute;
-     top: 0;
-     bottom: 0;
-     width: 100%;
- }
- 
- /* Asegurarnos que el body y html tienen altura completa */
- html, body {
-     margin: 0;
-     padding: 0;
-     height: 100%;
- }
 
- 
+.map-container {
+    bottom: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+

@@ -16,7 +16,7 @@
 
 .text {
      color: #FAFAFA;
-     font-size: 28px;
+     font-size: var(--font-size-xl);
      font-weight: 100;
 }
 

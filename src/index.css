@@ -3,6 +3,11 @@
     --color-primary: #ff00ff;
     --color-secondary: #ff4886;
     --color-accent: #bc13fe;
+    --color-primary-transparent: rgba(255, 0, 255, 0.1);
+    --color-primary-semi: rgba(255, 0, 255, 0.5);
+    
+    /* Color específico para el efecto de parpadeo */
+    --color-blink-dark: #2a0a29;
 
     /* Colores de fondo */
     --bg-dark: #1b2028;
@@ -12,6 +17,10 @@
     --text-light: #fff;
     --text-muted: #ccc;
     --text-highlight: #ffeba7;
+
+    /* Variables para gradientes */
+    --gradient-purple: rgba(117, 46, 124, 0.35);
+    --gradient-pink: rgba(115, 74, 88, 0.1);
 
     /* Efectos de neón */
     --neon-primary: 0 0 7px var(--color-primary),
@@ -40,6 +49,16 @@
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
 
+    /* Tamaños de fuente */
+
+    --font-size-xs: 0.8rem;
+    --font-size-sm: 1rem;
+    --font-size-md: 1.2rem;
+    --font-size-lg: 1.75rem;
+    /* 28px */
+    --font-size-xl: 2rem;
+
+
     /* Espaciado en píxeles */
     --spacing-10: 10px;
     --spacing-15: 15px;
@@ -62,26 +81,25 @@
 }
 
 .event-tooltip {
-    background: var(--bg-darker) !important;
-    border-radius: var(--border-radius-md) !important;
-    padding: var(--spacing-md) !important;
-    color: var(--text-light) !important;
-    font-family: 'Roboto Mono', monospace !important;
-    border: var(--border-glow) !important;
-    box-shadow: var(--shadow-primary) !important;
+    background: var(--bg-darker);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    color: var(--text-light);
+    font-family: 'Roboto Mono', monospace;
+    border: var(--border-glow);
+    box-shadow: 0 35px 60px 0 rgba(31, 38, 135, 0.37);
 }
 
 .event-tooltip .mapboxgl-popup-content {
-    background: transparent !important;
-    padding: 0 !important;
-    border-radius: var(--border-radius-md) !important;
+    background: transparent;
+    padding: 0;
+    border-radius: var(--border-radius-md);
 }
 
 .event-tooltip .mapboxgl-popup-tip {
-    border-top-color: var(--bg-darker) !important;
+    border-top-color: var(--bg-darker);
 }
 
-/* Utilidades de animación */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -104,7 +122,6 @@
     }
 }
 
-/* Clases de utilidad */
 .text-glow {
     text-shadow: var(--neon-primary);
 }
