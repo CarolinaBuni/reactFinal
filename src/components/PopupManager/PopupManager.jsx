@@ -14,6 +14,8 @@ const PopupManager = memo(() => {
             onClose={closePopup}
         />
     ) : null;
+}, (prev, next) => {
+    return prev.popupInfo?.id === next.popupInfo?.id;
 });
 
 export default PopupManager;

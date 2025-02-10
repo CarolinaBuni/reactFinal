@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import './CustomPopup.css';
 import FavoriteButton from '../FavoriteButton/FavoriteButton';
 import EventHeader from './components/EventHeader/EventHeader.jsx';
@@ -8,7 +8,7 @@ import CancelledBanner from '../CancelledBanner/CancelledBanner.jsx';
 import PupupImage from './components/PupupImage/PupupImage.jsx';
 import PopupLink from './components/PopupLink/PopupLink.jsx';
 
-const CustomPopup = ({ popupInfo, onClose }) => {
+const CustomPopup = memo(({ popupInfo, onClose }) => {
     console.log('CustomPopup Render');
     
     if (!popupInfo) return null;
@@ -36,6 +36,8 @@ const CustomPopup = ({ popupInfo, onClose }) => {
             <PopupLink url={url} />
         </div>
     );
-};
+}, (prev, next) => {
+    return prev.popupInfo?.id === next.popupInfo?.id;
+});
 
 export default CustomPopup;

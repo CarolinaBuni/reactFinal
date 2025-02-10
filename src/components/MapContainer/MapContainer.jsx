@@ -8,17 +8,20 @@ import { useMapInitialization } from './hooks/useMapInitialization';
 import { useGlobeAnimation } from './hooks/useGlobeAnimation';
 import { useMapBounds } from './hooks/useMapBounds';
 import { useFavorites } from '../../Context/FavoritesContext';
+import { useEvents } from '../../Context/EventsContext';
+import { usePopup } from "../../Context/PopupContext";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-const MapContainer = memo( ( { events, showMarkers, error, upcomingEvents, showingFavorites } ) => {
+const MapContainer = memo( (  ) => {
+    const { popupInfo } = usePopup();
     console.log( 'MapContainer Render' );
     const mapContainer = useRef( null );
     const mapRef = useRef( null );
     const { favorites } = useFavorites();
+    const { events, showMarkers, showingFavorites, upcomingEvents } = useEvents();
 
     const eventsToDisplay = useMemo( () => {
-
         return showingFavorites ? favorites : events;
     }, [ events, showingFavorites, showingFavorites ? favorites : null ] );
 
@@ -34,25 +37,27 @@ const MapContainer = memo( ( { events, showMarkers, error, upcomingEvents, showi
                 <>
                     <MarkerLayer
                         map={ mapRef.current }
-                        events={ eventsToDisplay }
-                        showMarkers={ showMarkers }
+                        // events={ eventsToDisplay }
+                        // showMarkers={ showMarkers }
                     />
-                    <PopupManager />
+                    {popupInfo && <PopupManager />}
                 </>
             ) }
         </>
-    ), [ mapRef.current, eventsToDisplay, showMarkers ] );
+    ), [ mapRef.current, popupInfo ] );
 
     return useMemo( () => (
         <div ref={ mapContainer } style={ { width: '100%', top: '0', bottom: '0', position: 'absolute' } }>
             {/* <IntroText /> */ }
             { mapContent }
+            {showMarkers && ( // ✅ Solo se renderiza cuando showMarkers es true
             <UpcomingEvents
-                events={ upcomingEvents }
-                map={ mapRef.current }
-                showingFavorites={ showingFavorites }
-                showMarkers={ showMarkers }
+                events={upcomingEvents}
+                map={mapRef.current}
+                showingFavorites={showingFavorites}
+                showMarkers={showMarkers}
             />
+        )}
         </div>
     ), [ mapContent, upcomingEvents, mapRef.current, showingFavorites, showMarkers ] );
 }, ( prev, next ) => {

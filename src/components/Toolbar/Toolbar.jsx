@@ -3,31 +3,38 @@
 import React, { useCallback, useRef } from 'react';
 import './Toolbar.css';
 import { useFavorites } from '../../Context/FavoritesContext';
+import { useEvents } from '../../Context/EventsContext';
 
-const Toolbar = ( { onFetchEvents, onToggleMarkers, showMarkers, events, showingFavorites } ) => {
+const Toolbar = ( ) => {
     console.log( 'Toolbar Render');
-
     const menuRef = useRef( null );
     const { favorites } = useFavorites();
+    const { 
+        events, 
+        fetchEvents, 
+        showMarkers, 
+        showingFavorites, 
+        handleToggleMarkers 
+    } = useEvents();
 
     const handleFetchAndToggleMarkers = async () => {
         if ( events.length === 0 ) {
-            await onFetchEvents();
+            await fetchEvents();
         }
 
         if ( showMarkers && !showingFavorites ) {
-            onToggleMarkers( false, false );
+            handleToggleMarkers( false, false );
         } else {
-            onToggleMarkers( false );
+            handleToggleMarkers( false );
         }
     };
 
     const handleFavoritesClick = useCallback( () => {
 
         if ( favorites && favorites.length > 0 ) {
-            onToggleMarkers( true );
+            handleToggleMarkers( true );
         }
-    }, [ favorites, onToggleMarkers ] );
+    }, [ favorites, handleToggleMarkers ] );
 
     const toggleMenu = () => {
         menuRef.current.classList.toggle( 'active' );

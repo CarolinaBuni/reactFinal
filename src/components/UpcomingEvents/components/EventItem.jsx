@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
 const EventItem = memo( ( { event, onClick } ) => {
-     console.log( "EventItem Render" );
+     // console.log( "EventItem Render" );
 
      return (
           <div

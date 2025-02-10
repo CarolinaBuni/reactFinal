@@ -5,7 +5,7 @@ import { useMapNavigation } from './hooks/useMapNavigation';
 import { useFavorites } from '../../Context/FavoritesContext';
 
 const UpcomingEvents = memo(({ events, map, showingFavorites, showMarkers }) => {
-    console.log("UpcomingEvents Render"); 
+    console.log(`UpcomingEvents Render with ${events.length} items`);
     
     // Todos los hooks primero
     const [isCollapsed, setIsCollapsed] = useState(window.innerWidth <= 1110);

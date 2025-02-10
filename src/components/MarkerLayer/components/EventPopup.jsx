@@ -1,8 +1,8 @@
 
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 
-const EventPopup = ( { map, event, closePopup } ) => {
+const EventPopup = memo( ( { map, event, closePopup } ) => {
      console.log( 'EventPopup Render' );
      useEffect( () => {
           if ( !event ) return;
@@ -28,6 +28,9 @@ const EventPopup = ( { map, event, closePopup } ) => {
      }, [ map, event, closePopup ] );
 
      return null;
-};
+}, ( prev, next ) => {
+     return prev.event?.id === next.event?.id &&
+          prev.map === next.map;
+} );
 
 export default EventPopup;
