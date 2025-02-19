@@ -1,44 +1,22 @@
 //Toolbar.jsx
 
-import React, { useCallback, useRef } from 'react';
+import React, { memo, useCallback, useRef } from 'react';
 import './Toolbar.css';
-import { useFavorites } from '../../Context/FavoritesContext';
-import { useEvents } from '../../Context/EventsContext';
+import { useToolbarLogic } from './hooks/useToolbarLogic';
 
-const Toolbar = ( ) => {
-    console.log( 'Toolbar Render');
+const Toolbar = memo( () => {
+    console.log( 'Toolbar Render' );
     const menuRef = useRef( null );
-    const { favorites } = useFavorites();
-    const { 
-        events, 
-        fetchEvents, 
-        showMarkers, 
-        showingFavorites, 
-        handleToggleMarkers 
-    } = useEvents();
+    const {
+        showMarkers,
+        showingFavorites,
+        handleFetchAndToggleMarkers,
+        handleFavoritesClick
+    } = useToolbarLogic();
 
-    const handleFetchAndToggleMarkers = async () => {
-        if ( events.length === 0 ) {
-            await fetchEvents();
-        }
-
-        if ( showMarkers && !showingFavorites ) {
-            handleToggleMarkers( false, false );
-        } else {
-            handleToggleMarkers( false );
-        }
-    };
-
-    const handleFavoritesClick = useCallback( () => {
-
-        if ( favorites && favorites.length > 0 ) {
-            handleToggleMarkers( true );
-        }
-    }, [ favorites, handleToggleMarkers ] );
-
-    const toggleMenu = () => {
+    const toggleMenu = useCallback( () => {
         menuRef.current.classList.toggle( 'active' );
-    };
+    }, [] );
 
     return (
         <div className="navigation">
@@ -71,6 +49,9 @@ const Toolbar = ( ) => {
             </div>
         </div>
     );
-};
+}, ( prev, next ) => {
+    return prev.showMarkers === next.showMarkers &&
+        prev.showingFavorites === next.showingFavorites;
+} );
 
 export default Toolbar;

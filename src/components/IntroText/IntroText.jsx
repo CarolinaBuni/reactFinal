@@ -8,10 +8,9 @@ const IntroText = memo(() => {
     const textRef = useRef(null);
     const [shouldShow, setShouldShow] = useState(true);
     const phrases = [
-        'Bienvenido a EventMap',
-        'Explora eventos cerca de ti',
-        'Descubre nuevas experiencias',
-        'Vive la música en directo',
+        'PULSE',
+        'Tu guía musical',
+        'Madrid en directo'
     ];
 
     useEffect(() => {

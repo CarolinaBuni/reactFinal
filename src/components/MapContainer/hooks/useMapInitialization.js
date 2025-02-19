@@ -6,20 +6,20 @@ export const useMapInitialization = ( mapContainer, mapRef ) => {
           mapRef.current = new mapboxgl.Map( {
                container: mapContainer.current,
                style: "mapbox://styles/mapbox/standard",
-               center:  [30, 15],
+               center: [ 30, 15 ],
                zoom: 1,
                projection: 'globe',
                dragRotate: true
           } );
 
-          mapRef.current.addControl( new mapboxgl.NavigationControl( { 
+          mapRef.current.addControl( new mapboxgl.NavigationControl( {
                visualizePitch: true,
                showCompass: true,
-               
+
           } ) );
 
           mapRef.current.on( "style.load", () => {
-               mapRef.current.setConfigProperty('basemap', 'lightPreset', 'dusk');
+               mapRef.current.setConfigProperty( 'basemap', 'lightPreset', 'dusk' );
                mapRef.current.setFog( {
                     color: "rgba(8, 236, 194, 0.548)",
                     "high-color": "rgb(8, 236, 194)",
@@ -28,12 +28,12 @@ export const useMapInitialization = ( mapContainer, mapRef ) => {
                     "star-intensity": 0.9,
                } );
 
-                // Añadir efecto de nieve
-                const zoomBasedReveal = (value) => {
+               // Añadir efecto de nieve
+               const zoomBasedReveal = ( value ) => {
                     return [
                          'interpolate',
-                         ['linear'],
-                         ['zoom'],
+                         [ 'linear' ],
+                         [ 'zoom' ],
                          11,
                          0.0,
                          13,

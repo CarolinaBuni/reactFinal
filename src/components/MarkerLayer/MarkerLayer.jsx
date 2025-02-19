@@ -1,54 +1,41 @@
 import React, { memo, useMemo, useEffect, useState, useCallback, useRef } from 'react';
 import { usePopup } from "../../Context/PopupContext";
 import { createGeoJSONFeature } from './utils/createGeoJSONFeature';
-import EventPopup from './components/EventPopup';
 import useMarkerEvents from './hooks/useMarkerEvents';
 import useMapLayer from './hooks/useMapLayer';
 import { useEvents } from '../../Context/EventsContext';
-import { useFavorites } from '../../Context/FavoritesContext';
+
 
 const MarkerLayer = memo( ( { map } ) => {
-    console.log( 'MarkerLayer Render' );
+    console.log( 'MarkerLayer Render', Date.now() );
     const { togglePopup } = usePopup();
-    const { events, showMarkers, showingFavorites } = useEvents();
-    const { favorites } = useFavorites();
+    const { showMarkers, filteredUpcomingEvents } = useEvents();
     const tooltipRef = useRef(null);
 
     const sourceId = 'events-source';
     const layerId = 'events-layer';
 
-    // Usamos la misma lógica que en MapContainer
-    const eventsToDisplay = useMemo(() => {
-        return showingFavorites ? favorites : events;
-    }, [events, showingFavorites, favorites]);
+    const handlePopupToggle = useCallback((event) => {
+        togglePopup(event);
+    }, [togglePopup]);
 
-    const geoJSON = useMemo( () => ( {
+    const geoJSON = useMemo(() => ({
         type: 'FeatureCollection',
-        features: eventsToDisplay.map( createGeoJSONFeature )
-    } ), [ eventsToDisplay ] );
+        features: filteredUpcomingEvents.map(createGeoJSONFeature)
+    }), [filteredUpcomingEvents]);
 
-    // const handleSetActiveEvent = useCallback( ( event ) => {
-    //     setActiveEvent( event );
-    // }, [] );
-
-
-    useMarkerEvents( map, layerId, eventsToDisplay, togglePopup, geoJSON, tooltipRef );
+    useMarkerEvents( map, layerId, filteredUpcomingEvents, handlePopupToggle, geoJSON, tooltipRef );
     useMapLayer( map, sourceId, layerId, geoJSON, showMarkers );
 
-
-    // // Memorizamos el EventPopup
-    // const eventPopup = useMemo( () => (
-    //     activeEvent && (
-    //         <EventPopup
-    //             map={ map }
-    //             event={ activeEvent }
-    //             closePopup={ () => handleSetActiveEvent( null ) }
-    //         />
-    //     )
-    // ), [ activeEvent, map ] );
-
-
     return null;
+}, (prev, next) => {
+    console.log('MarkerLayer memo check', {
+        mapEqual: prev.map === next.map,
+        showMarkersEqual: prev.showMarkers === next.showMarkers,
+    });
+    return prev.map === next.map &&
+    prev.showMarkers === next.showMarkers &&
+    prev.filteredUpcomingEvents === next.filteredUpcomingEvents;
 } );
 
 export default MarkerLayer;

@@ -5,7 +5,6 @@ const useMapLayer = ( map, sourceId, layerId, geoJSON, showMarkers ) => {
      useEffect( () => {
           if ( !map ) return;
 
-          // Se añade o actualiza la fuente
           if ( !map.getSource( sourceId ) ) {
                map.addSource( sourceId, {
                     type: 'geojson',
@@ -15,7 +14,6 @@ const useMapLayer = ( map, sourceId, layerId, geoJSON, showMarkers ) => {
                map.getSource( sourceId ).setData( geoJSON );
           }
 
-          // Se añad la capa si no existe
           if ( !map.getLayer( layerId ) ) {
                map.addLayer( {
                     id: layerId,

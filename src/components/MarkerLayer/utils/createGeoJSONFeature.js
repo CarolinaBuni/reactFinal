@@ -1,4 +1,3 @@
-// Función helper fuera del componente
 export const createGeoJSONFeature = ( event ) => ( {
      type: 'Feature',
      geometry: {

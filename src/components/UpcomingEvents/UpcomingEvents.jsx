@@ -2,22 +2,14 @@ import React, { memo, useState } from 'react';
 import './UpcomingEvents.css';
 import EventItem from './components/EventItem';
 import { useMapNavigation } from './hooks/useMapNavigation';
-import { useFavorites } from '../../Context/FavoritesContext';
 
-const UpcomingEvents = memo(({ events, map, showingFavorites, showMarkers }) => {
+const UpcomingEvents = memo(({ events, map, showMarkers }) => {
     console.log(`UpcomingEvents Render with ${events.length} items`);
     
-    // Todos los hooks primero
     const [isCollapsed, setIsCollapsed] = useState(window.innerWidth <= 1110);
     const handleEventClick = useMapNavigation(map, showMarkers);
-    const { favorites } = useFavorites();
 
-    // Filtra eventos según la vista actual
-    const visibleEvents = showingFavorites 
-        ? events.filter(event => favorites.some(fav => fav.id === event.id))
-        : events;
-
-    if (!visibleEvents?.length) return null;
+    if (!events?.length) return null;
 
     const toggleCollapse = () => {
         if (window.innerWidth <= 1110) {
@@ -29,7 +21,7 @@ const UpcomingEvents = memo(({ events, map, showingFavorites, showMarkers }) => 
         <div className={`upcoming-events-container ${isCollapsed ? 'collapsed' : ''}`}>
             <h3 onClick={toggleCollapse}>Próximos Eventos</h3>
             <div className="upcoming-events-list">
-                {visibleEvents.map(event => (
+                {events.map(event => (
                     <EventItem 
                         key={event.id}
                         event={event}
