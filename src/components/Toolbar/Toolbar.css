@@ -1,209 +1,107 @@
-/* .navigation {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  bottom: var(--spacing-20);
-  z-index: 1000;
-}
-
-.menuTogle {
-  position: relative;
-  width: 65px;
-  height: 65px;
-  background-color: var(--color-secondary);
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  transform: translateY(-30px);
-  box-shadow: 0px 6px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.menuTogle::before {
-  content: "+";
-  position: absolute;
-  z-index: 10;
-  font-size: 3em;
-  color: var(--text-light);
-  transition: var(--transition-medium);
-}
-
-.menuTogle.active::before {
-  transform: rotate(225deg);
-}
-
-.menu {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60px;
-  height: 60px;
-  background-color: #282b33;
-  border-radius: 70px;
-  transform: translateY(-30px);
-  transition: transform 0.5s, width 0.5s, height 0.5s;
-  transition-delay: 1s, 0.5s, 0.5s;
-  box-shadow: 0px 6px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.menuTogle.active ~ .menu {
-  width: 360px;
-  height: 70px;
-  transform: translateY(0px);
-  transition-delay: 0s, 0.5s, 0.5s;
-}
-
-.menu ul {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 35px;
-  margin-top: 15px;
-}
-
-.menu ul li {
-  cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
-  transition: 0.25s;
-  transition-delay: calc(0s + var(--i));
-  transform: translateY(-30px);
-}
-
-.menuTogle.active ~ .menu ul li {
-  opacity: 1;
-  visibility: visible;
-  transition-delay: calc(0.75s + var(--i));
-  transform: translateY(0px);
-}
-
-.menu ul li a {
-  display: block;
-  font-size: 2em;
-  color: var(--text-light);
-  transition: all 0.5s ease-in-out;
-}
-
-.menu ul li a.active {
-  color: var(--color-secondary);
-  transition: color 0.3s ease;
-}
-
-.menu ul li:hover a {
-  color: var(--color-secondary);
-} */
-:root {
-  --color-neon: #00ffff;
-  --color-dark: rgba(20, 20, 25, 0.9);
-}
-
 .navigation {
-  position: absolute;
+  align-items: center;
+  bottom: var(--spacing-20);
   display: flex;
   justify-content: center;
-  align-items: center;
+  position: absolute;
   width: 100%;
-  bottom: var(--spacing-20);
   z-index: 1000;
 }
 
 .menuTogle {
-  position: relative;
-  width: 65px;
-  height: 65px;
-  background-color: rgba(27, 32, 40, 0.85);
+  align-items: center;
+  backdrop-filter: blur(4px);
+  background-color: var(--bg-darker);
   border-radius: 50%;
+  border: var(--border-glow);
+  box-shadow: 0 0 15px var(--color-primary-semi);
   cursor: pointer;
   display: flex;
+  height: 65px;
   justify-content: center;
-  align-items: center;
-  z-index: 10;
+  position: relative;
   transform: translateY(-30px);
-  box-shadow: 0 0 15px rgba(188, 19, 254, 0.2);
-  backdrop-filter: blur(4px);
+  width: 65px;
+  z-index: 10;
 }
 
 .menuTogle::before {
+  color: var(--color-primary);
   content: "+";
-  position: absolute;
-  z-index: 10;
   font-size: 3em;
-  color: var(--color-accent);
-  text-shadow: 0 0 8px var(--color-accent);
+  position: absolute;
+  text-shadow: var(--neon-primary);
   transition: var(--transition-medium);
+  z-index: 10;
 }
 
 .menu {
-  position: absolute;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  width: 60px;
-  height: 60px;
-  background-color: rgba(27, 32, 40, 0.85);
-  border-radius: 70px;
-  transform: translateY(-30px);
-  transition: transform 0.5s, width 0.5s, height 0.5s;
-  transition-delay: 1s, 0.5s, 0.5s;
   backdrop-filter: blur(4px);
-  box-shadow: 0 0 15px rgba(188, 19, 254, 0.2);
+  background-color: var(--bg-darker);
+  border-radius: 70px;
+  border: var(--border-glow);
+  box-shadow: 0 0 15px var(--color-primary-semi);
+  display: flex;
+  height: 60px;
+  justify-content: center;
+  position: absolute;
+  transform: translateY(-30px);
+  transition-delay: 1s, 0.5s, 0.5s;
+  transition: transform 0.5s, width 0.5s, height 0.5s;
+  width: 60px;
 }
 
-.menuTogle.active ~ .menu {
-  width: 360px;
+.menuTogle.active~.menu {
   height: 70px;
   transform: translateY(0px);
   transition-delay: 0s, 0.5s, 0.5s;
+  width: 360px;
 }
 
 .menu ul {
-  position: relative;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  display: flex;
   gap: 35px;
+  justify-content: center;
   margin-top: 15px;
+  position: relative;
 }
 
 .menu ul li {
   cursor: pointer;
   opacity: 0;
-  visibility: hidden;
-  transition: 0.25s;
-  transition-delay: calc(0s + var(--i));
   transform: translateY(-30px);
+  transition-delay: calc(0s + var(--i));
+  transition: 0.25s;
+  visibility: hidden;
 }
 
-.menuTogle.active ~ .menu ul li {
+.menuTogle.active~.menu ul li {
   opacity: 1;
-  visibility: visible;
-  transition-delay: calc(0.75s + var(--i));
   transform: translateY(0px);
+  transition-delay: calc(0.75s + var(--i));
+  visibility: visible;
 }
 
 .menu ul li a {
+  color: var(--text-light);
   display: block;
   font-size: 2em;
-  color: var(--color-accent);
-  text-shadow: 0 0 8px var(--color-accent);
-  transition: all 0.3s ease-in-out;
   opacity: 0.9;
+  text-shadow: var(--neon-primary);
+  transition: var(--transition-fast);
 }
 
 .menu ul li a.active {
   color: var(--color-primary);
-  text-shadow: 0 0 12px var(--color-primary);
   opacity: 1;
+  text-shadow: var(--neon-primary);
 }
 
 .menu ul li:hover a {
   color: var(--color-primary);
-  text-shadow: 0 0 12px var(--color-primary);
   opacity: 1;
+  text-shadow: var(--neon-primary);
+  transform: scale(1.1);
 }

@@ -14,8 +14,6 @@ import PopupLayer from "../PopupManager/components/PopupLayer";
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const MapContainer = memo( () => {
-
-    console.log( 'MapContainer Render' );
     const mapContainer = useRef( null );
     const mapRef = useRef( null );
     const { showMarkers, showingFavorites, filteredUpcomingEvents } = useEvents();
@@ -24,9 +22,8 @@ const MapContainer = memo( () => {
     useGlobeAnimation( mapRef );
     useMapBounds( mapRef, filteredUpcomingEvents, showMarkers, showingFavorites );
 
-    // Memoizar mapa 
+    // Memoizo el mapa 
     const map = useMemo( () => mapRef.current, [ mapRef.current ] );
-
     const mapContent = useMemo( () => (
         <>
             { map && (

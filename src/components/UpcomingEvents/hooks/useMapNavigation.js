@@ -9,20 +9,18 @@ export const useMapNavigation = (map, showMarkers) => {
     }, [showMarkers]);
     return useCallback((event) => {
         
-        if (!map) {
-            console.log('Navigation cancelled: No map available');
+        if (!map || !showMarkersRef.current) {
+            console.log('Navigation cancelled: No map or markers are hidden');
             return;
         }
 
-        if (!showMarkersRef.current) {
-            console.log('Navigation cancelled: Markers are hidden');
-            return;
-        }
+        // Detectar si es dispositivo móvil
+        const isMobile = window.innerWidth <= 480;
         
         map.flyTo({
             center: event.coordinates,
-            zoom: 15,
-            pitch: 60,
+            zoom: isMobile ? 16 : 15,     
+            pitch: isMobile ? 70 : 60,    
             bearing: 0,
             duration: 2000
         });

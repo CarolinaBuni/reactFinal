@@ -3,8 +3,6 @@ import DetailLine from '../DetailLine/DetailLine';
 import './EventDetails.css';
 
 const EventDetails = memo(({ startDate, genreName, venueName, cityName, address }) => {
-    console.log("EventDetails Render");
-
     return (
         <div className="event-details">
             <DetailLine label="Fecha" value={startDate} />

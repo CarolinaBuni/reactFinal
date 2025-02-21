@@ -4,7 +4,7 @@ export const useGlobeAnimation = (mapRef) => {
      useEffect(() => {
           if (!mapRef.current) return;
 
-     // Control rotation speed:
+     // Control rotation speed
           const secondsPerRevolution = 240;
           const maxSpinZoom = 5;
           const slowSpinZoom = 3;
@@ -25,8 +25,7 @@ export const useGlobeAnimation = (mapRef) => {
                     mapRef.current.easeTo({ center, duration: 1000, easing: (n) => n });
                }
           }
-
-          // Pause spinning on interaction
+          // Se pausa spinning al interactuar
           mapRef.current.on('mousedown', () => {
                userInteracting = true;
           });

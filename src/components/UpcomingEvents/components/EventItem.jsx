@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 
 const EventItem = memo( ( { event, onClick } ) => {
-
      return (
           <div
                className="upcoming-event-item"

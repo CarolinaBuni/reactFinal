@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useEffect, useState, useCallback, useRef } from 'react';
+import { memo, useMemo, useCallback, useRef } from 'react';
 import { usePopup } from "../../Context/PopupContext";
 import { createGeoJSONFeature } from './utils/createGeoJSONFeature';
 import useMarkerEvents from './hooks/useMarkerEvents';
@@ -7,11 +7,9 @@ import { useEvents } from '../../Context/EventsContext';
 
 
 const MarkerLayer = memo( ( { map } ) => {
-    console.log( 'MarkerLayer Render', Date.now() );
     const { togglePopup } = usePopup();
     const { showMarkers, filteredUpcomingEvents } = useEvents();
     const tooltipRef = useRef(null);
-
     const sourceId = 'events-source';
     const layerId = 'events-layer';
 

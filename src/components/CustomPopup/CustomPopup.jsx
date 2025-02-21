@@ -9,12 +9,9 @@ import PupupImage from './components/PupupImage/PupupImage.jsx';
 import PopupLink from './components/PopupLink/PopupLink.jsx';
 
 const CustomPopup = memo(({ popupInfo, onClose }) => {
-    console.log('CustomPopup Render');
-    
     if (!popupInfo) return null;
 
     const isCancelled = popupInfo.status === 'cancelled';
-
     const {
         name, startDate, genreName, venueName, cityName, address, image, url,
     } = popupInfo;

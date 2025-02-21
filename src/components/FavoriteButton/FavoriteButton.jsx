@@ -3,8 +3,6 @@ import { useFavorites } from '../../Context/FavoritesContext';
 import './FavoriteButton.css';
 
 const FavoriteButton = memo(({ event }) => {
-     console.log('FavoriteButton Render');
-     
      const { toggleFavorite, isFavorite } = useFavorites();
      const isEventFavorite = isFavorite(event.id);
      const isCancelled = event.status === 'cancelled';; 

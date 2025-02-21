@@ -4,13 +4,10 @@ import EventItem from './components/EventItem';
 import { useMapNavigation } from './hooks/useMapNavigation';
 
 const UpcomingEvents = memo(({ events, map, showMarkers }) => {
-    console.log(`UpcomingEvents Render with ${events.length} items`);
-    
     const [isCollapsed, setIsCollapsed] = useState(window.innerWidth <= 1110);
     const handleEventClick = useMapNavigation(map, showMarkers);
 
     if (!events?.length) return null;
-
     const toggleCollapse = () => {
         if (window.innerWidth <= 1110) {
             setIsCollapsed(!isCollapsed);

@@ -1,11 +1,8 @@
-//Toolbar.jsx
-
 import React, { memo, useCallback, useRef } from 'react';
 import './Toolbar.css';
 import { useToolbarLogic } from './hooks/useToolbarLogic';
 
 const Toolbar = memo( () => {
-    console.log( 'Toolbar Render' );
     const menuRef = useRef( null );
     const {
         showMarkers,

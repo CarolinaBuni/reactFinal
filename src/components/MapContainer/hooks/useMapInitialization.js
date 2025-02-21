@@ -27,31 +27,6 @@ export const useMapInitialization = ( mapContainer, mapRef ) => {
                     "space-color": "rgba(4, 1, 14, 0.959)",
                     "star-intensity": 0.9,
                } );
-
-               // Añadir efecto de nieve
-               const zoomBasedReveal = ( value ) => {
-                    return [
-                         'interpolate',
-                         [ 'linear' ],
-                         [ 'zoom' ],
-                         11,
-                         0.0,
-                         13,
-                         value
-                    ];
-               };
-
-               // mapRef.current.setSnow({
-               //      density: zoomBasedReveal(0.85),
-               //      intensity: 1.0,
-               //      'center-thinning': 0.1,
-               //      direction: [0, 50],
-               //      opacity: 1.0,
-               //      color: '#ffffff',
-               //      'flake-size': 0.71,
-               //      vignette: zoomBasedReveal(0.3),
-               //      'vignette-color': '#ffffff'
-               // });
           } );
 
           return () => {

@@ -7,13 +7,16 @@ export const useMapBounds = ( mapRef, events, showMarkers, showingFavorites ) =>
                const bounds = new mapboxgl.LngLatBounds();
                events.forEach( ( event ) => bounds.extend( event.coordinates ) );
 
+               // Detectar si es dispositivo móvil
+               const isMobile = window.innerWidth <= 480;
+
                mapRef.current.fitBounds( bounds, {
                     padding: 50,
-                    maxZoom: 15,
+                    maxZoom: isMobile ? 14 : 13,
                     duration: 1000,
                } ).once( "moveend", () => {
                     mapRef.current.easeTo( {
-                         pitch: 60,
+                         pitch: 65,        
                          bearing: 0,
                          duration: 1000,
                     } );

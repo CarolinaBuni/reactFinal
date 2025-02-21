@@ -1,4 +1,3 @@
-// App.jsx
 import React from 'react';
 import { PopupProvider } from './Context/PopupContext';
 import { FavoritesProvider } from './Context/FavoritesContext';

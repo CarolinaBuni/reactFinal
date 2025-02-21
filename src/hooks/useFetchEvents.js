@@ -1,5 +1,3 @@
-// useFetchEvents.js
-
 import { useState, useCallback } from "react";
 
 const useFetchEvents = () => {

@@ -23,7 +23,6 @@
      animation: heartBeat 1.5s ease-in-out;
 }
 
-/* Estilos cuando está deshabilitado */
 .favorite-button.disabled,
 .favorite-button.disabled:hover {
      color: var(--text-muted);

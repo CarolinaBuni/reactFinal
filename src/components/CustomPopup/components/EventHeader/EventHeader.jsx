@@ -2,8 +2,6 @@ import React, { memo } from 'react';
 import './EventHeader.css';
 
 const EventHeader = memo(({ name }) => {
-    console.log("EventHeader Render");
-
     return (
         <div className="logo">
             <b>

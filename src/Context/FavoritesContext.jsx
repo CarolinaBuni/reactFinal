@@ -1,18 +1,37 @@
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useState, useEffect, useCallback } from 'react';
+
+// Acciones posibles
+const ACTIONS = {
+    ADD_FAVORITE: 'ADD_FAVORITE',
+    REMOVE_FAVORITE: 'REMOVE_FAVORITE',
+    TOGGLE_FAVORITE: 'TOGGLE_FAVORITE'
+};
+
+// Reducer
+const favoritesReducer = (state, action) => {
+    switch (action.type) {
+        case ACTIONS.ADD_FAVORITE:
+            return [...state, action.payload];
+            
+        case ACTIONS.REMOVE_FAVORITE:
+            return state.filter(favorite => favorite.id !== action.payload.id);
+            
+        case ACTIONS.TOGGLE_FAVORITE:
+            const exists = state.some(fav => fav.id === action.payload.id);
+            return exists 
+                ? state.filter(fav => fav.id !== action.payload.id)
+                : [...state, action.payload];
+                
+        default:
+            return state;
+    }
+};
 
 const FavoritesContext = createContext();
 const FAVORITES_STORAGE_KEY = 'app_favorites';
 
 export const FavoritesProvider = ({ children }) => {
-    const [favorites, setFavorites] = useState(() => {
-        try {
-            const savedFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY);
-            return savedFavorites ? JSON.parse(savedFavorites) : [];
-        } catch (error) {
-            console.error('Error loading favorites:', error);
-            return [];
-        }
-    });
+    const [favorites, dispatch] = useReducer(favoritesReducer, []);
 
     const [showingFavorites, setShowingFavorites] = useState(false);
 
@@ -24,23 +43,20 @@ export const FavoritesProvider = ({ children }) => {
         }
     }, [favorites]);
 
-    const toggleFavorite = useCallback((event) => {
-        setFavorites(prev => {
-            const isFavorite = prev.some(fav => fav.id === event.id);
-            const newFavorites = isFavorite 
-                ? prev.filter(fav => fav.id !== event.id)
-                : [...prev, event];
-            return newFavorites;
+    const toggleFavorite = (event) => {
+        dispatch({ 
+            type: ACTIONS.TOGGLE_FAVORITE, 
+            payload: event 
         });
-    }, []);
+    };
 
     const toggleShowingFavorites = useCallback((show = false) => {
         setShowingFavorites(show);
     }, []);
 
-    const isFavorite = useCallback((eventId) => {
+    const isFavorite = (eventId) => {
         return favorites.some(fav => fav.id === eventId);
-    }, [favorites]);
+    };
 
     const contextValue = {
         favorites,

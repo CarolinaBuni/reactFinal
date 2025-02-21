@@ -4,7 +4,6 @@ import { HEIGHT_COLORS, LAYER_CONFIG } from '../constants/layerConfig';
 const useMapLayer = ( map, sourceId, layerId, geoJSON, showMarkers ) => {
      useEffect( () => {
           if ( !map ) return;
-
           if ( !map.getSource( sourceId ) ) {
                map.addSource( sourceId, {
                     type: 'geojson',
