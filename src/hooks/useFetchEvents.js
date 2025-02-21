@@ -6,8 +6,9 @@ const useFetchEvents = () => {
 
     const fetchEvents = useCallback(async () => {
         try {
+            const API_KEY = import.meta.env.VITE_TICKETMASTER_API_KEY;
             const response = await fetch(
-                "https://app.ticketmaster.com/discovery/v2/events.json?countryCode=ES&city=Madrid&classificationName=music&apikey=xrdE9ZHXu6uGOvHCK5lXKw3ZuCB6c1TA&size=10"
+                `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=ES&city=Madrid&classificationName=music&apikey=${API_KEY}&size=10`
             );
 
             if (!response.ok) {
