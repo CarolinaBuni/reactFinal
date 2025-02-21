@@ -10,12 +10,11 @@ const useFetchEvents = () => {
             const response = await fetch(
                 `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=ES&city=Madrid&classificationName=music&apikey=${API_KEY}&size=10`
             );
-
             if (!response.ok) {
-                throw new Error(`Error fetching events: ${response.statusText}`);
+                throw new Error(`Error fetching events: ${response.status}`);
             }
 
-            const data = await response.json();         
+            const data = await response.json();
             const heights = [100, 300, 600, 900, 1200, 1500];
 
             const fetchedEvents = data._embedded.events.map((event) => {
@@ -58,7 +57,7 @@ const useFetchEvents = () => {
 
         } catch (err) {
             setError("Error fetching events");
-            console.error(err);
+            console.error('Error details:', err);
         }
     }, []);
 
