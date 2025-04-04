@@ -1,27 +1,65 @@
 /* Enlace "Más información" */
 .popup-link {
-     animation: pulsate 1.5s infinite alternate;
-     background: transparent;
-     border-radius: var(--border-radius-sm);
-     border: none;
-     bottom: var(--spacing-xl);
-     color: var(--text-light);
-     font-family: 'Roboto Mono', monospace;
-     font-size: 0.9rem;
-     left: 50%;
-     letter-spacing: 2px;
-     margin-top: var(--spacing-xl);
-     padding: var(--spacing-sm) var(--spacing-xl);
-     position: absolute;
-     text-shadow: var(--neon-white);
-     text-transform: uppercase;
-     transform: translateX(-50%);
-     transition: var(--transition-fast);
-     width: auto;
+    animation: pulsate 1.5s infinite alternate;
+    background: transparent;
+    border-radius: var(--border-radius-sm);
+    border: none;
+    bottom: var(--spacing-xl);
+    color: var(--text-light);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+    left: 50%;
+    letter-spacing: 2px;
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-sm) var(--spacing-xl);
+    position: absolute;
+    text-shadow: var(--neon-white);
+    text-transform: uppercase;
+    transform: translateX(-50%);
+    transition: var(--transition-fast);
+    width: auto;
 }
 
 .popup-link:hover {
-     text-shadow: var(--neon-primary);
-     transform: translateX(-50%) scale(1.1);
+    text-shadow: var(--neon-primary);
+    transform: translateX(-50%) scale(1.1);
 }
 
+
+.popup-link i {
+    display: none;
+}
+
+/* Estilo para móviles */
+@media (max-width: 500px) {
+    .popup-link {
+        animation: none;
+        bottom: auto;
+        color: var(--color-primary);
+        font-size: 1.2rem;
+        left: auto;
+        margin: 0;
+        padding: 0;
+        right: calc(var(--spacing-sm) + 35px);
+        text-shadow: var(--neon-primary);
+        top: var(--spacing-sm);
+        transform: none;
+        width: auto;
+        z-index: 99999;
+    }
+
+    .popup-link:hover {
+        color: var(--text-light);
+        text-shadow: var(--neon-white);
+        transform: scale(1.1);
+    }
+
+    /* Mostrar el icono y ocultar el texto en móvil */
+    .popup-link span {
+        display: none;
+    }
+
+    .popup-link i {
+        display: inline;
+    }
+}

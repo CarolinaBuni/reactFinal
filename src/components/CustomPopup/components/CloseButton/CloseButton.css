@@ -3,13 +3,13 @@
      border: none;
      color: var(--color-primary);
      cursor: pointer;
-     font-size: var(--font-size-lg);
      position: absolute;
      right: var(--spacing-sm);
      text-shadow: var(--neon-primary);
      top: var(--spacing-sm);
      transition: var(--transition-fast);
      z-index: 99999;
+     font-size: 1.2rem;
 }
 
 

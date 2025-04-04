@@ -7,7 +7,7 @@ const CloseButton = memo( ( { onClose } ) => {
                className="close-button"
                onClick={ onClose }
           >
-               &times;
+               <i className="fas fa-times"></i>
           </button>
      );
 } );
