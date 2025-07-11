@@ -17,7 +17,8 @@ const EventHistory = ({ isOpen, onClose, onReviewClick }) => {
             
             try {
                 // Obtener eventos pasados
-                const eventsResponse = await fetch('http://localhost:3000/api/events/past', {
+                const eventsResponse = await fetch('https://pulse-back-qjhc-7bdtxskek-powermbas-projects.vercel.app/api/events/past', {
+                    credentials: 'include',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                     }
@@ -32,7 +33,8 @@ const EventHistory = ({ isOpen, onClose, onReviewClick }) => {
 
                 // Obtener reseñas del usuario
                 try {
-                    const reviewsResponse = await fetch('http://localhost:3000/api/reviews/user', {
+                    const reviewsResponse = await fetch('https://pulse-back-qjhc-7bdtxskek-powermbas-projects.vercel.app/api/reviews/user', {
+                        credentials: 'include',
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                         }
