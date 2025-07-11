@@ -1,22 +1,43 @@
-import React, { memo } from 'react';
+// src/components/FavoriteButton/FavoriteButton.jsx
+import React, { useState } from 'react';
 import { useFavorites } from '../../Context/FavoritesContext';
+import { useAuth } from '../../Context/AuthContext';
+import AuthModal from '../Auth/AuthModal/AuthModal';
 import './FavoriteButton.css';
 
-const FavoriteButton = memo(({ event }) => {
-     const { toggleFavorite, isFavorite } = useFavorites();
-     const isEventFavorite = isFavorite(event.id);
-     const isCancelled = event.status === 'cancelled';; 
+const FavoriteButton = ({ event }) => {
+    console.log('🔄 FavoriteButton renderizado');
+    const { toggleFavorite, isFavorite } = useFavorites();
+    const { isAuthenticated } = useAuth();
+    const [showAuthModal, setShowAuthModal] = useState(false);
+    
+    const isEventFavorite = isFavorite(event.id);
+    
+    const handleClick = (e) => {
+        e.stopPropagation();
+        
+        if (isAuthenticated()) {
+            toggleFavorite(event);
+        } else {
+            setShowAuthModal(true);
+        }
+    };
+    
+    return (
+        <>
+            <button 
+                className={`favorite-button ${isEventFavorite ? 'active' : ''}`} 
+                onClick={handleClick}
+            >
+                <ion-icon name={isEventFavorite ? "heart" : "heart-outline"}></ion-icon>
+            </button>
+            
+            <AuthModal 
+                isOpen={showAuthModal} 
+                onClose={() => setShowAuthModal(false)} 
+            />
+        </>
+    );
+};
 
-     return (
-          <button 
-               className={`favorite-button ${isEventFavorite ? 'active' : ''} ${isCancelled ? 'disabled' : ''}`}
-               onClick={() => !isCancelled && toggleFavorite(event)}
-               disabled={isCancelled}
-               title={isCancelled ? 'No disponible - Evento cancelado' : 'Guardar en favoritos'}  
-          >
-               <ion-icon name={isEventFavorite ? "heart" : "heart-outline"}></ion-icon>
-          </button>
-     );
-});
-
-export default FavoriteButton; 
+export default FavoriteButton;

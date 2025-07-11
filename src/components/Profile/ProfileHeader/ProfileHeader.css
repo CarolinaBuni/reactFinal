@@ -1,0 +1,44 @@
+/* Info del usuario */
+.profile-user-info {
+     display: flex;
+     padding: var(--spacing-lg);
+     align-items: center;
+     border-bottom: 1px solid rgba(255, 0, 255, 0.2);
+     background-color: rgba(0, 0, 0, 0.2);
+}
+
+.profile-avatar {
+     width: 80px;
+     height: 80px;
+     border-radius: 50%;
+     margin-right: var(--spacing-lg);
+     border: 2px solid var(--color-primary);
+     box-shadow: 0 0 15px var(--color-primary);
+     overflow: hidden;
+}
+
+.profile-avatar img {
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+}
+
+.profile-details h3 {
+     margin: 0 0 var(--spacing-xs) 0;
+     font-size: var(--font-size-md);
+     color: var(--text-light);
+     text-shadow: var(--neon-primary);
+}
+
+.profile-details p {
+     margin: 0;
+     color: var(--text-muted);
+     font-size: var(--font-size-sm);
+}
+
+.member-since {
+     font-size: var(--font-size-xs);
+     color: var(--text-muted);
+     margin-top: var(--spacing-xs);
+     font-style: italic;
+}

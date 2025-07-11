@@ -75,23 +75,23 @@
      width: 50px;
 }
 
-.event-info {
+.upcoming-event-info {
      flex: 1;
 }
 
-.event-info h4 {
+.upcoming-event-info h4 {
      color: var(--text-light);
      font-size: 0.9rem;
      margin: 0;
 }
 
-.event-date {
+.upcoming-event-date {
      color: var(--text-muted);
      font-size: var(--font-size-xs);
      margin: 2px 0;
 }
 
-.event-venue {
+.upcoming-event-venue {
      color: #ccc;
      font-size: var(--font-size-xs);
      margin: 0;
@@ -150,12 +150,12 @@
           height: 35px;
      }
 
-     .event-info h4 {
+     .upcoming-event-info h4 {
           font-size: var(--font-size-xs);
      }
 
-     .event-date,
-     .event-venue {
+     .upcoming-event-date,
+     .upcoming-event-venue {
           font-size: 0.7rem;
      }
 }
@@ -180,12 +180,12 @@
           height: 35px;
      }
 
-     .event-info h4 {
+     .upcoming-event-info h4 {
           font-size: var(--font-size-xs);
      }
 
-     .event-date,
-     .event-venue {
+     .upcoming-event-date,
+     .upcoming-event-venue {
           font-size: 0.7rem;
      }
 }
@@ -205,4 +205,22 @@
 
 .upcoming-events-container {
      animation: slideIn 0.3s ease-out forwards;
+}
+
+/* Mensaje cuando no hay eventos */
+.no-events-message {
+     color: var(--text-muted);
+     font-size: var(--font-size-sm);
+     padding: var(--spacing-md);
+     text-align: center;
+}
+
+.no-events-message p {
+     margin: var(--spacing-xs) 0;
+}
+
+.search-suggestion {
+     color: var(--text-highlight);
+     font-size: var(--font-size-xs);
+     font-style: italic;
 }

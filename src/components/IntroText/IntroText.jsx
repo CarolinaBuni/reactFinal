@@ -3,6 +3,7 @@ import './IntroText.css';
 import { TextScramble } from '../../utils/TextScramble';
 
 const IntroText = memo(() => {
+    console.log('🔄 IntroText renderizado');
     const textRef = useRef(null);
     const [shouldShow, setShouldShow] = useState(true);
     const phrases = [

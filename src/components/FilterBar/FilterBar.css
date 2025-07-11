@@ -1,0 +1,310 @@
+/* FilterBar.css */
+
+.filter-system {
+    position: absolute;
+    bottom: 100px;
+    right: 30px;
+    z-index: 5000;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Botón principal */
+.filter-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 50px;
+    padding: 12px 20px;
+    color: #f8fafc;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.filter-trigger:hover {
+    transform: translateY(-2px);
+    border-color: #6366f1;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.filter-trigger.active {
+    border-color: #6366f1;
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.filter-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter-icon ion-icon {
+    font-size: 20px;
+    color: #6366f1;
+}
+
+.filter-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #10b981;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 50%;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter-trigger span {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Panel horizontal */
+.filter-panel-horizontal {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+    min-width: 600px;
+    animation: slideUp 0.3s ease-out;
+    flex-wrap: wrap;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Sección de filtro */
+.filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 120px;
+}
+
+.filter-section label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Inputs comunes */
+.filter-section input,
+.filter-section select {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    color: #f8fafc;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.filter-section input:focus,
+.filter-section select:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.filter-section input[type="date"] {
+    color-scheme: dark;
+}
+
+.filter-section select {
+    cursor: pointer;
+}
+
+.filter-section select option {
+    background: #1e293b;
+    color: #f8fafc;
+}
+
+/* Input de búsqueda especial */
+.search-input {
+    display: flex;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 6px;
+    overflow: hidden;
+    min-width: 200px;
+}
+
+.search-input input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #f8fafc;
+    padding: 10px 12px;
+    font-size: 14px;
+    outline: none;
+}
+
+.search-input input::placeholder {
+    color: #94a3b8;
+}
+
+.search-input button {
+    background: #6366f1;
+    border: none;
+    color: white;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.search-input button:hover {
+    background: #818cf8;
+}
+
+.search-input button ion-icon {
+    font-size: 16px;
+}
+
+/* Precio range */
+.price-range {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.price-range input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    width: 120px;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(148, 163, 184, 0.3);
+    outline: none;
+    padding: 0;
+}
+
+.price-range input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #6366f1;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.price-range input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* Botón reset */
+.reset-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid #6366f1;
+    color: #f8fafc;
+    border-radius: 6px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.reset-btn:hover {
+    background: #6366f1;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.reset-btn ion-icon {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+.reset-btn:hover ion-icon {
+    transform: rotate(180deg);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .filter-panel-horizontal {
+        min-width: 500px;
+        gap: 15px;
+    }
+    
+    .filter-section {
+        min-width: 100px;
+    }
+    
+    .search-input {
+        min-width: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    .filter-system {
+        /* bottom: 30px; */
+        right: 20px;
+    }
+
+    .filter-panel-horizontal {
+        flex-direction: column;
+        align-items: stretch;
+        min-width: 280px;
+        gap: 15px;
+    }
+    
+    .filter-section {
+        min-width: auto;
+    }
+    
+    .search-input {
+        min-width: auto;
+    }
+    
+    .price-range input[type="range"] {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-trigger span {
+        display: none;
+    }
+    
+    .filter-panel-horizontal {
+        min-width: 250px;
+    }
+} 

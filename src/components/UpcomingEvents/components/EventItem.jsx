@@ -1,16 +1,17 @@
 import React, { memo } from 'react';
 
 const EventItem = memo( ( { event, onClick } ) => {
+     console.log('🔄 EventItem renderizado');
      return (
           <div
                className="upcoming-event-item"
                onClick={ () => onClick( event ) }
           >
                <img src={ event.image } alt={ event.name } />
-               <div className="event-info">
+               <div className="upcoming-event-info">
                     <h4>{ event.name }</h4>
-                    <p className="event-date">{ event.startDate }</p>
-                    <p className="event-venue">{ event.venueName }</p>
+                    <p className="upcoming-event-date">{ event.startDate }</p>
+                    <p className="upcoming-event-venue">{ event.venueName }</p>
                </div>
           </div>
      );

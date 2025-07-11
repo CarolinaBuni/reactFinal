@@ -1,0 +1,417 @@
+/* ReviewModal.css - Modal de reviews con estética cyberpunk */
+.review-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(20, 0, 40, 0.9) 50%,
+        rgba(0, 0, 0, 0.8) 100%
+    );
+    backdrop-filter: blur(15px);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: overlayFadeIn 0.5s ease-out;
+    overflow: hidden;
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+    }
+    to {
+        opacity: 1;
+        backdrop-filter: blur(15px);
+    }
+}
+
+.review-modal-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+        linear-gradient(rgba(255, 0, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+    animation: bgPulse 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes bgPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+.review-modal {
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+    background: linear-gradient(
+        135deg,
+        rgba(15, 25, 45, 0.95) 0%,
+        rgba(25, 15, 45, 0.98) 50%,
+        rgba(15, 25, 45, 0.95) 100%
+    );
+    border: 2px solid rgba(255, 0, 255, 0.4);
+    border-radius: 20px;
+    box-shadow: 
+        0 25px 50px rgba(255, 0, 255, 0.3),
+        0 0 30px rgba(255, 0, 255, 0.2),
+        inset 0 0 30px rgba(255, 0, 255, 0.1);
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+    position: relative;
+    animation: modalSlideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.review-modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        #ff00ff, 
+        #00ffff, 
+        #ff00ff, 
+        transparent
+    );
+    animation: topScanLine 4s linear infinite;
+}
+
+@keyframes topScanLine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.review-modal-header {
+    padding: 25px 30px;
+    border-bottom: 1px solid rgba(255, 0, 255, 0.3);
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.review-modal-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.review-icon {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 0, 255, 0.2);
+    border: 2px solid #ff00ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: iconRotate 4s linear infinite;
+}
+
+@keyframes iconRotate {
+    0% { transform: rotate(0deg); box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); }
+    50% { transform: rotate(180deg); box-shadow: 0 0 20px rgba(255, 0, 255, 0.8); }
+    100% { transform: rotate(360deg); box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); }
+}
+
+.review-icon ion-icon {
+    font-size: 24px;
+    color: #ff00ff;
+}
+
+.review-modal-title h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    font-family: 'Roboto Mono', monospace;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.review-modal-subtitle {
+    font-size: 14px;
+    color: #00ffff;
+    margin-top: 5px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px #00ffff;
+}
+
+.review-modal-close {
+    background: transparent;
+    border: 2px solid #ff00ff;
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.review-modal-close::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 0, 255, 0.4), transparent);
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.review-modal-close:hover::before {
+    width: 80px;
+    height: 80px;
+}
+
+.review-modal-close:hover {
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+}
+
+.review-modal-close ion-icon {
+    font-size: 22px;
+    z-index: 1;
+}
+
+.review-modal-content {
+    padding: 30px;
+    max-height: 60vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ff00ff rgba(0, 0, 0, 0.3);
+}
+
+.review-modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.review-modal-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.review-modal-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff00ff, #00ffff);
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+.review-modal-actions {
+    padding: 25px 30px;
+    border-top: 1px solid rgba(255, 0, 255, 0.3);
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.review-action-button {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid;
+    border-radius: 25px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.review-action-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.review-action-button:hover::before {
+    left: 100%;
+}
+
+.cancel-button {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.cancel-button:hover {
+    border-color: white;
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.submit-button {
+    background: linear-gradient(45deg, 
+        rgba(255, 0, 255, 0.2), 
+        rgba(0, 255, 255, 0.2)
+    );
+    border-color: #ff00ff;
+    color: white;
+}
+
+.submit-button:hover {
+    background: linear-gradient(45deg, 
+        rgba(255, 0, 255, 0.4), 
+        rgba(0, 255, 255, 0.4)
+    );
+    border-color: #00ffff;
+    box-shadow: 
+        0 0 20px rgba(255, 0, 255, 0.4),
+        0 0 30px rgba(0, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.submit-button:disabled {
+    background: rgba(100, 100, 100, 0.3);
+    border-color: rgba(100, 100, 100, 0.5);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.submit-button:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.loading-review {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    gap: 20px;
+}
+
+.review-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 0, 255, 0.2);
+    border-top: 3px solid #ff00ff;
+    border-radius: 50%;
+    animation: reviewSpinnerRotate 1s linear infinite;
+}
+
+@keyframes reviewSpinnerRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-review-text {
+    color: white;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 16px;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+    letter-spacing: 2px;
+    animation: textPulse 2s infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .review-modal {
+        width: 95%;
+        max-height: 90vh;
+        margin: 20px;
+    }
+    
+    .review-modal-header {
+        padding: 20px;
+    }
+    
+    .review-modal-title h2 {
+        font-size: 20px;
+    }
+    
+    .review-modal-content {
+        padding: 20px;
+    }
+    
+    .review-modal-actions {
+        padding: 20px;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .review-modal {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        margin: 0;
+    }
+    
+    .review-modal-header {
+        padding: 15px;
+    }
+    
+    .review-modal-title h2 {
+        font-size: 18px;
+    }
+    
+    .review-modal-content {
+        padding: 15px;
+    }
+    
+    .event-info-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .review-modal-actions {
+        padding: 15px;
+    }
+} 

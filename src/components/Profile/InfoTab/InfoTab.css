@@ -1,0 +1,123 @@
+/* Info personal */
+.info-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: var(--spacing-md);
+}
+
+.profile-info-tab h4,
+.profile-favorites-tab h4,
+.profile-reviews-tab h4 {
+     color: var(--text-light);
+     margin-top: 0;
+     margin-bottom: var(--spacing-md);
+     text-shadow: var(--neon-primary);
+     font-size: var(--font-size-md);
+     letter-spacing: 1px;
+}
+
+.edit-profile-button {
+     background-color: transparent;
+     border: 1px solid var(--color-primary);
+     color: var(--text-light);
+     padding: var(--spacing-xs) var(--spacing-md);
+     border-radius: var(--border-radius-md);
+     cursor: pointer;
+     font-family: 'Roboto Mono', monospace;
+     font-size: var(--font-size-xs);
+     transition: var(--transition-fast);
+     text-transform: uppercase;
+     letter-spacing: 1px;
+     text-shadow: var(--neon-primary);
+}
+
+.edit-profile-button:hover {
+     background-color: var(--color-primary-transparent);
+     transform: translateY(-2px);
+     box-shadow: 0 5px 15px rgba(255, 0, 255, 0.2);
+}
+
+.edit-profile-button::before {
+     content: '✎';
+     margin-right: var(--spacing-xs);
+}
+
+.info-item {
+     margin-bottom: var(--spacing-sm);
+     padding: var(--spacing-sm);
+     border-radius: var(--border-radius-md);
+     background-color: rgba(0, 0, 0, 0.2);
+     transition: var(--transition-fast);
+}
+
+.info-item:hover {
+     background-color: rgba(255, 0, 255, 0.1);
+     box-shadow: 0 0 5px rgba(255, 0, 255, 0.3);
+}
+
+.info-item .label {
+     font-weight: 500;
+     margin-right: var(--spacing-sm);
+     color: var(--text-muted);
+     font-size: var(--font-size-xs);
+     text-transform: uppercase;
+     letter-spacing: 1px;
+}
+
+.info-item .value {
+     color: var(--text-light);
+     font-size: var(--font-size-sm);
+}
+
+/* Acciones del perfil */
+.profile-actions {
+     margin-top: var(--spacing-lg);
+     display: flex;
+     flex-direction: column;
+     gap: var(--spacing-md);
+}
+
+.logout-button {
+     padding: var(--spacing-sm) var(--spacing-lg);
+     background-color: transparent;
+     color: var(--text-light);
+     border: 1px solid var(--color-primary);
+     border-radius: var(--border-radius-md);
+     cursor: pointer;
+     transition: var(--transition-fast);
+     font-family: 'Roboto Mono', monospace;
+     text-transform: uppercase;
+     letter-spacing: 1px;
+     font-size: var(--font-size-xs);
+     text-shadow: var(--neon-primary);
+}
+
+.logout-button:hover {
+     background-color: var(--color-primary-transparent);
+     transform: scale(1.05);
+}
+
+.delete-account-button {
+     background-color: rgba(244, 67, 54, 0.1);
+     color: #ff5252;
+     border: 1px solid #ff5252;
+     padding: var(--spacing-sm) var(--spacing-lg);
+     border-radius: var(--border-radius-md);
+     cursor: pointer;
+     font-family: 'Roboto Mono', monospace;
+     font-size: var(--font-size-xs);
+     text-transform: uppercase;
+     letter-spacing: 1px;
+     transition: var(--transition-fast);
+}
+
+.delete-account-button::before {
+     content: '⚠ ';
+}
+
+.delete-account-button:hover {
+     background-color: rgba(244, 67, 54, 0.2);
+     box-shadow: 0 0 15px rgba(255, 82, 82, 0.4);
+     transform: translateY(-2px);
+}

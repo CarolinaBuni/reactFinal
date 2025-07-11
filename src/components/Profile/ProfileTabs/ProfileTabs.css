@@ -1,0 +1,31 @@
+/* Pestañas */
+.profile-tabs {
+     display: flex;
+     border-bottom: 1px solid rgba(255, 0, 255, 0.2);
+     background-color: rgba(0, 0, 0, 0.1);
+}
+
+.profile-tabs button {
+     flex: 1;
+     padding: var(--spacing-md);
+     background: none;
+     border: none;
+     cursor: pointer;
+     font-weight: 500;
+     color: var(--text-muted);
+     border-bottom: 2px solid transparent;
+     transition: var(--transition-fast);
+     letter-spacing: 1px;
+     font-family: 'Roboto Mono', monospace;
+}
+
+.profile-tabs button.active {
+     color: var(--color-primary);
+     border-bottom-color: var(--color-primary);
+     text-shadow: var(--neon-primary);
+}
+
+.profile-tabs button:hover:not(.active) {
+     color: var(--text-light);
+     background-color: rgba(255, 0, 255, 0.1);
+}

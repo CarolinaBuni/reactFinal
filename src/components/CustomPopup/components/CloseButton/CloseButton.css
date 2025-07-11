@@ -4,11 +4,11 @@
      color: var(--color-primary);
      cursor: pointer;
      position: absolute;
-     right: var(--spacing-sm);
+     right: var(--spacing-md);
      text-shadow: var(--neon-primary);
      top: var(--spacing-sm);
      transition: var(--transition-fast);
-     z-index: 99999;
+     z-index: 2;
      font-size: 1.2rem;
 }
 

@@ -1,0 +1,303 @@
+/* StarRating.css - Sistema de calificación con estética cyberpunk */
+
+.star-rating-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.star-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.star-rating.interactive {
+    cursor: pointer;
+}
+
+.star {
+    position: relative;
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.1));
+}
+
+.star.interactive {
+    cursor: pointer;
+}
+
+.star.interactive:hover {
+    transform: scale(1.2) rotate(5deg);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 0, 0.6));
+}
+
+.star.filled {
+    color: #ffff00;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 0, 0.8),
+        0 0 20px rgba(255, 255, 0, 0.4),
+        0 0 30px rgba(255, 255, 0, 0.2);
+    animation: starGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes starGlow {
+    from {
+        text-shadow: 
+            0 0 10px rgba(255, 255, 0, 0.8),
+            0 0 20px rgba(255, 255, 0, 0.4),
+            0 0 30px rgba(255, 255, 0, 0.2);
+    }
+    to {
+        text-shadow: 
+            0 0 15px rgba(255, 255, 0, 1),
+            0 0 25px rgba(255, 255, 0, 0.6),
+            0 0 35px rgba(255, 255, 0, 0.3);
+    }
+}
+
+.star.half-filled {
+    background: linear-gradient(90deg, #ffff00 50%, rgba(255, 255, 255, 0.2) 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+}
+
+/* Efectos hover para estrellas interactivas */
+.star-rating.interactive .star:hover,
+.star-rating.interactive .star.hover-active {
+    color: #ffff00;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 0, 0.8),
+        0 0 20px rgba(255, 255, 0, 0.4);
+    transform: scale(1.15);
+}
+
+.star-rating.interactive .star:hover ~ .star {
+    color: rgba(255, 255, 255, 0.2);
+    transform: scale(0.9);
+}
+
+/* Animación de selección */
+.star.just-selected {
+    animation: starSelect 0.6s ease-out;
+}
+
+@keyframes starSelect {
+    0% {
+        transform: scale(1);
+        color: rgba(255, 255, 255, 0.2);
+    }
+    50% {
+        transform: scale(1.4) rotate(10deg);
+        color: #ffff00;
+        text-shadow: 
+            0 0 20px rgba(255, 255, 0, 1),
+            0 0 40px rgba(255, 255, 0, 0.6);
+    }
+    100% {
+        transform: scale(1);
+        color: #ffff00;
+        text-shadow: 
+            0 0 10px rgba(255, 255, 0, 0.8),
+            0 0 20px rgba(255, 255, 0, 0.4);
+    }
+}
+
+/* Texto de rating */
+.rating-text {
+    text-align: center;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 1px;
+    margin-top: 5px;
+}
+
+.rating-value {
+    color: #ffff00;
+    font-weight: 600;
+    text-shadow: 0 0 5px rgba(255, 255, 0, 0.6);
+}
+
+/* Diferentes tamaños */
+.star-rating.small .star {
+    font-size: 16px;
+}
+
+.star-rating.medium .star {
+    font-size: 20px;
+}
+
+.star-rating.large .star {
+    font-size: 28px;
+}
+
+.star-rating.extra-large .star {
+    font-size: 36px;
+}
+
+/* Variantes de color */
+.star-rating.cyan .star.filled {
+    color: #00ffff;
+    text-shadow: 
+        0 0 10px rgba(0, 255, 255, 0.8),
+        0 0 20px rgba(0, 255, 255, 0.4),
+        0 0 30px rgba(0, 255, 255, 0.2);
+}
+
+.star-rating.cyan .star-rating.interactive .star:hover,
+.star-rating.cyan .star-rating.interactive .star.hover-active {
+    color: #00ffff;
+    text-shadow: 
+        0 0 10px rgba(0, 255, 255, 0.8),
+        0 0 20px rgba(0, 255, 255, 0.4);
+}
+
+.star-rating.magenta .star.filled {
+    color: #ff00ff;
+    text-shadow: 
+        0 0 10px rgba(255, 0, 255, 0.8),
+        0 0 20px rgba(255, 0, 255, 0.4),
+        0 0 30px rgba(255, 0, 255, 0.2);
+}
+
+.star-rating.magenta .star-rating.interactive .star:hover,
+.star-rating.magenta .star-rating.interactive .star.hover-active {
+    color: #ff00ff;
+    text-shadow: 
+        0 0 10px rgba(255, 0, 255, 0.8),
+        0 0 20px rgba(255, 0, 255, 0.4);
+}
+
+/* Efectos de partículas al hacer hover */
+.star.interactive::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 255, 0, 0.6), transparent);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.star.interactive:hover::before {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, rgba(255, 255, 0, 0.3), transparent);
+}
+
+/* Animación de carga */
+.star-rating.loading .star {
+    animation: starLoading 1.5s ease-in-out infinite;
+}
+
+.star-rating.loading .star:nth-child(1) { animation-delay: 0s; }
+.star-rating.loading .star:nth-child(2) { animation-delay: 0.1s; }
+.star-rating.loading .star:nth-child(3) { animation-delay: 0.2s; }
+.star-rating.loading .star:nth-child(4) { animation-delay: 0.3s; }
+.star-rating.loading .star:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes starLoading {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+        color: #ffff00;
+        text-shadow: 0 0 10px rgba(255, 255, 0, 0.6);
+    }
+}
+
+/* Efectos de disabled */
+.star-rating.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.star-rating.disabled .star {
+    cursor: not-allowed;
+    filter: grayscale(100%);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .star-rating .star {
+        font-size: 20px;
+        gap: 6px;
+    }
+    
+    .star-rating.small .star {
+        font-size: 14px;
+    }
+    
+    .star-rating.large .star {
+        font-size: 24px;
+    }
+    
+    .star-rating.extra-large .star {
+        font-size: 30px;
+    }
+}
+
+/* Efectos especiales para reviews */
+.star-rating.review-mode {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.star-rating.review-mode:hover {
+    border-color: rgba(255, 255, 0, 0.5);
+    box-shadow: 0 0 15px rgba(255, 255, 0, 0.2);
+}
+
+/* Indicador de rating promedio */
+.average-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.average-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffff00;
+    text-shadow: 0 0 10px rgba(255, 255, 0, 0.6);
+}
+
+.average-count {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 1px;
+}
+
+/* Animación de aparición */
+.star-rating.fade-in {
+    animation: ratingFadeIn 0.8s ease-out;
+}
+
+@keyframes ratingFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} 

@@ -1,0 +1,442 @@
+/* EventHistoryCard.css - Tarjetas de eventos elegantes y simplificadas */
+
+:root {
+    --card-primary: #6366f1;
+    --card-primary-light: #818cf8;
+    --card-secondary: #10b981;
+    --card-warning: #f59e0b;
+    --card-danger: #ef4444;
+    --card-bg: rgba(30, 41, 59, 0.8);
+    --card-border: rgba(148, 163, 184, 0.2);
+    --card-text: #f8fafc;
+    --card-text-muted: #94a3b8;
+    --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --card-radius: 12px;
+    --card-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Tarjeta principal */
+.event-history-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    transition: var(--card-transition);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.event-history-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--card-primary);
+}
+
+/* Imagen */
+.card-image-container {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.image-placeholder,
+.image-fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(51, 65, 85, 0.6);
+    color: var(--card-text-muted);
+}
+
+.image-placeholder ion-icon,
+.image-fallback ion-icon {
+    font-size: 32px;
+    opacity: 0.5;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--card-transition);
+    opacity: 0;
+}
+
+.card-image.loaded {
+    opacity: 1;
+}
+
+.event-history-card:hover .card-image {
+    transform: scale(1.05);
+}
+
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(0, 0, 0, 0.1) 50%,
+        rgba(0, 0, 0, 0.6) 100%
+    );
+    opacity: 0;
+    transition: var(--card-transition);
+}
+
+.event-history-card:hover .card-overlay {
+    opacity: 1;
+}
+
+/* Badge de estado */
+.status-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(8px);
+    z-index: 2;
+}
+
+.status-badge.completed {
+    background: rgba(16, 185, 129, 0.2);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: var(--card-secondary);
+}
+
+.status-badge.cancelled {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: var(--card-danger);
+}
+
+.status-badge ion-icon {
+    font-size: 14px;
+}
+
+/* Contenido de la tarjeta */
+.card-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    margin-bottom: 16px;
+}
+
+.card-title {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--card-text);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--card-text-muted);
+    font-weight: 500;
+}
+
+.card-date ion-icon {
+    font-size: 16px;
+    color: var(--card-primary);
+}
+
+/* Detalles del evento */
+.card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.card-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--card-text-muted);
+}
+
+.card-detail-item ion-icon {
+    font-size: 16px;
+    color: var(--card-primary);
+    min-width: 16px;
+}
+
+.card-detail-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Acciones de la tarjeta */
+.card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--card-border);
+    gap: 12px;
+}
+
+/* Estado de reseña */
+.review-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.review-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stars-display {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+
+.stars-display ion-icon {
+    font-size: 16px;
+    transition: var(--card-transition);
+}
+
+.stars-display ion-icon.filled,
+.stars-display ion-icon[name="star"] {
+    color: #fbbf24 !important;
+}
+
+.stars-display ion-icon.empty,
+.stars-display ion-icon[name="star-outline"] {
+    color: var(--card-text-muted) !important;
+}
+
+.rating-text {
+    font-size: 13px;
+    color: var(--card-text);
+    font-weight: 600;
+}
+
+.no-review-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--card-text-muted);
+}
+
+.no-review-indicator ion-icon {
+    font-size: 16px;
+}
+
+/* Botón de reseña */
+.review-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--card-transition);
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.review-button.create {
+    background: var(--card-primary);
+    color: white;
+}
+
+.review-button.create:hover {
+    background: var(--card-primary-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.review-button.edit {
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: var(--card-warning);
+}
+
+.review-button.edit:hover {
+    background: rgba(245, 158, 11, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.review-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.review-button ion-icon {
+    font-size: 14px;
+}
+
+/* Spinner del botón */
+.button-spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Estados especiales */
+.event-history-card.cancelled {
+    border-color: rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.event-history-card.cancelled:hover {
+    border-color: var(--card-danger);
+    box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.1);
+}
+
+/* Forzar color amarillo en estrellas llenas - Mayor especificidad */
+.review-rating .stars-display ion-icon[name="star"],
+.review-status .stars-display ion-icon[name="star"],
+.card-actions .stars-display ion-icon[name="star"],
+.event-history-card .stars-display ion-icon[name="star"] {
+    color: #fbbf24 !important;
+}
+
+.review-rating .stars-display ion-icon.filled,
+.review-status .stars-display ion-icon.filled,
+.card-actions .stars-display ion-icon.filled,
+.event-history-card .stars-display ion-icon.filled {
+    color: #fbbf24 !important;
+}
+
+/* Estrellas vacías */
+.review-rating .stars-display ion-icon[name="star-outline"],
+.review-status .stars-display ion-icon[name="star-outline"],
+.card-actions .stars-display ion-icon[name="star-outline"],
+.event-history-card .stars-display ion-icon[name="star-outline"] {
+    color: var(--card-text-muted) !important;
+}
+
+.review-rating .stars-display ion-icon.empty,
+.review-status .stars-display ion-icon.empty,
+.card-actions .stars-display ion-icon.empty,
+.event-history-card .stars-display ion-icon.empty {
+    color: var(--card-text-muted) !important;
+}
+
+/* Animaciones de hover mejoradas */
+.event-history-card:hover .card-title {
+    color: var(--card-primary-light);
+}
+
+.event-history-card:hover .stars-display ion-icon.filled,
+.event-history-card:hover .stars-display ion-icon[name="star"] {
+    color: #fbbf24 !important;
+    transform: scale(1.1);
+}
+
+.card-detail-item:hover ion-icon {
+    color: var(--card-primary-light);
+    transform: scale(1.1);
+}
+
+.event-history-card:hover .status-badge {
+    transform: scale(1.05);
+}
+
+/* Efectos de animación en botones */
+.review-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.review-button:hover::before {
+    transform: translateX(100%);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card-actions {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+    
+    .review-button {
+        justify-content: center;
+        padding: 12px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-content {
+        padding: 16px;
+    }
+    
+    .card-title {
+        font-size: 16px;
+    }
+    
+    .card-details {
+        margin-bottom: 16px;
+    }
+    
+    .status-badge {
+        position: static;
+        align-self: flex-start;
+        margin-bottom: 8px;
+    }
+}
+
+/* Mejoras de accesibilidad */
+.review-button:focus {
+    outline: 2px solid var(--card-primary);
+    outline-offset: 2px;
+}
+
+.event-history-card:focus-within {
+    border-color: var(--card-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+} 

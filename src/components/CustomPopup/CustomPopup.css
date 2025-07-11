@@ -102,10 +102,6 @@
         box-shadow: var(--neon-white);
     }
 
-    .event-detail-line {
-        margin: var(--spacing-xs) 0;
-        padding: var(--spacing-xs) var(--spacing-sm);
-    }
 
     .detail-label {
         min-width: 100px;

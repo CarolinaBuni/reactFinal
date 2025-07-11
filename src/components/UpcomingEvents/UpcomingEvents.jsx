@@ -2,12 +2,14 @@ import React, { memo, useState } from 'react';
 import './UpcomingEvents.css';
 import EventItem from './components/EventItem';
 import { useMapNavigation } from './hooks/useMapNavigation';
+import { useEvents } from '../../Context/EventsContext';
 
 const UpcomingEvents = memo(({ events, map, showMarkers }) => {
+    console.log('🔄 UpcomingEvents renderizado');
     const [isCollapsed, setIsCollapsed] = useState(window.innerWidth <= 1110);
     const handleEventClick = useMapNavigation(map, showMarkers);
+    const { searchQuery } = useEvents();
 
-    if (!events?.length) return null;
     const toggleCollapse = () => {
         if (window.innerWidth <= 1110) {
             setIsCollapsed(!isCollapsed);
@@ -16,20 +18,35 @@ const UpcomingEvents = memo(({ events, map, showMarkers }) => {
 
     return (
         <div className={`upcoming-events-container ${isCollapsed ? 'collapsed' : ''}`}>
-            <h3 onClick={toggleCollapse}>Próximos Eventos</h3>
+            <h3 onClick={toggleCollapse}>
+                {searchQuery ? `Resultados para "${searchQuery}"` : 'Próximos Eventos'}
+            </h3>
             <div className="upcoming-events-list">
-                {events.map(event => (
-                    <EventItem 
-                        key={event.id}
-                        event={event}
-                        onClick={() => {
-                            handleEventClick(event);
-                            if (window.innerWidth <= 1110) {
-                                setIsCollapsed(true);
-                            }
-                        }}
-                    />
-                ))}
+                {events?.length > 0 ? (
+                    events.map(event => (
+                        <EventItem 
+                            key={event.id}
+                            event={event}
+                            onClick={() => {
+                                handleEventClick(event);
+                                if (window.innerWidth <= 1110) {
+                                    setIsCollapsed(true);
+                                }
+                            }}
+                        />
+                    ))
+                ) : (
+                    <div className="no-events-message">
+                        {searchQuery ? (
+                            <>
+                                <p>No se encontraron eventos para "{searchQuery}"</p>
+                                <p className="search-suggestion">Intenta con términos más generales o revisa los filtros</p>
+                            </>
+                        ) : (
+                            <p>No hay eventos próximos disponibles</p>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );
