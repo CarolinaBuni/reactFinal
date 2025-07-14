@@ -15,8 +15,9 @@ const fetchWithAuth = async ( url, options = {} ) => {
   }
 
   // Hacer la petición
-  const response = await fetch( `https://pulse-back-qjhc-7bdtxskek-powermbas-projects.vercel.app/api${ url }`, {
+  const response = await fetch( `https://pulse-back-qjhc.vercel.app/api${ url }`, {
     ...options,
+    credentials: 'include',
     headers
   } );
 
@@ -35,8 +36,9 @@ const authService = {
   register: async ( userData ) => {
     try {
       // No usamos fetchWithAuth para register porque es una ruta pública
-      const response = await fetch( 'https://pulse-back-qjhc-7bdtxskek-powermbas-projects.vercel.app/api/users/register', {
+      const response = await fetch( 'https://pulse-back-qjhc.vercel.app/api/users/register', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -63,8 +65,9 @@ const authService = {
       console.log( 'Intentando login con:', credentials );
 
       // No usamos fetchWithAuth para login porque es una ruta pública
-      const response = await fetch( 'https://pulse-back-qjhc-7bdtxskek-powermbas-projects.vercel.app/api/users/login', {
+      const response = await fetch( 'https://pulse-back-qjhc.vercel.app/api/users/login', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },

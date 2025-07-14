@@ -33,7 +33,7 @@ export const useReviewSubmit = ( event, existingReview, onClose ) => {
 
           if ( existingReview ) {
                // Actualizar review existente
-               const url = `https://pulse-back-qjhc-7bdtxskek-powermbas-projects.vercel.app/api/reviews/${ existingReview._id }`;
+               const url = `https://pulse-back-qjhc.vercel.app/api/reviews/${ existingReview._id }`;
                response = await fetch( url, {
                     method: 'PUT',
                     credentials: 'include',
@@ -45,7 +45,7 @@ export const useReviewSubmit = ( event, existingReview, onClose ) => {
                } );
           } else {
                // Crear nueva review
-               response = await fetch( 'https://pulse-back-qjhc-7bdtxskek-powermbas-projects.vercel.app/api/reviews', {
+               response = await fetch( 'https://pulse-back-qjhc.vercel.app/api/reviews', {
                     method: 'POST',
                     credentials: 'include',
                     headers: {

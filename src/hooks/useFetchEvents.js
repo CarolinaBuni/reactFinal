@@ -97,7 +97,8 @@ const useFetchEvents = () => {
             if (filters.dateTo) queryParams.append('endDate', filters.dateTo);
             
             // Realizar la petición
-            const response = await fetch(`https://pulse-back-qjhc-7bdtxskek-powermbas-projects.vercel.app/api/events/search?${queryParams.toString()}`, {
+            const response = await fetch(`https://pulse-back-qjhc.vercel.app/api/events/search?${queryParams.toString()}`, {
+                credentials: 'include',
                 headers: authService.isAuthenticated() ? { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` } : {}
             });
             
@@ -137,7 +138,7 @@ const useFetchEvents = () => {
             });
             
             const queryString = queryParams.toString();
-            const url = `https://pulse-back-qjhc-7bdtxskek-powermbas-projects.vercel.app/api/events${queryString ? `?${queryString}` : ''}`;
+            const url = `https://pulse-back-qjhc.vercel.app/api/events${queryString ? `?${queryString}` : ''}`;
             
             // Preparar headers con token si el usuario está autenticado
             const headers = {};
@@ -146,7 +147,10 @@ const useFetchEvents = () => {
                 headers['Authorization'] = `Bearer ${token}`;
             }
             
-            const response = await fetch(url, { headers });
+            const response = await fetch(url, { 
+                headers,
+                credentials: 'include'
+            });
             
             if (!response.ok) {
                 throw new Error(`Error fetching events: ${response.status}`);
