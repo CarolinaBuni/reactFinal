@@ -114,100 +114,6 @@
   font-style: italic;
 }
 
-/* Reviews */
-.reviews-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.review-item {
-  display: flex;
-  border: var(--border-glow);
-  border-radius: var(--border-radius-md);
-  overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.2);
-  transition: var(--transition-fast);
-  align-items: stretch;
-  min-height: 100px;
-}
-
-.review-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
-}
-
-.review-image {
-  width: 100px;
-  min-width: 100px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
-.review-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.review-details {
-  padding: var(--spacing-sm) var(--spacing-md);
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.review-details h5 {
-  margin: 0 0 var(--spacing-xs) 0;
-  font-size: var(--font-size-sm);
-  color: var(--text-light);
-  text-shadow: 0 0 8px #00ffff;
-  line-height: 1.2;
-}
-
-.review-rating {
-  display: flex;
-  margin-bottom: var(--spacing-xs);
-}
-
-.star {
-  color: rgba(255, 255, 255, 0.2);
-  margin-right: 2px;
-  font-size: 18px;
-}
-
-.star.filled {
-  color: #00ffff;
-  text-shadow: 0 0 10px #00ffff;
-}
-
-.review-comment {
-  margin: var(--spacing-xs) 0;
-  font-size: var(--font-size-xs);
-  color: var(--text-light);
-  line-height: 1.4;
-  font-style: italic;
-}
-
-.review-date {
-  margin: var(--spacing-xs) 0 0 0;
-  font-size: var(--font-size-xs);
-  color: var(--text-muted);
-}
-
-.review-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0 var(--spacing-sm);
-  min-width: 40px;
-}
-
 .edit-review-button {
   background: transparent;
   border: none;
@@ -380,12 +286,6 @@
     margin-bottom: var(--spacing-md);
   }
 
-
-
-  .favorite-item,
-  .review-item {
-    flex-direction: column;
-  }
 
   .favorite-image,
   .review-image {

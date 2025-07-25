@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, memo, useRef } from 'react';
 import { useAuth } from '../../../Context/AuthContext';
 import './Login.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
-const Login = ({ onClose, onSwitchToRegister }) => {
+const Login = memo(({ onClose, onSwitchToRegister }) => {
   console.log('🔄 Login renderizado');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  
   const [error, setError] = useState('');
   const { login, loading } = useAuth();
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     setError('');
-    
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
     if (!email || !password) {
       setError('Por favor, completa todos los campos');
       return;
@@ -33,7 +36,8 @@ const Login = ({ onClose, onSwitchToRegister }) => {
       console.error('Error en login:', err);
       setError('Error al conectar con el servidor');
     }
-  };
+  }, [login, onClose]);
+
 
   return (
     <div className="auth-form">
@@ -49,8 +53,7 @@ const Login = ({ onClose, onSwitchToRegister }) => {
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            ref={emailRef}
             disabled={loading}
             placeholder="tu@email.com"
           />
@@ -63,8 +66,7 @@ const Login = ({ onClose, onSwitchToRegister }) => {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            ref={passwordRef}
             disabled={loading}
             placeholder="••••••••"
           />
@@ -84,6 +86,6 @@ const Login = ({ onClose, onSwitchToRegister }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Login; 

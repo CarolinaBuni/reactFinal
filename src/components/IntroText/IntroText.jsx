@@ -9,7 +9,7 @@ const IntroText = memo(() => {
     const phrases = [
         'PULSE',
         'Tu guía musical',
-        'Madrid en directo'
+        'En directo'
     ];
 
     useEffect(() => {
@@ -37,6 +37,6 @@ const IntroText = memo(() => {
             <div className="text" ref={textRef}></div>
         </div>
     );
-});
+}, () => true); 
 
 export default IntroText; 

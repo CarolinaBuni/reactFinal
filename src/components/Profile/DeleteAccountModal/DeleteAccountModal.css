@@ -263,17 +263,6 @@
      box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
 }
 
-.error-message {
-     color: #fff;
-     margin-bottom: 1rem;
-     padding: 1rem;
-     background-color: rgba(244, 67, 54, 0.2);
-     border-radius: 5px;
-     border: 1px solid rgba(244, 67, 54, 0.5);
-     text-align: center;
-     font-size: 0.9rem;
-     animation: fadeIn 0.3s ease-out;
-}
 
 @keyframes scanline {
      0% { transform: translateX(-100%); }

@@ -1,4 +1,4 @@
-import { useCallback, useReducer } from "react";
+import { useCallback, useReducer, useMemo } from "react";
 
 export const MODAL_ACTIONS = {
      OPEN_AUTH: 'OPEN_AUTH',
@@ -52,34 +52,77 @@ const modalReducer = ( state, action ) => {
      }
 };
 
+// export const useModalReducer = () => {
+//      const [ state, dispatch ] = useReducer( modalReducer, initialState );
+
+//      // Action creators memoizados
+//      const actions = {
+//           openAuth: useCallback( () => {
+//                dispatch( { type: MODAL_ACTIONS.OPEN_AUTH } );
+//           }, [] ),
+
+//           openProfile: useCallback( () => {
+//                dispatch( { type: MODAL_ACTIONS.OPEN_PROFILE } );
+//           }, [] ),
+
+//           openHistory: useCallback( () => {
+//                dispatch( { type: MODAL_ACTIONS.OPEN_HISTORY } );
+//           }, [] ),
+
+//           openReview: useCallback( ( event, existingReview = null ) => {
+//                dispatch( {
+//                     type: MODAL_ACTIONS.OPEN_REVIEW,
+//                     payload: { event, review: existingReview }
+//                } );
+//           }, [] ),
+
+//           closeAll: useCallback( () => {
+//                dispatch( { type: MODAL_ACTIONS.CLOSE_ALL } );
+//           }, [] )
+//      };
+
+//      return {
+//           state,
+//           actions
+//      };
+// };
+
+
 export const useModalReducer = () => {
      const [ state, dispatch ] = useReducer( modalReducer, initialState );
 
-     // Action creators memoizados
-     const actions = {
-          openAuth: useCallback( () => {
-               dispatch( { type: MODAL_ACTIONS.OPEN_AUTH } );
-          }, [] ),
+     // Declarar cada función individualmente FUERA del objeto
+     const openAuth = useCallback( () => {
+          dispatch( { type: MODAL_ACTIONS.OPEN_AUTH } );
+     }, [] );
 
-          openProfile: useCallback( () => {
-               dispatch( { type: MODAL_ACTIONS.OPEN_PROFILE } );
-          }, [] ),
+     const openProfile = useCallback( () => {
+          dispatch( { type: MODAL_ACTIONS.OPEN_PROFILE } );
+     }, [] );
 
-          openHistory: useCallback( () => {
-               dispatch( { type: MODAL_ACTIONS.OPEN_HISTORY } );
-          }, [] ),
+     const openHistory = useCallback( () => {
+          dispatch( { type: MODAL_ACTIONS.OPEN_HISTORY } );
+     }, [] );
 
-          openReview: useCallback( ( event, existingReview = null ) => {
-               dispatch( {
-                    type: MODAL_ACTIONS.OPEN_REVIEW,
-                    payload: { event, review: existingReview }
-               } );
-          }, [] ),
+     const openReview = useCallback( ( event, existingReview = null ) => {
+          dispatch( {
+               type: MODAL_ACTIONS.OPEN_REVIEW,
+               payload: { event, review: existingReview }
+          } );
+     }, [] );
 
-          closeAll: useCallback( () => {
-               dispatch( { type: MODAL_ACTIONS.CLOSE_ALL } );
-          }, [] )
-     };
+     const closeAll = useCallback( () => {
+          dispatch( { type: MODAL_ACTIONS.CLOSE_ALL } );
+     }, [] );
+
+     // Crear el objeto usando useMemo PERO sin useCallback dentro
+     const actions = useMemo(() => ({
+          openAuth,
+          openProfile, 
+          openHistory,
+          openReview,
+          closeAll
+     }), [openAuth, openProfile, openHistory, openReview, closeAll]);
 
      return {
           state,

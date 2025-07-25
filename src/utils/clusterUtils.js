@@ -63,7 +63,7 @@ export const createClusterData = ( events ) => {
           }
      } ) );
 
-     console.log( '🎯 Clusters creados:', features.map( f => `${ f.properties.region }: ${ f.properties.count }` ) );
+
 
      return {
           type: 'FeatureCollection',

@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import useFetchEvents from '../hooks/useFetchEvents';
 import { useFavorites } from './FavoritesContext';
@@ -12,9 +11,6 @@ export const EventsProvider = ( { children } ) => {
      const { favorites } = useFavorites();
      const [ searchQuery, setSearchQuery ] = useState( '' );
      
-     console.log( '🔄 EventsProvider renderizado' );
-     // console.log( '📊 EventsProvider - favorites length:', favorites?.length || 0 );
-     // console.log( '📊 EventsProvider - events length:', events?.length || 0 );
      // Nuevo estado para filtros
      const [ filters, setFilters ] = useState( {
           category: '',
@@ -29,7 +25,6 @@ export const EventsProvider = ( { children } ) => {
 
      // Efecto para cargar eventos al iniciar
      useEffect( () => {
-          console.log( '🔄 EventsContext useEffect ejecutado - fetchEvents' );
           fetchEvents();
      }, [] );
 
@@ -83,7 +78,7 @@ export const EventsProvider = ( { children } ) => {
 
                return updatedFilters;
           } );
-     }, [ fetchEvents, searchEvents, searchQuery ] );
+     }, [ searchQuery ] );
 
      // Función para buscar eventos por texto
      const handleSearch = useCallback( ( query ) => {
@@ -92,20 +87,21 @@ export const EventsProvider = ( { children } ) => {
           searchEvents( query, filters );
      }, [ searchEvents, filters ] );
 
-     // Función para resetear a la búsqueda normal
-     const resetSearch = useCallback( () => {
+
+     // Nueva función para resetear todo completamente
+     const resetAllFilters = useCallback( () => {
           setSearchQuery( '' );
           searchMode.current = 'all';
-
-          const params = {};
-          if ( filters.category ) params.category = filters.category;
-          if ( filters.genre ) params.genre = filters.genre;
-          if ( filters.location ) params.city = filters.location;
-          if ( filters.dateFrom ) params.startDate = filters.dateFrom;
-          if ( filters.dateTo ) params.endDate = filters.dateTo;
-
-          fetchEvents( params );
-     }, [ fetchEvents, filters ] );
+          setFilters( {
+               category: '',
+               genre: '',
+               location: '',
+               dateFrom: '',
+               dateTo: ''
+          } );
+          // Cargar todos los eventos sin filtros
+          fetchEvents( {} );
+     }, [ ] );
 
      const upcomingEvents = useMemo( () => {
           if ( !events.length ) return [];
@@ -131,41 +127,31 @@ export const EventsProvider = ( { children } ) => {
                return upcomingEvents.filter( event => favoriteIds.has( event.id ) );
           }
           return upcomingEvents;
-     }, [ upcomingEvents, showingFavorites, favorites ] );
+     }, [ upcomingEvents, showingFavorites, favorites.length ] );
 
      const handleToggleMarkers = useCallback( ( showFavorites = false, show = true ) => {
           setShowingFavorites( showFavorites );
           setShowMarkers( show );
      }, [] );
 
-     const value = useMemo( () => ( {
+
+     const value = {
           events,
           error,
+          upcomingEvents,
+          filteredUpcomingEvents,
+          genres,
+          cities,
           fetchEvents,
-          showMarkers,
-          showingFavorites,
-          upcomingEvents,
-          filteredUpcomingEvents,
           handleToggleMarkers,
-          filters,
           updateFilters,
-          genres,
-          cities,
           handleSearch,
-          resetSearch,
-          searchQuery,
-     } ), [
+          resetAllFilters,
           showMarkers,
           showingFavorites,
           filters,
           searchQuery,
-          genres,
-          cities,
-          events,
-          error,
-          upcomingEvents,
-          filteredUpcomingEvents,
-     ] );
+     };
 
      return (
           <EventsContext.Provider value={ value }>

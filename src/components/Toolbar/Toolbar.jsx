@@ -1,5 +1,5 @@
 // src/components/Toolbar/Toolbar.jsx
-import React, { memo, useCallback, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import './Toolbar.css';
 import { useToolbarLogic } from './hooks/useToolbarLogic';
 import { useAuth } from '../../Context/AuthContext';
@@ -9,7 +9,7 @@ import EventHistory from '../EventHistory/EventHistory';
 import ReviewModal from '../ReviewModal/ReviewModal';
 import { useModalReducer } from './hooks/useModalReducer';
 
-const Toolbar = memo( () => {
+const Toolbar = () => {
     console.log('🔄 Toolbar renderizado');
     const menuRef = useRef( null );
     const {
@@ -54,6 +54,8 @@ const Toolbar = memo( () => {
             console.log( 'Review guardada exitosamente' );
         }
     }, [ modalActions ] );
+
+    
 
     return (
         <>
@@ -138,10 +140,6 @@ const Toolbar = memo( () => {
             )}
         </>
     );
-}, ( prev, next ) => {
-    return prev.showMarkers === next.showMarkers &&
-        prev.showingFavorites === next.showingFavorites &&
-        prev.isAuthenticated === next.isAuthenticated;
-} );
+};
 
 export default Toolbar;

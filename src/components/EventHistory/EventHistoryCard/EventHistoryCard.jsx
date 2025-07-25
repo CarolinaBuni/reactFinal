@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './EventHistoryCard.css';
+import { formatDate } from '../../../utils/formatDate';
 
 const EventHistoryCard = ({ event, onReviewClick }) => {
     const [loading, setLoading] = useState(false);
@@ -8,17 +9,6 @@ const EventHistoryCard = ({ event, onReviewClick }) => {
 
     const hasReview = event.hasReview || false;
     const userReview = event.userReview || null;
-
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('es-ES', {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    };
 
     const handleReviewAction = () => {
         setLoading(true);
@@ -94,7 +84,7 @@ const EventHistoryCard = ({ event, onReviewClick }) => {
                     <h3 className="card-title">{event.name}</h3>
                     <div className="card-date">
                         <ion-icon name="calendar-outline"></ion-icon>
-                        <span>{formatDate(event.startDate)}</span>
+                        <span>{formatDate(event.startDate, true, true)}</span>
                     </div>
                 </div>
                 

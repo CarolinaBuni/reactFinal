@@ -1,9 +1,10 @@
-import { authService, fetchWithAuth } from "../../../services/authService";
-import reviewService from "../../../services/reviewService";
+import { fetchWithAuth } from "../../../services/authService";
+import { useCallback } from "react";
+
 
 export const useProfileLogic = ( state, actions, user, updateUser, deleteAccount, onClose ) => {
      // FUNCIONES PARA EDICIÓN DE PERFIL
-     const handleStartEdit = () => {
+     const handleStartEdit = useCallback( () => {
           actions.setEditFormData( {
                username: state.profile.userDetails?.username || user.username || '',
                email: state.profile.userDetails?.email || user.email || '',
@@ -12,18 +13,18 @@ export const useProfileLogic = ( state, actions, user, updateUser, deleteAccount
           actions.setEditing( true );
           actions.setEditError( '' );
           actions.setEditSuccess( false );
-     };
+     }, [ state.profile.userDetails, user, actions.setEditFormData, actions.setEditing, actions.setEditError, actions.setEditSuccess ] );
 
-     const handleEditChange = ( e ) => {
+     const handleEditChange = useCallback( ( e ) => {
           const { name, value } = e.target;
           actions.updateEditField( name, value );
-     };
+     }, [ actions.updateEditField ] );
 
-     const handleAvatarSelect = ( avatarUrl ) => {
+     const handleAvatarSelect = useCallback( ( avatarUrl ) => {
           actions.updateEditField( 'avatar', avatarUrl );
-     };
+     }, [ actions.updateEditField ] );
 
-     const handleEditSubmit = async ( e ) => {
+     const handleEditSubmit = useCallback( async ( e ) => {
           e.preventDefault();
           actions.setEditLoading( true );
           actions.setEditError( '' );
@@ -47,29 +48,21 @@ export const useProfileLogic = ( state, actions, user, updateUser, deleteAccount
           } finally {
                actions.setEditLoading( false );
           }
-     };
+     }, [ state.profile.editFormData, actions.setEditLoading, actions.setEditError, actions.setEditSuccess, actions.setUserDetails, actions.setEditing, updateUser ] );
 
      // Manejar actualización del perfil
-     const handleProfileUpdate = ( updatedUser ) => {
+     const handleProfileUpdate = useCallback( ( updatedUser ) => {
           actions.setUserDetails( updatedUser );
           updateUser( updatedUser );
           actions.setEditing( false );
-     };
-
-     // FUNCIONES PARA REVIEW INLINE
-     const handleStartReviewEdit = ( review ) => {
-          actions.setEditingReview( review );
-          actions.setReviewFormData( {
-               rating: review ? review.rating : 0,
-               comment: review ? review.comment : ''
-          } );
-          actions.setReviewError( '' );
-          actions.setReviewSuccess( '' );
-     };
+     }, [ actions.setUserDetails, updateUser, actions.setEditing ] );
 
 
+     const handleStartReviewEdit = useCallback((review) => {
+          actions.setEditingReview(review);     // ✅ SOLO ESTO
+      }, [actions.setEditingReview]);
 
-     const handleDeleteAccount = async () => {
+     const handleDeleteAccount = useCallback( async () => {
           actions.setDeleteLoading( true );
           actions.setDeleteError( '' );
 
@@ -85,7 +78,8 @@ export const useProfileLogic = ( state, actions, user, updateUser, deleteAccount
           } finally {
                actions.setDeleteLoading( false );
           }
-     };
+     }, [ actions.setDeleteLoading, actions.setDeleteError, deleteAccount, onClose ] );
+
      return {
           handleStartEdit,
           handleEditChange,

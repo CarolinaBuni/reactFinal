@@ -1,7 +1,7 @@
 import './ProfileTabs.css';
-import React from 'react';
+import React, { memo } from 'react';
 
-const ProfileTabs = ( {
+const ProfileTabs = memo(( {
      activeTab,
      favoritesCount,
      reviewCount,
@@ -30,6 +30,6 @@ const ProfileTabs = ( {
                </button>
           </div>
      );
-};
+});
 
 export default ProfileTabs;

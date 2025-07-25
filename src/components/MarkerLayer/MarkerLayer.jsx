@@ -40,13 +40,7 @@ const MarkerLayer = memo( ( { map } ) => {
 
     return null;
 }, ( prev, next ) => {
-    console.log( 'MarkerLayer memo check', {
-        mapEqual: prev.map === next.map,
-        showMarkersEqual: prev.showMarkers === next.showMarkers,
-    } );
-    return prev.map === next.map &&
-        prev.showMarkers === next.showMarkers &&
-        prev.filteredUpcomingEvents === next.filteredUpcomingEvents;
+    return prev.map === next.map;
 } );
 
 export default MarkerLayer;

@@ -1,8 +1,9 @@
-import { useState, useCallback, useRef, useEffect, useMemo } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { authService } from "../services/authService";
 
 const useFetchEvents = () => {
     console.log('🔄 useFetchEvents renderizado');
+    
     const [events, setEvents] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -68,7 +69,7 @@ const useFetchEvents = () => {
                 
                 // Comparación eficiente por longitud e IDs
                 if (prevEvents.length !== newEvents.length) return newEvents;
-                if (prevEvents.length === 0) return newEvents;
+                if (prevEvents.length === 0 && newEvents.length === 0) return prevEvents; 
                 
                 const areEqual = prevEvents.every((prev, index) => 
                     prev.id === newEvents[index]?.id
@@ -123,7 +124,7 @@ const useFetchEvents = () => {
                 setLoading(false);
             }
         }
-    }, [processEvents]);
+    }, []);
 
     const fetchEvents = useCallback(async (params = {}) => {
         if (isMountedRef.current) {
@@ -177,15 +178,15 @@ const useFetchEvents = () => {
                 setLoading(false);
             }
         }
-    }, [processEvents]);
+    }, []);
 
-    return useMemo(() => ({
-        events,
-        error,
-        loading,
-        fetchEvents,
-        searchEvents
-    }), [events, error, loading, fetchEvents, searchEvents]);
+    return {
+    events,
+    error,
+    loading,
+    fetchEvents,
+    searchEvents
+};
 };
 
 export default useFetchEvents;

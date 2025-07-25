@@ -1,7 +1,7 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, memo } from 'react';
 import "./DeleteAccountModal.css";
 
-const DeleteAccountModal = ( {
+const DeleteAccountModal = memo(( {
      // Props de estado
      showModal,
      deletePhase,
@@ -16,7 +16,7 @@ const DeleteAccountModal = ( {
      onDeleteAccount,
      onSetMatrixCode,
      onSetDeleteProgress
-} ) => {
+     } ) => {
      console.log('🔄 DeleteAccountModal renderizado');
      useEffect( () => {
           let interval;
@@ -41,7 +41,7 @@ const DeleteAccountModal = ( {
                     clearInterval( interval );
                }
           };
-     }, [ deletePhase, deleteProgress, onSetMatrixCode, onSetDeleteProgress, onDeleteAccount ] );
+     }, [ deletePhase, deleteProgress ] );
 
      useEffect( () => {
           const handleEscKey = ( event ) => {
@@ -57,7 +57,7 @@ const DeleteAccountModal = ( {
           return () => {
                window.removeEventListener( 'keydown', handleEscKey );
           };
-     }, [ showModal, onCancel ] );
+     }, [ showModal ] );
 
 
      if ( !showModal ) return null;
@@ -148,6 +148,6 @@ const DeleteAccountModal = ( {
                </div>
           </div>
      );
-};
+});
 
 export default DeleteAccountModal;

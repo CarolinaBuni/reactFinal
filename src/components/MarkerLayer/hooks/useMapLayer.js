@@ -74,7 +74,7 @@ const useMapLayer = (map, sourceId, layerId, geoJSON, circleGeoJSON, clusterGeoJ
             setCurrentZoom(zoom);
         };
 
-        map.on('zoom', handleZoomChange);
+        map.on('zoomend', handleZoomChange);
         
         const addOrUpdateLayers = () => {
             try {
@@ -217,7 +217,7 @@ const useMapLayer = (map, sourceId, layerId, geoJSON, circleGeoJSON, clusterGeoJ
                 const circleVis = (showMarkers && currentZoom > 8 && currentZoom <= 12) ? 'visible' : 'none';
                 const extrusionVis = (showMarkers && currentZoom > 12) ? 'visible' : 'none';
 
-                console.log(`🎯 Zoom ${currentZoom.toFixed(1)} - Clusters: ${clusterVis}, Circles: ${circleVis}, Extrusions: ${extrusionVis}`);
+                
                 
                 map.setLayoutProperty(clusterLayerId, 'visibility', clusterVis);
                 map.setLayoutProperty(clusterLayerId + '-labels', 'visibility', clusterVis);
@@ -236,7 +236,7 @@ const useMapLayer = (map, sourceId, layerId, geoJSON, circleGeoJSON, clusterGeoJ
         }
 
         return () => {
-            map.off('zoom', handleZoomChange);
+            map.off('zoomend', handleZoomChange);
             map.off('load', addOrUpdateLayers);
         };
     }, [map, geoJSON, clusterGeoJSON, showMarkers, currentZoom, sourceId, layerId, circleGeoJSON]);

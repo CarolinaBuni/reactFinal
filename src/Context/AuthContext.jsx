@@ -28,11 +28,8 @@ export const AuthProvider = ({ children }) => {
         console.error('Error al verificar autenticación:', err);
         // Si hay error, limpiar tokens
         authService.logout();
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
       }
+      // ✅ ELIMINADO: setLoading(false) innecesario ya que loading empieza en false
     };
 
     checkAuth();

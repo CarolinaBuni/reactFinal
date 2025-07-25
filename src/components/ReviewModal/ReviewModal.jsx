@@ -3,11 +3,12 @@ import './ReviewModal.css';
 import EventInfoCard from './EventInfoCard/EventInfoCard';
 import ReviewForm from './ReviewForm/ReviewForm';
 import { useReviewSubmit } from './hooks/useReviewSubmit';
+import { formatDate } from '../../utils/formatDate';
 
 const ReviewModal = ({ isOpen, onClose, event, existingReview = null }) => {
     console.log('🔄 ReviewModal renderizado');
     const [rating, setRating] = useState(existingReview?.rating || 0);
-    const [comment, setComment] = useState(existingReview?.comment || '');
+    const commentRef = useRef(null);
     const isMountedRef = useRef(true);
 
     const {
@@ -22,7 +23,9 @@ const ReviewModal = ({ isOpen, onClose, event, existingReview = null }) => {
     useEffect(() => {
         if (isOpen) {
             setRating(existingReview?.rating || 0);
-            setComment(existingReview?.comment || '');
+            if (commentRef.current) {
+                commentRef.current.value = existingReview?.comment || '';
+            }
             setError('');
         }
     }, [isOpen, existingReview]);
@@ -33,36 +36,21 @@ const ReviewModal = ({ isOpen, onClose, event, existingReview = null }) => {
         return cleanup;
     }, [cleanup]);
 
-    const formatDate = (dateString) => {
-        try {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('es-ES', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        } catch {
-            return 'Fecha no disponible';
-        }
-    };
 
     const handleRatingChange = useCallback((newRating) => {
         setRating(newRating);
     }, []);
 
-    const handleCommentChange = useCallback((e) => {
-        setComment(e.target.value);
-    }, []);
-
     const handleSubmit = () => {
-        submitReview(rating, comment);
+        const commentValue = commentRef.current.value;
+        submitReview(rating, commentValue);
     };
 
     const handleCancel = () => {
         setRating(existingReview?.rating || 0);
-        setComment(existingReview?.comment || '');
+        if (commentRef.current) {
+            commentRef.current.value = existingReview?.comment || '';
+        }
         setError('');
         onClose(false);
     };
@@ -104,15 +92,15 @@ const ReviewModal = ({ isOpen, onClose, event, existingReview = null }) => {
                         </div>
                     ) : (
                         <>
-                            <EventInfoCard event={event} formatDate={formatDate} />
+                            <EventInfoCard event={event} formatDate={(date) => formatDate(date, true)} />
                             
                             <ReviewForm 
                                 rating={rating}
                                 onRatingChange={handleRatingChange}
-                                comment={comment}
-                                onCommentChange={handleCommentChange}
+                                commentRef={commentRef}
                                 loading={loading}
                                 error={error}
+                                defaultValue={existingReview?.comment || ''}
                             />
                         </>
                     )}
@@ -131,7 +119,7 @@ const ReviewModal = ({ isOpen, onClose, event, existingReview = null }) => {
                         <button 
                             className="review-action-button submit-button"
                             onClick={handleSubmit}
-                            disabled={rating === 0 || comment.trim().length < 10}
+                            disabled={rating === 0 || commentRef.current?.value.trim().length < 10}
                         >
                             <ion-icon name={existingReview ? "checkmark-outline" : "add-outline"}></ion-icon>
                             {existingReview ? 'Actualizar' : 'Publicar'}

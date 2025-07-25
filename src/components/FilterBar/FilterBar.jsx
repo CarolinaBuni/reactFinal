@@ -1,4 +1,4 @@
-// src/components/FilterBar/FilterBar.jsx
+// FilterBar.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import "./FilterBar.css";
 import { useEvents } from '../../Context/EventsContext';
@@ -11,7 +11,7 @@ const FilterBar = () => {
         genres,
         cities,
         handleSearch,
-        resetSearch,
+        resetAllFilters,
         searchQuery,
     } = useEvents();
 
@@ -59,14 +59,8 @@ const FilterBar = () => {
     };
 
     const resetFilters = () => {
-        updateFilters({
-            genre: '',
-            location: '',
-            dateFrom: '',
-            dateTo: '',
-        });
         setLocalSearchQuery('');
-        resetSearch();
+        resetAllFilters();
     };
 
     return (

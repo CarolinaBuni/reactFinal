@@ -22,7 +22,7 @@ export const useMapNavigation = (map, showMarkers) => {
             zoom: isMobile ? 16 : 15,     
             pitch: isMobile ? 70 : 60,    
             bearing: 0,
-            duration: 2000
+            duration: 800
         });
     }, [map]);
 }; 

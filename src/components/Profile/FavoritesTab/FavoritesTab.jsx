@@ -3,10 +3,7 @@ import './FavoritesTab.css';
 const FavoritesTab = ( {
      favorites,
      formatDate,
-     confirmDelete,
      onShowDeleteConfirm,
-     onConfirmDelete,
-     onCancelDelete,
 } ) => {
      console.log('🔄 FavoritesTab renderizado');
      return (

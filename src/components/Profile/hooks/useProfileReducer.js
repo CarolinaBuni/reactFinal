@@ -20,14 +20,9 @@ export const PROFILE_ACTIONS = {
 
      // REVIEW ACTIONS
      SET_EDITING_REVIEW: 'SET_EDITING_REVIEW',
-     SET_REVIEW_FORM_DATA: 'SET_REVIEW_FORM_DATA',
-     UPDATE_REVIEW_FIELD: 'UPDATE_REVIEW_FIELD',
-     SET_REVIEW_ERROR: 'SET_REVIEW_ERROR',
-     SET_REVIEW_SUCCESS: 'SET_REVIEW_SUCCESS',
-     SET_REVIEW_LOADING: 'SET_REVIEW_LOADING',
      SET_REVIEW_COUNT: 'SET_REVIEW_COUNT',
      SET_CONFIRM_DELETE_REVIEW: 'SET_CONFIRM_DELETE_REVIEW',
-     RESET_REVIEW_FORM: 'RESET_REVIEW_FORM',
+
 
      // DELETE ACCOUNT ACTIONS
      SET_SHOW_DELETE_CONFIRM: 'SET_SHOW_DELETE_CONFIRM',
@@ -57,10 +52,6 @@ export const initialState = {
      },
      reviews: {
           editingReview: null,
-          reviewFormData: { rating: 0, comment: '' },
-          reviewError: '',
-          reviewSuccess: '',
-          reviewLoading: false,
           reviewCount: 0,
           confirmDeleteReview: null
      },
@@ -165,42 +156,6 @@ export const profileReducer = ( state, action ) => {
                     reviews: { ...state.reviews, editingReview: action.payload }
                };
 
-          case PROFILE_ACTIONS.SET_REVIEW_FORM_DATA:
-               return {
-                    ...state,
-                    reviews: { ...state.reviews, reviewFormData: action.payload }
-               };
-
-          case PROFILE_ACTIONS.UPDATE_REVIEW_FIELD:
-               return {
-                    ...state,
-                    reviews: {
-                         ...state.reviews,
-                         reviewFormData: {
-                              ...state.reviews.reviewFormData,
-                              [ action.payload.name ]: action.payload.value
-                         }
-                    }
-               };
-
-          case PROFILE_ACTIONS.SET_REVIEW_ERROR:
-               return {
-                    ...state,
-                    reviews: { ...state.reviews, reviewError: action.payload }
-               };
-
-          case PROFILE_ACTIONS.SET_REVIEW_SUCCESS:
-               return {
-                    ...state,
-                    reviews: { ...state.reviews, reviewSuccess: action.payload }
-               };
-
-          case PROFILE_ACTIONS.SET_REVIEW_LOADING:
-               return {
-                    ...state,
-                    reviews: { ...state.reviews, reviewLoading: action.payload }
-               };
-
           case PROFILE_ACTIONS.SET_REVIEW_COUNT:
                return {
                     ...state,
@@ -211,19 +166,6 @@ export const profileReducer = ( state, action ) => {
                return {
                     ...state,
                     reviews: { ...state.reviews, confirmDeleteReview: action.payload }
-               };
-
-          case PROFILE_ACTIONS.RESET_REVIEW_FORM:
-               return {
-                    ...state,
-                    reviews: {
-                         ...state.reviews,
-                         editingReview: null,
-                         reviewFormData: { rating: 0, comment: '' },
-                         reviewError: '',
-                         reviewSuccess: '',
-                         reviewLoading: false
-                    }
                };
 
           // ========== DELETE ACCOUNT ACTIONS ==========
@@ -327,29 +269,11 @@ export const useProfileReducer = () => {
           setEditingReview: ( review ) =>
                dispatch( { type: PROFILE_ACTIONS.SET_EDITING_REVIEW, payload: review } ),
 
-          setReviewFormData: ( data ) =>
-               dispatch( { type: PROFILE_ACTIONS.SET_REVIEW_FORM_DATA, payload: data } ),
-
-          updateReviewField: ( name, value ) =>
-               dispatch( { type: PROFILE_ACTIONS.UPDATE_REVIEW_FIELD, payload: { name, value } } ),
-
-          setReviewError: ( error ) =>
-               dispatch( { type: PROFILE_ACTIONS.SET_REVIEW_ERROR, payload: error } ),
-
-          setReviewSuccess: ( success ) =>
-               dispatch( { type: PROFILE_ACTIONS.SET_REVIEW_SUCCESS, payload: success } ),
-
-          setReviewLoading: ( loading ) =>
-               dispatch( { type: PROFILE_ACTIONS.SET_REVIEW_LOADING, payload: loading } ),
-
           setReviewCount: ( count ) =>
                dispatch( { type: PROFILE_ACTIONS.SET_REVIEW_COUNT, payload: count } ),
 
           setConfirmDeleteReview: ( review ) =>
                dispatch( { type: PROFILE_ACTIONS.SET_CONFIRM_DELETE_REVIEW, payload: review } ),
-
-          resetReviewForm: () =>
-               dispatch( { type: PROFILE_ACTIONS.RESET_REVIEW_FORM } ),
 
           // ========== DELETE ACCOUNT ACTIONS ==========
           setShowDeleteConfirm: ( show ) =>

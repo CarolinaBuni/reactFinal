@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import reviewService from '../../../services/reviewService';
 import './ReviewsList.css';
+import { formatDate } from '../../../utils/formatDate';
 
 const ReviewsList = ({ onEdit, onSetCount, onShowDeleteConfirm }) => {
   console.log('🔄 ReviewsList renderizado');
@@ -33,17 +34,6 @@ const ReviewsList = ({ onEdit, onSetCount, onShowDeleteConfirm }) => {
       isMounted = false;
     };
   }, []);
-
-  // Formatear fecha
-  const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('es-ES', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric'
-    });
-  };
 
   // Renderizar estrellas
   const renderStars = (rating) => {

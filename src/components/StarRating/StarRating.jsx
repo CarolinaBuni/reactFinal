@@ -27,7 +27,6 @@ const StarRating = ({
         setCurrentRating(starValue);
         setJustSelected(starValue);
         
-        // Remover la clase de animación después de la animación
         setTimeout(() => setJustSelected(null), 600);
         
         if (onRatingChange) {

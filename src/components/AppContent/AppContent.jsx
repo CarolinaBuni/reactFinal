@@ -1,9 +1,9 @@
-import React, { memo } from 'react';
+import React from 'react';
 import '../../App.css';
 import MapContainer from '../MapContainer/MapContainer';
 import Toolbar from '../Toolbar/Toolbar';
 
-const AppContent = memo( () => {
+const AppContent = () => {
      console.log('🔄 AppContent renderizado');
      return (
           <div className="app-container">
@@ -11,6 +11,6 @@ const AppContent = memo( () => {
                <Toolbar/>
           </div>
      );
-} );
+};
 
 export default AppContent;

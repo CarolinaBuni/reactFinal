@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
+import reviewService from '../../../services/reviewService';
 
 export const useReviewSubmit = ( event, existingReview, onClose ) => {
      const [ loading, setLoading ] = useState( false );
@@ -16,7 +17,7 @@ export const useReviewSubmit = ( event, existingReview, onClose ) => {
                return 'Por favor, selecciona una calificación';
           }
 
-          if ( !comment.trim() ) {
+          if ( !comment || !comment.trim() ) {
                return 'Por favor, escribe un comentario';
           }
 
@@ -27,36 +28,15 @@ export const useReviewSubmit = ( event, existingReview, onClose ) => {
           return null;
      }, [] );
 
-     // Función para hacer la llamada a la API
-     const makeApiCall = useCallback( async ( reviewData ) => {
-          let response;
-
+     // Función para hacer la llamada a la API usando reviewService
+     const makeApiCall = useCallback( async ( eventId, rating, comment ) => {
           if ( existingReview ) {
                // Actualizar review existente
-               const url = `https://pulse-back-qjhc.vercel.app/api/reviews/${ existingReview._id }`;
-               response = await fetch( url, {
-                    method: 'PUT',
-                    credentials: 'include',
-                    headers: {
-                         'Content-Type': 'application/json',
-                         'Authorization': `Bearer ${ localStorage.getItem( 'accessToken' ) }`
-                    },
-                    body: JSON.stringify( reviewData )
-               } );
+               return await reviewService.updateReview( existingReview._id, rating, comment );
           } else {
                // Crear nueva review
-               response = await fetch( 'https://pulse-back-qjhc.vercel.app/api/reviews', {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                         'Content-Type': 'application/json',
-                         'Authorization': `Bearer ${ localStorage.getItem( 'accessToken' ) }`
-                    },
-                    body: JSON.stringify( reviewData )
-               } );
+               return await reviewService.createReview( eventId, rating, comment );
           }
-
-          return response;
      }, [ existingReview ] );
 
      // Función principal de envío
@@ -75,21 +55,17 @@ export const useReviewSubmit = ( event, existingReview, onClose ) => {
           }
 
           try {
-               const reviewData = {
-                    eventId: event._id || event.id,
-                    rating,
-                    comment: comment.trim()
-               };
+               const eventId = event._id || event.id;
+               const trimmedComment = comment.trim();
 
-               const response = await makeApiCall( reviewData );
-               const data = await response.json();
+               const response = await makeApiCall( eventId, rating, trimmedComment );
 
-               if ( response.ok && data.success ) {
+               if ( response.success ) {
                     onClose();
                     return true;
                } else {
                     if ( isMountedRef.current ) {
-                         setError( data.message || 'Error al guardar la review' );
+                         setError( response.message || 'Error al guardar la review' );
                     }
                     return false;
                }

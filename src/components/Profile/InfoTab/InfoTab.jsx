@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import './InfoTab.css';
 
-const InfoTab = ( {
+const InfoTab = memo(( {
      userDetails,
      user,
      loading,
@@ -61,6 +61,6 @@ const InfoTab = ( {
                </div>
           </div>
      );
-};
+});
 
 export default InfoTab;

@@ -19,12 +19,15 @@ import ProfileHeader from '../ProfileHeader/ProfileHeader';
 import { useFavoritesLogic } from '../hooks/useFavoritesLogic';
 import { useDeleteLogic } from '../hooks/useDeleteLogic';
 import { useReviewsLogic } from '../hooks/useReviewsLogic';
+import { formatDate } from '../../../utils/formatDate';
 
 const ProfilePage = ( { onClose } ) => {
   console.log('🔄 ProfilePage renderizado');
+  
   const { user, logout, updateUser, deleteAccount } = useAuth();
   const { favorites, toggleFavorite } = useFavorites();
   const { state, actions } = useProfileReducer();
+
   const {
     handleStartEdit,
     handleEditChange,
@@ -51,12 +54,13 @@ const ProfilePage = ( { onClose } ) => {
     handleCancelDelete: handleCancelDeleteReview
   } = useReviewsLogic(actions);
 
-  // Obtener detalles completos del usuario
+
   useEffect( () => {
+
     let isMounted = true;
 
     const fetchUserDetails = async () => {
-      if ( user ) {
+      if ( user && !state.profile.userDetails && !state.ui.loading) {
         actions.setLoading( true );
         try {
           const response = await authService.getProfile();
@@ -83,20 +87,11 @@ const ProfilePage = ( { onClose } ) => {
     return () => {
       isMounted = false;
     };
-  }, [ user ] );
+  }, [ user?._id ] );
 
-  // Formatear fechas
-  const formatDate = ( dateString ) => {
-    if ( !dateString ) return 'N/A';
-    const date = new Date( dateString );
-    return date.toLocaleDateString( 'es-ES', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric'
-    } );
-  };
+  
 
-  // Manejar reviews
+  // Reviews
   const handleSetReviewCount = ( count ) => {
     actions.setReviewCount( count );
   };
@@ -172,10 +167,7 @@ const ProfilePage = ( { onClose } ) => {
           <FavoritesTab
             favorites={ favorites }
             formatDate={ formatDate }
-            confirmDelete={ state.favorites.confirmDelete }
             onShowDeleteConfirm={ handleShowDeleteConfirm }
-            onConfirmDelete={ handleConfirmDelete }
-            onCancelDelete={ handleCancelDelete }
           />
         ) }
 

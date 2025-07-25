@@ -1,5 +1,5 @@
 // src/Context/FavoritesContext.jsx
-import React, { createContext, useContext, useReducer, useState, useEffect, useCallback, useMemo } from 'react';
+import React, { createContext, useContext, useReducer, useState, useEffect, useCallback, useMemo, memo } from 'react';
 import favoriteService from '../services/favoriteService';
 import { useAuth } from './AuthContext';
 
@@ -52,7 +52,7 @@ export const FavoritesProvider = ( { children } ) => {
         let isMounted = true;
 
         const loadFavorites = async () => {
-            if ( isAuthenticated() ) {
+            if ( isAuthenticated() && user?._id ) {
                 try {
                     const response = await favoriteService.getUserFavorites();
 
@@ -73,7 +73,7 @@ export const FavoritesProvider = ( { children } ) => {
                 } catch ( error ) {
                     console.error( 'Error al cargar favoritos:', error );
                 }
-            } else {
+            } else if (favorites.length > 0) {  // ← SOLO dispatch si hay que limpiar
                 dispatch( { type: ACTIONS.SET_FAVORITES, payload: [] } );
             }
         };
@@ -83,19 +83,9 @@ export const FavoritesProvider = ( { children } ) => {
         return () => {
             isMounted = false;
         };
-    }, [ isAuthenticated, user ] );
+    }, [ user?._id ] );  // ✅ CORREGIDO: solo user?.id es suficiente
 
-    // Guardar favoritos en localStorage si no está autenticado
-    // useEffect(() => {
-    //     console.log('🔍 FavoritesContext useEffect 2 ejecutado');
-    //     if (!isAuthenticated()) {
-    //         try {
-    //             localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites));
-    //         } catch (error) {
-    //             console.error('Error al guardar favoritos:', error);
-    //         }
-    //     }
-    // }, [favorites.length, user]);
+    
 
     // FUNCIÓN TOGGLEFAVORITE MEMOIZADA
     const toggleFavorite = useCallback( async ( event ) => {

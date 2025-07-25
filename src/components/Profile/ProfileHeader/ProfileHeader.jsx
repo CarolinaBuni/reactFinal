@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import './ProfileHeader.css';
 
-const ProfileHeader = ( {
+const ProfileHeader = memo(( {
      user,
      userDetails,
      formatDate
@@ -29,6 +29,6 @@ const ProfileHeader = ( {
                </div>
           </div>
      );
-};
+});
 
 export default ProfileHeader;

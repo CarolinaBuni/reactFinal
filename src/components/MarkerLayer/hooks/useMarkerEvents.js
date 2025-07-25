@@ -27,7 +27,7 @@ const useMarkerEvents = ( map, layerId, events, togglePopup, geoJSON, tooltipRef
                 map.easeTo( {
                     center: feature.geometry.coordinates,
                     zoom: 10,
-                    duration: 1000
+                    duration: 500
                 } );
                 return;
             }
@@ -38,7 +38,7 @@ const useMarkerEvents = ( map, layerId, events, togglePopup, geoJSON, tooltipRef
                 if ( tooltipRef.current ) {
                     tooltipRef.current.remove();
                 }
-                togglePopup( event );
+                togglePopup( event ); 
             }
         };
 

@@ -3,7 +3,7 @@ import EventHistoryCard from './EventHistoryCard/EventHistoryCard';
 import './EventHistory.css';
 
 const EventHistory = ({ isOpen, onClose, onReviewClick }) => {
-    console.log('🔄 EventHistory renderizado', {isOpen});
+    console.log('🔄 EventHistory renderizado');
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
