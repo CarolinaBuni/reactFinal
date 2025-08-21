@@ -1,4 +1,3 @@
-// FilterBar.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import "./FilterBar.css";
 import { useEvents } from '../../Context/EventsContext';
@@ -20,7 +19,6 @@ const FilterBar = () => {
     const [localSearchQuery, setLocalSearchQuery] = useState(searchQuery || '');
     const filterRef = useRef(null);
 
-    // Calcular filtros activos
     useEffect(() => {
         let count = 0;
         if (filters.genre) count++;
@@ -47,7 +45,6 @@ const FilterBar = () => {
         }
     }, [isOpen]);
 
-    // Actualizar búsqueda local
     useEffect(() => {
         setLocalSearchQuery(searchQuery || '');
     }, [searchQuery]);
@@ -65,7 +62,6 @@ const FilterBar = () => {
 
     return (
         <div className="filter-system" ref={filterRef}>
-            {/* Botón principal */}
             <button 
                 className={`filter-trigger ${activeFiltersCount > 0 ? 'active' : ''}`}
                 onClick={() => setIsOpen(!isOpen)}
@@ -79,10 +75,8 @@ const FilterBar = () => {
                 <span>FILTROS</span>
             </button>
 
-            {/* Panel horizontal simple */}
             {isOpen && (
                 <div className="filter-panel-horizontal">
-                    {/* Búsqueda */}
                     <div className="filter-section">
                         <label>Buscar:</label>
                         <div className="search-input">
@@ -99,7 +93,6 @@ const FilterBar = () => {
                         </div>
                     </div>
 
-                    {/* Género */}
                     <div className="filter-section">
                         <label>Género:</label>
                         <select 
@@ -113,7 +106,6 @@ const FilterBar = () => {
                         </select>
                     </div>
 
-                    {/* Ubicación */}
                     <div className="filter-section">
                         <label>Ubicación:</label>
                         <select 
@@ -127,7 +119,6 @@ const FilterBar = () => {
                         </select>
                     </div>
 
-                    {/* Fechas */}
                     <div className="filter-section">
                         <label>Desde:</label>
                         <input 
@@ -146,7 +137,6 @@ const FilterBar = () => {
                         />
                     </div>
 
-                    {/* Reset */}
                     <div className="filter-section">
                         <button className="reset-btn" onClick={resetFilters}>
                             <ion-icon name="refresh"></ion-icon>

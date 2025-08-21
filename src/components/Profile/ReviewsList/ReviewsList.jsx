@@ -35,7 +35,6 @@ const ReviewsList = ({ onEdit, onSetCount, onShowDeleteConfirm }) => {
     };
   }, []);
 
-  // Renderizar estrellas
   const renderStars = (rating) => {
     return Array(5).fill(0).map((_, i) => (
       <span 
@@ -47,7 +46,6 @@ const ReviewsList = ({ onEdit, onSetCount, onShowDeleteConfirm }) => {
     ));
   };
 
-  // Función para actualizar la lista después de eliminar
   const handleReviewDeleted = (reviewId) => {
     setReviews(reviews.filter(r => r._id !== reviewId));
     onSetCount(reviews.length - 1);

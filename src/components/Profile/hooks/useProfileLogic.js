@@ -3,7 +3,7 @@ import { useCallback } from "react";
 
 
 export const useProfileLogic = ( state, actions, user, updateUser, deleteAccount, onClose ) => {
-     // FUNCIONES PARA EDICIÓN DE PERFIL
+     // EDICIÓN DE PERFIL
      const handleStartEdit = useCallback( () => {
           actions.setEditFormData( {
                username: state.profile.userDetails?.username || user.username || '',
@@ -50,7 +50,7 @@ export const useProfileLogic = ( state, actions, user, updateUser, deleteAccount
           }
      }, [ state.profile.editFormData, actions.setEditLoading, actions.setEditError, actions.setEditSuccess, actions.setUserDetails, actions.setEditing, updateUser ] );
 
-     // Manejar actualización del perfil
+     // Actualización del perfil
      const handleProfileUpdate = useCallback( ( updatedUser ) => {
           actions.setUserDetails( updatedUser );
           updateUser( updatedUser );
@@ -59,8 +59,8 @@ export const useProfileLogic = ( state, actions, user, updateUser, deleteAccount
 
 
      const handleStartReviewEdit = useCallback((review) => {
-          actions.setEditingReview(review);     // ✅ SOLO ESTO
-      }, [actions.setEditingReview]);
+          actions.setEditingReview(review);    
+     }, [actions.setEditingReview]);
 
      const handleDeleteAccount = useCallback( async () => {
           actions.setDeleteLoading( true );

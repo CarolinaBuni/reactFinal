@@ -1,4 +1,3 @@
-// src/App.jsx 
 import React from 'react';
 import { AuthProvider } from './Context/AuthContext';
 import { PopupProvider } from './Context/PopupContext';

@@ -227,7 +227,6 @@ export const profileReducer = ( state, action ) => {
 export const useProfileReducer = () => {
      const [ state, dispatch ] = useReducer( profileReducer, initialState );
 
-     // Action creators para facilitar el uso - MEMOIZADOS para evitar bucles infinitos
      const actions = useMemo(() => ({
           // ========== UI ACTIONS ==========
           setActiveTab: ( tab ) =>
@@ -296,7 +295,7 @@ export const useProfileReducer = () => {
 
           resetDeleteState: () =>
                dispatch( { type: PROFILE_ACTIONS.RESET_DELETE_STATE } )
-     }), [dispatch]); // Solo depende de dispatch que es estable
+     }), [dispatch]); 
 
      return { state, actions, dispatch };
 };

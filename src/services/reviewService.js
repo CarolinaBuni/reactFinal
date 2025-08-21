@@ -1,4 +1,3 @@
-// src/services/reviewService.js
 import { fetchWithAuth } from './authService';
 
 const reviewService = {

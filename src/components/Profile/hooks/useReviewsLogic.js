@@ -1,7 +1,7 @@
 import reviewService from '../../../services/reviewService';
 
 export const useReviewsLogic = ( actions ) => {
-     // Manejar eliminación de reviews
+     // Eliminación de reviews
      const handleShowDeleteConfirm = ( review, e, onDeleted ) => {
           e.stopPropagation();
           actions.setConfirmDeleteReview( { review, onDeleted } );

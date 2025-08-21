@@ -1,8 +1,8 @@
-import React, { useEffect, useCallback, memo } from 'react';
+//* Idea secuencia de eliminación sacada de cuenta de Telegram
+import React, { useEffect, memo } from 'react';
 import "./DeleteAccountModal.css";
 
 const DeleteAccountModal = memo(( {
-     // Props de estado
      showModal,
      deletePhase,
      deleteProgress,
@@ -10,8 +10,6 @@ const DeleteAccountModal = memo(( {
      deleteError,
      deleteLoading,
 
-     // Props de las actions
-     onStartSequence,
      onCancel,
      onDeleteAccount,
      onSetMatrixCode,
@@ -58,7 +56,6 @@ const DeleteAccountModal = memo(( {
                window.removeEventListener( 'keydown', handleEscKey );
           };
      }, [ showModal ] );
-
 
      if ( !showModal ) return null;
 

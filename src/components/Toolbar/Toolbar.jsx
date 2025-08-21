@@ -1,4 +1,3 @@
-// src/components/Toolbar/Toolbar.jsx
 import React, { useCallback, useRef } from 'react';
 import './Toolbar.css';
 import { useToolbarLogic } from './hooks/useToolbarLogic';
@@ -42,18 +41,18 @@ const Toolbar = () => {
         }
     }, [ isAuthenticated, modalActions ] );
 
-    const handleReviewClick = useCallback( ( event, existingReview = null ) => {
-        modalActions.openReview( event, existingReview );
-    }, [ modalActions ] );
+    const handleReviewClick = useCallback((event, existingReview = null, onSuccess = null) => {
+        modalActions.openReview(event, existingReview, onSuccess); 
+    }, [modalActions]);
 
-    const handleReviewModalClose = useCallback( ( success = false ) => {
-        modalActions.closeAll();
+    const handleReviewModalClose = useCallback((success = false) => {
+        modalActions.closeReview();
+    
+        if (success && modalState.onReviewSuccess) {
 
-        if ( success ) {
-            // Opcional: mostrar notificación de éxito
-            console.log( 'Review guardada exitosamente' );
+            modalState.onReviewSuccess(success.reviewData, success.isEdit);
         }
-    }, [ modalActions ] );
+    }, [modalActions, modalState]);
 
     
 

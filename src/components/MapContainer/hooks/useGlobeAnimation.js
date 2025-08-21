@@ -25,7 +25,7 @@ export const useGlobeAnimation = (mapRef) => {
                     mapRef.current.easeTo({ center, duration: 1000, easing: (n) => n });
                }
           }
-          // Se pausa spinning al interactuar
+          // Pausar spinning al interactuar
           mapRef.current.on('mousedown', () => {
                userInteracting = true;
           });

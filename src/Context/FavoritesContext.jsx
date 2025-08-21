@@ -1,9 +1,8 @@
-// src/Context/FavoritesContext.jsx
-import React, { createContext, useContext, useReducer, useState, useEffect, useCallback, useMemo, memo } from 'react';
+import React, { createContext, useContext, useReducer, useState, useEffect, useCallback, useMemo } from 'react';
 import favoriteService from '../services/favoriteService';
 import { useAuth } from './AuthContext';
 
-// Acciones posibles
+// Actions
 const ACTIONS = {
     ADD_FAVORITE: 'ADD_FAVORITE',
     REMOVE_FAVORITE: 'REMOVE_FAVORITE',
@@ -35,7 +34,7 @@ const favoritesReducer = ( state, action ) => {
 };
 
 const FavoritesContext = createContext();
-const FAVORITES_STORAGE_KEY = 'app_favorites';
+
 
 export const FavoritesProvider = ( { children } ) => {
     const [ favorites, dispatch ] = useReducer( favoritesReducer, [] );
@@ -43,12 +42,9 @@ export const FavoritesProvider = ( { children } ) => {
     const { user, isAuthenticated } = useAuth();
 
     console.log( '🔄 FavoritesProvider renderizado' );
-    // console.log( '📊 FavoritesProvider - favorites length:', favorites?.length || 0 );
-    // console.log( '📊 FavoritesProvider - user:', user?.username || 'no user' );
-
-    // Cargar favoritos desde la API si el usuario está autenticado
+    
     useEffect( () => {
-        // console.log( '🔍 FavoritesContext useEffect 1 ejecutado', { isAuthenticated: isAuthenticated(), user } );
+
         let isMounted = true;
 
         const loadFavorites = async () => {
@@ -57,11 +53,11 @@ export const FavoritesProvider = ( { children } ) => {
                     const response = await favoriteService.getUserFavorites();
 
                     if ( response.success && isMounted ) {
-                        // Transformar los datos al formato que espera la aplicación
+                    
                         const formattedFavorites = response.data.map( ( fav ) => ( {
                             id: fav.event._id || fav.event.id,
                             ...fav.event,
-                            // Limpiar el campo genre si es "Undefined" o similar
+                    
                             genre: ( fav.event.genre &&
                                 fav.event.genre !== 'Undefined' &&
                                 fav.event.genre !== 'undefined' &&
@@ -73,7 +69,7 @@ export const FavoritesProvider = ( { children } ) => {
                 } catch ( error ) {
                     console.error( 'Error al cargar favoritos:', error );
                 }
-            } else if (favorites.length > 0) {  // ← SOLO dispatch si hay que limpiar
+            } else if (favorites.length > 0) {  
                 dispatch( { type: ACTIONS.SET_FAVORITES, payload: [] } );
             }
         };
@@ -83,11 +79,8 @@ export const FavoritesProvider = ( { children } ) => {
         return () => {
             isMounted = false;
         };
-    }, [ user?._id ] );  // ✅ CORREGIDO: solo user?.id es suficiente
+    }, [ user?._id ] ); 
 
-    
-
-    // FUNCIÓN TOGGLEFAVORITE MEMOIZADA
     const toggleFavorite = useCallback( async ( event ) => {
         if ( isAuthenticated() ) {
             try {
@@ -100,14 +93,13 @@ export const FavoritesProvider = ( { children } ) => {
                 } else {
                     const response = await favoriteService.addFavorite( event.id );
                     if ( response.success ) {
-                        // En lugar de añadir solo el evento, recargar todos los favoritos
-                        // para obtener los datos completos desde el backend
+                    
                         const favoritesResponse = await favoriteService.getUserFavorites();
                         if ( favoritesResponse.success ) {
                             const formattedFavorites = favoritesResponse.data.map( ( fav ) => ( {
                                 id: fav.event._id || fav.event.id,
                                 ...fav.event,
-                                // Limpiar el campo genre si es "Undefined" o similar
+                            
                                 genre: ( fav.event.genre &&
                                     fav.event.genre !== 'Undefined' &&
                                     fav.event.genre !== 'undefined' &&
@@ -121,22 +113,18 @@ export const FavoritesProvider = ( { children } ) => {
                 console.error( 'Error al gestionar favorito:', error );
             }
         } else {
-            // Si no está autenticado, solo actualizar el estado local
             dispatch( { type: ACTIONS.TOGGLE_FAVORITE, payload: event } );
         }
     }, [ favorites, isAuthenticated ] );
 
-    // FUNCIÓN TOGGLESHOWINGFAVORITES MEMOIZADA
     const toggleShowingFavorites = useCallback( ( show = false ) => {
         setShowingFavorites( show );
     }, [] );
 
-    // FUNCIÓN ISFAVORITE MEMOIZADA
     const isFavorite = useCallback( ( eventId ) => {
         return favorites.some( fav => fav.id === eventId );
     }, [ favorites ] );
 
-    // CONTEXTVALUE MEMOIZADO - Solo cambia cuando cambian las dependencias
     const contextValue = useMemo( () => ( {
         favorites,
         toggleFavorite,

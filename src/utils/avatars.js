@@ -1,4 +1,3 @@
-// src/utils/avatars.js
 // Array de avatares predeterminados de Cloudinary
 const DEFAULT_AVATARS = [
   'https://res.cloudinary.com/dafjggs2p/image/upload/v1744369015/pulse/avatar_nsx2kr.png',

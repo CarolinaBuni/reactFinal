@@ -1,4 +1,3 @@
-// src/components/Profile/ProfileModal/ProfileModal.jsx
 import React from 'react';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import './ProfileModal.css';

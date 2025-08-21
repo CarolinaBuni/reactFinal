@@ -1,10 +1,8 @@
-// src/services/authService.js 
 
-// Función para hacer peticiones con autenticación
 const fetchWithAuth = async ( url, options = {} ) => {
   const token = localStorage.getItem( 'accessToken' );
 
-  // Preparar headers con token si el usuario está autenticado
+
   const headers = {
     'Content-Type': 'application/json',
     ...options.headers
@@ -14,14 +12,14 @@ const fetchWithAuth = async ( url, options = {} ) => {
     headers[ 'Authorization' ] = `Bearer ${ token }`;
   }
 
-  // Hacer la petición
+
   const response = await fetch( `https://pulse-back-qjhc.vercel.app/api${ url }`, {
     ...options,
     credentials: 'include',
     headers
   } );
 
-  // Si la respuesta no es ok, lanzar error
+
   if ( !response.ok ) {
     const errorData = await response.json().catch( () => ( {} ) );
     throw new Error( errorData.message || `Error ${ response.status }: ${ response.statusText }` );
@@ -30,12 +28,12 @@ const fetchWithAuth = async ( url, options = {} ) => {
   return response.json();
 };
 
-// Servicio de autenticación
+
 const authService = {
   // Registrar un nuevo usuario
   register: async ( userData ) => {
     try {
-      // No usamos fetchWithAuth para register porque es una ruta pública
+      // No uso fetchWithAuth para register porque es una ruta pública
       const response = await fetch( 'https://pulse-back-qjhc.vercel.app/api/users/register', {
         method: 'POST',
         credentials: 'include',
@@ -64,7 +62,7 @@ const authService = {
     try {
       console.log( 'Intentando login con:', credentials );
 
-      // No usamos fetchWithAuth para login porque es una ruta pública
+      // Ruta pública, no necesita fetchWithAuth
       const response = await fetch( 'https://pulse-back-qjhc.vercel.app/api/users/login', {
         method: 'POST',
         credentials: 'include',
@@ -107,12 +105,12 @@ const authService = {
       return await fetchWithAuth( '/users/profile' );
     } catch ( error ) {
       console.error( 'Error al obtener perfil:', error );
-      // Si hay error, limpiar tokens
       localStorage.removeItem( 'accessToken' );
       localStorage.removeItem( 'refreshToken' );
       return { success: false, message: error.message };
     }
   },
+  // Eliminar cuenta
   deleteAccount: async () => {
     try {
       const response = await fetchWithAuth('/users/delete', {
@@ -120,7 +118,6 @@ const authService = {
       });
       
       if (response.success) {
-        // Limpiar tokens al eliminar la cuenta
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
       }

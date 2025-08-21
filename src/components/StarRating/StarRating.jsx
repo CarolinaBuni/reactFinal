@@ -130,7 +130,6 @@ const StarRating = ({
     );
 };
 
-// Componente para mostrar rating promedio (solo lectura)
 export const AverageRating = ({ 
     rating, 
     count, 

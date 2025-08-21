@@ -145,6 +145,7 @@
     line-height: 1.3;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;  
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -192,24 +193,6 @@
     white-space: nowrap;
 }
 
-/* Acciones de la tarjeta */
-.card-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 16px;
-    border-top: 1px solid var(--card-border);
-    gap: 12px;
-}
-
-/* Estado de reseña */
-.review-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    font-weight: 500;
-}
 
 .review-rating {
     display: flex;
@@ -236,6 +219,11 @@
 .stars-display ion-icon.empty,
 .stars-display ion-icon[name="star-outline"] {
     color: var(--card-text-muted) !important;
+}
+
+.stars-display ion-icon.half-filled,
+.stars-display ion-icon[name="star-half"] {
+    color: #fbbf24 !important;
 }
 
 .rating-text {
@@ -274,12 +262,13 @@
 }
 
 .review-button.create {
-    background: var(--card-primary);
-    color: white;
+    background: rgba(99, 102, 241, 0.2);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: var(--card-primary);
 }
 
 .review-button.create:hover {
-    background: var(--card-primary-light);
+    background: rgba(99, 102, 241, 0.3);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
@@ -332,36 +321,6 @@
     box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.1);
 }
 
-/* Forzar color amarillo en estrellas llenas - Mayor especificidad */
-.review-rating .stars-display ion-icon[name="star"],
-.review-status .stars-display ion-icon[name="star"],
-.card-actions .stars-display ion-icon[name="star"],
-.event-history-card .stars-display ion-icon[name="star"] {
-    color: #fbbf24 !important;
-}
-
-.review-rating .stars-display ion-icon.filled,
-.review-status .stars-display ion-icon.filled,
-.card-actions .stars-display ion-icon.filled,
-.event-history-card .stars-display ion-icon.filled {
-    color: #fbbf24 !important;
-}
-
-/* Estrellas vacías */
-.review-rating .stars-display ion-icon[name="star-outline"],
-.review-status .stars-display ion-icon[name="star-outline"],
-.card-actions .stars-display ion-icon[name="star-outline"],
-.event-history-card .stars-display ion-icon[name="star-outline"] {
-    color: var(--card-text-muted) !important;
-}
-
-.review-rating .stars-display ion-icon.empty,
-.review-status .stars-display ion-icon.empty,
-.card-actions .stars-display ion-icon.empty,
-.event-history-card .stars-display ion-icon.empty {
-    color: var(--card-text-muted) !important;
-}
-
 /* Animaciones de hover mejoradas */
 .event-history-card:hover .card-title {
     color: var(--card-primary-light);
@@ -382,8 +341,9 @@
     transform: scale(1.05);
 }
 
-/* Efectos de animación en botones */
-.review-button::before {
+
+/* ========== CLASE COMÚN PARA EFECTO DE BRILLO DE LOS BOTONES ========== */
+.button-shine::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -392,17 +352,12 @@
     transition: transform 0.6s ease;
 }
 
-.review-button:hover::before {
+.button-shine:hover::before {
     transform: translateX(100%);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .card-actions {
-        flex-direction: column;
-        gap: 12px;
-        align-items: stretch;
-    }
     
     .review-button {
         justify-content: center;
@@ -440,3 +395,131 @@
     border-color: var(--card-primary);
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 } 
+
+/* RATING GLOBAL */
+.global-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 8px;
+}
+
+.rating-info {
+    font-size: 13px;
+    color: var(--card-text);
+    font-weight: 500;
+}
+
+/* BOTÓN VER TODAS LAS RESEÑAS */
+.view-all-reviews-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: rgba(16, 185, 129, 0.2);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 6px;
+    color: var(--card-secondary);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--card-transition);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;         
+    overflow: hidden;  
+}
+
+
+
+.view-all-reviews-button ion-icon {
+    font-size: 14px;
+}
+
+
+/* Section titles */
+.section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Global reviews section */
+.global-reviews-section {
+    margin-top: 16px;
+    padding: 12px;
+    background: rgba(16, 185, 129, 0.08);
+    border-radius: 8px;
+    border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.global-reviews-header {
+    margin-bottom: 10px;
+}
+
+.global-reviews-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.global-reviews-section .global-rating {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+}
+
+/* Botón secundario más pequeño */
+.view-all-reviews-button.secondary {
+    padding: 6px 10px;
+    font-size: 11px;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.view-all-reviews-button.secondary:hover {
+    background: rgba(16, 185, 129, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Personal review section */
+.personal-review-section {
+    margin-top: 12px;
+    padding: 12px;
+    background: rgba(121, 91, 255, 0.08);
+    border-radius: 8px;
+    border: 1px solid rgba(121, 91, 255, 0.15);
+}
+
+.personal-review-header {
+    margin-bottom: 10px;
+}
+
+.personal-review-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.personal-review-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+

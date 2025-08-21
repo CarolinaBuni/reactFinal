@@ -1,4 +1,3 @@
-// src/components/Profile/ProfilePage/ProfilePage.jsx
 import React, { useEffect } from 'react';
 import { useAuth } from '../../../Context/AuthContext';
 import { useFavorites } from '../../../Context/FavoritesContext';
@@ -88,8 +87,6 @@ const ProfilePage = ( { onClose } ) => {
       isMounted = false;
     };
   }, [ user?._id ] );
-
-  
 
   // Reviews
   const handleSetReviewCount = ( count ) => {

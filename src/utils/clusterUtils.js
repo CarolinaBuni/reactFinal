@@ -2,24 +2,9 @@
 export const createClusterData = ( events ) => {
      const clusters = {};
 
-     // Función para determinar la región
-     const getRegion = ( cityName ) => {
-          if ( !cityName ) return 'Unknown';
-
-          const city = cityName.toLowerCase();
-          if ( city.includes( 'angeles' ) || city.includes( 'hollywood' ) ||
-               city.includes( 'inglewood' ) || city.includes( 'anaheim' ) ||
-               city.includes( 'long beach' ) || city.includes( 'burbank' ) ) {
-               return 'Los Angeles';
-          }
-          if ( city.includes( 'madrid' ) ) return 'Madrid';
-          if ( city.includes( 'barcelona' ) ) return 'Barcelona';
-          return cityName; // Otras ciudades mantienen su nombre
-     };
-
      // Agrupar eventos por región
      events.forEach( event => {
-          const region = getRegion( event.cityName );
+          const region = event.cityName || 'Unknown'; 
 
           if ( !clusters[ region ] ) {
                clusters[ region ] = {
@@ -62,8 +47,6 @@ export const createClusterData = ( events ) => {
                eventIds: data.events.map( e => e.id )
           }
      } ) );
-
-
 
      return {
           type: 'FeatureCollection',

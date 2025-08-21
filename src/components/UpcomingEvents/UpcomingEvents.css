@@ -56,6 +56,7 @@
      gap: var(--spacing-10);
      padding: 8px;
      transition: all 0.3s ease;
+     overflow-x: hidden;
 }
 
 .upcoming-event-item:hover {
@@ -137,7 +138,7 @@
      }
 
      .upcoming-events-list {
-          max-height: 30vh;
+          /* max-height: 30vh; */
           transition: var(--transition-fast);
      }
 

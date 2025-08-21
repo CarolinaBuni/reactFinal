@@ -1,6 +1,7 @@
 import './EventInfoCard.css';
+import { memo } from 'react';
 
-const EventInfoCard = ( { event, formatDate } ) => {
+const EventInfoCard = memo( ( { event, formatDate } ) => {
      console.log('🔄 EventInfoCard renderizado');
      return (
           <div className="event-info-card">
@@ -19,6 +20,6 @@ const EventInfoCard = ( { event, formatDate } ) => {
                </div>
           </div>
      );
-};
+} );
 
 export default EventInfoCard;

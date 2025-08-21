@@ -1,4 +1,3 @@
-// src/services/favoriteService.js
 import { fetchWithAuth } from './authService';
 
 const favoriteService = {

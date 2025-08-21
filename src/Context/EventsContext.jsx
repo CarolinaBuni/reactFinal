@@ -11,7 +11,7 @@ export const EventsProvider = ( { children } ) => {
      const { favorites } = useFavorites();
      const [ searchQuery, setSearchQuery ] = useState( '' );
      
-     // Nuevo estado para filtros
+     // estado para filtros
      const [ filters, setFilters ] = useState( {
           category: '',
           genre: '',
@@ -23,7 +23,7 @@ export const EventsProvider = ( { children } ) => {
      // Referencia para almacenar el modo de búsqueda (todos, texto, cercanos)
      const searchMode = useRef( 'all' );
 
-     // Efecto para cargar eventos al iniciar
+     // cargar eventos al iniciar
      useEffect( () => {
           fetchEvents();
      }, [] );
@@ -56,16 +56,15 @@ export const EventsProvider = ( { children } ) => {
           return uniqueCities.sort();
      }, [ events ] );
 
-     // Función para actualizar los filtros y refrescar la búsqueda
+     // Función para actualizar los filtros 
      const updateFilters = useCallback( ( newFilters ) => {
           setFilters( prev => {
                const updatedFilters = { ...prev, ...newFilters };
 
-               // Refrescar la búsqueda según el modo actual
                if ( searchMode.current === 'text' && searchQuery ) {
                     searchEvents( searchQuery, updatedFilters );
                } else {
-                    // Si no hay búsqueda específica, usar fetchEvents con filtros
+
                     const params = {};
                     if ( updatedFilters.category ) params.category = updatedFilters.category;
                     if ( updatedFilters.genre ) params.genre = updatedFilters.genre;
@@ -88,7 +87,7 @@ export const EventsProvider = ( { children } ) => {
      }, [ searchEvents, filters ] );
 
 
-     // Nueva función para resetear todo completamente
+     // función para resetear todo completamente
      const resetAllFilters = useCallback( () => {
           setSearchQuery( '' );
           searchMode.current = 'all';
@@ -99,29 +98,25 @@ export const EventsProvider = ( { children } ) => {
                dateFrom: '',
                dateTo: ''
           } );
-          // Cargar todos los eventos sin filtros
           fetchEvents( {} );
      }, [ ] );
 
      const upcomingEvents = useMemo( () => {
           if ( !events.length ) return [];
 
-          // const now = new Date();
           const now = new Date();
-          now.setHours(0, 0, 0, 0); // 00:00:00.000 de hoy
+          now.setHours(0, 0, 0, 0); 
 
           return events.filter( event => {
-               // Convertir la fecha del evento a objeto Date
+               
                const eventDate = new Date( event.startDate );
                return eventDate > now;
           } ).sort( ( a, b ) => new Date( a.startDate ) - new Date( b.startDate ) );
      }, [ events ] );
 
-     // Ya no necesitamos aplicar filtros aquí porque vienen aplicados del backend
      const filteredUpcomingEvents = useMemo( () => {
           if ( !upcomingEvents.length ) return [];
 
-          // Solo filtramos por favoritos si es necesario
           if ( showingFavorites ) {
                const favoriteIds = new Set( favorites.map( fav => fav.id ) );
                return upcomingEvents.filter( event => favoriteIds.has( event.id ) );

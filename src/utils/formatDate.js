@@ -1,5 +1,4 @@
 
-// utils/formatDate.js
 export const formatDate = ( dateString, includeTime = false, shortMonth = false ) => {
      if ( !dateString ) return 'N/A';
 
@@ -8,11 +7,10 @@ export const formatDate = ( dateString, includeTime = false, shortMonth = false 
 
           const options = {
                day: '2-digit',
-               month: shortMonth ? 'short' : 'long',  // "ene" vs "enero"
+               month: shortMonth ? 'short' : 'long',  
                year: 'numeric'
           };
 
-          // Si incluye tiempo, añadir hora y minutos
           if ( includeTime ) {
                options.hour = '2-digit';
                options.minute = '2-digit';

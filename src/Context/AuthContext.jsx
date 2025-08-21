@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     
     const checkAuth = async () => {
       try {
-        // Verificar autenticación básica con tokens
+
         if (authService.isAuthenticated()) {
           const response = await authService.getProfile();
           if (response.success && isMounted) {
@@ -26,10 +26,8 @@ export const AuthProvider = ({ children }) => {
         }
       } catch (err) {
         console.error('Error al verificar autenticación:', err);
-        // Si hay error, limpiar tokens
         authService.logout();
       }
-      // ✅ ELIMINADO: setLoading(false) innecesario ya que loading empieza en false
     };
 
     checkAuth();
@@ -39,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  // Función para iniciar sesión - MEMOIZADA
+  // Función para iniciar sesión
   const login = useCallback(async (credentials) => {
     setLoading(true);
     setError(null);
@@ -77,7 +75,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // Función para registrarse - MEMOIZADA
+  // Función para registrarse 
   const register = useCallback(async (userData) => {
     setLoading(true);
     setError(null);
@@ -101,7 +99,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // Función para eliminar cuenta - MEMOIZADA
+  // Función para eliminar cuenta 
   const deleteAccount = useCallback(async () => {
     try {
       const response = await authService.deleteAccount();
@@ -115,7 +113,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // Función para actualizar usuario - MEMOIZADA
+  // Función para actualizar usuario 
   const updateUser = useCallback((userData) => {
     setUser(prevUser => ({
       ...prevUser,
@@ -123,18 +121,17 @@ export const AuthProvider = ({ children }) => {
     }));
   }, []);
 
-  // Función para cerrar sesión - MEMOIZADA
+  // Función para cerrar sesión 
   const logout = useCallback(() => {
     setUser(null);
     authService.logout();
   }, []);
 
-  // Función isAuthenticated - MEMOIZADA
+  // Función isAuthenticated 
   const isAuthenticated = useCallback(() => {
     return authService.isAuthenticated();
   }, []);
 
-  // VALUE MEMOIZADO - Solo cambia cuando cambian las dependencias
   const value = useMemo(() => ({
     user,
     login,
@@ -159,4 +156,3 @@ export const useAuth = () => {
   }
   return context;
 };
-

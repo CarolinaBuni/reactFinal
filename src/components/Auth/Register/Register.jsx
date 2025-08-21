@@ -48,7 +48,6 @@ const Register = ({ onClose, onSwitchToLogin }) => {
       return;
     }
     
-    // Preparar datos con avatar de Cloudinary
     const { confirmPassword, ...userData } = formData;
     userData.avatar = getRandomAvatar();
     

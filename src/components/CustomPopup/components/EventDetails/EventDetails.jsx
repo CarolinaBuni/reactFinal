@@ -4,7 +4,7 @@ import './EventDetails.css';
 
 const EventDetails = memo( ( { startDate, genreName, venueName, cityName, address, status } ) => {
     console.log( '🔄 EventDetails renderizado' );
-    // Función para verificar si un valor es válido para mostrar
+
     const isValidValue = ( value ) => {
         return value &&
             value !== 'undefined' &&
@@ -13,7 +13,7 @@ const EventDetails = memo( ( { startDate, genreName, venueName, cityName, addres
             value.toString().trim() !== '';
     };
 
-    // Función para formatear el status en español
+
     const getStatusText = ( status ) => {
         const statusMap = {
             'onsale': '🎫 En venta',

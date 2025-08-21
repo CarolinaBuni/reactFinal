@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 
 export const useFavoritesLogic = ( actions, toggleFavorite ) => {
-     // Manejar eliminación de favoritos
+     // Eliminación de favoritos
      const handleShowDeleteConfirm = useCallback( ( event, e ) => {
           e.stopPropagation();
           actions.setConfirmDelete( event );

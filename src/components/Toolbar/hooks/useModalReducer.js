@@ -5,7 +5,8 @@ export const MODAL_ACTIONS = {
      OPEN_PROFILE: 'OPEN_PROFILE',
      OPEN_HISTORY: 'OPEN_HISTORY',
      OPEN_REVIEW: 'OPEN_REVIEW',
-     CLOSE_ALL: 'CLOSE_ALL'
+     CLOSE_ALL: 'CLOSE_ALL',
+     CLOSE_REVIEW: 'CLOSE_REVIEW'
 };
 
 // Estado inicial
@@ -15,7 +16,8 @@ const initialState = {
      showEventHistory: false,
      showReviewModal: false,
      selectedEvent: null,
-     selectedReview: null
+     selectedReview: null,
+     onReviewSuccess: null
 };
 
 const modalReducer = ( state, action ) => {
@@ -38,60 +40,34 @@ const modalReducer = ( state, action ) => {
 
           case MODAL_ACTIONS.OPEN_REVIEW:
                return {
-                    ...initialState,
+                    ...state,
                     showReviewModal: true,
                     selectedEvent: action.payload.event,
-                    selectedReview: action.payload.review
+                    selectedReview: action.payload.review,
+                    onReviewSuccess: action.payload.onSuccess 
                };
 
           case MODAL_ACTIONS.CLOSE_ALL:
                return initialState;
+
+          case MODAL_ACTIONS.CLOSE_REVIEW:
+               return {
+                    ...state,
+                    showReviewModal: false,
+                    selectedEvent: null,
+                    selectedReview: null
+               };
 
           default:
                return state;
      }
 };
 
-// export const useModalReducer = () => {
-//      const [ state, dispatch ] = useReducer( modalReducer, initialState );
-
-//      // Action creators memoizados
-//      const actions = {
-//           openAuth: useCallback( () => {
-//                dispatch( { type: MODAL_ACTIONS.OPEN_AUTH } );
-//           }, [] ),
-
-//           openProfile: useCallback( () => {
-//                dispatch( { type: MODAL_ACTIONS.OPEN_PROFILE } );
-//           }, [] ),
-
-//           openHistory: useCallback( () => {
-//                dispatch( { type: MODAL_ACTIONS.OPEN_HISTORY } );
-//           }, [] ),
-
-//           openReview: useCallback( ( event, existingReview = null ) => {
-//                dispatch( {
-//                     type: MODAL_ACTIONS.OPEN_REVIEW,
-//                     payload: { event, review: existingReview }
-//                } );
-//           }, [] ),
-
-//           closeAll: useCallback( () => {
-//                dispatch( { type: MODAL_ACTIONS.CLOSE_ALL } );
-//           }, [] )
-//      };
-
-//      return {
-//           state,
-//           actions
-//      };
-// };
-
 
 export const useModalReducer = () => {
      const [ state, dispatch ] = useReducer( modalReducer, initialState );
 
-     // Declarar cada función individualmente FUERA del objeto
+
      const openAuth = useCallback( () => {
           dispatch( { type: MODAL_ACTIONS.OPEN_AUTH } );
      }, [] );
@@ -104,10 +80,10 @@ export const useModalReducer = () => {
           dispatch( { type: MODAL_ACTIONS.OPEN_HISTORY } );
      }, [] );
 
-     const openReview = useCallback( ( event, existingReview = null ) => {
+     const openReview = useCallback( ( event, existingReview = null, onSuccess = null ) => {
           dispatch( {
                type: MODAL_ACTIONS.OPEN_REVIEW,
-               payload: { event, review: existingReview }
+               payload: { event, review: existingReview, onSuccess }
           } );
      }, [] );
 
@@ -115,14 +91,18 @@ export const useModalReducer = () => {
           dispatch( { type: MODAL_ACTIONS.CLOSE_ALL } );
      }, [] );
 
-     // Crear el objeto usando useMemo PERO sin useCallback dentro
-     const actions = useMemo(() => ({
+     const closeReview = useCallback( () => {  
+          dispatch( { type: MODAL_ACTIONS.CLOSE_REVIEW } );
+     }, [] );
+
+     const actions = useMemo( () => ( {
           openAuth,
-          openProfile, 
+          openProfile,
           openHistory,
           openReview,
-          closeAll
-     }), [openAuth, openProfile, openHistory, openReview, closeAll]);
+          closeAll,
+          closeReview
+     } ), [ openAuth, openProfile, openHistory, openReview, closeAll, closeReview ] );
 
      return {
           state,

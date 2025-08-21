@@ -8,8 +8,9 @@ import { formatDate } from '../../utils/formatDate';
 const ReviewModal = ({ isOpen, onClose, event, existingReview = null }) => {
     console.log('🔄 ReviewModal renderizado');
     const [rating, setRating] = useState(existingReview?.rating || 0);
+    const [isFormValid, setIsFormValid] = useState(false);
     const commentRef = useRef(null);
-    const isMountedRef = useRef(true);
+    const isMountedRef = useRef(true); 
 
     const {
         loading,
@@ -19,7 +20,7 @@ const ReviewModal = ({ isOpen, onClose, event, existingReview = null }) => {
         cleanup
     } = useReviewSubmit(event, existingReview, onClose);
 
-    // Resetear valores cuando el modal se abre
+    // Reset de valores
     useEffect(() => {
         if (isOpen) {
             setRating(existingReview?.rating || 0);
@@ -27,18 +28,27 @@ const ReviewModal = ({ isOpen, onClose, event, existingReview = null }) => {
                 commentRef.current.value = existingReview?.comment || '';
             }
             setError('');
+            const commentLength = (existingReview?.comment || '').trim().length;
+            setIsFormValid((existingReview?.rating || 0) > 0 && commentLength >= 10);
         }
     }, [isOpen, existingReview]);
 
-    // Cleanup para evitar actualizaciones después del desmontaje
     useEffect(() => {
         isMountedRef.current = true;
         return cleanup;
     }, [cleanup]);
 
+    const validateForm = useCallback(() => {
+        const commentLength = (commentRef.current?.value || '').trim().length;
+        setIsFormValid(rating > 0 && commentLength >= 10);
+    }, [rating]);
+
 
     const handleRatingChange = useCallback((newRating) => {
         setRating(newRating);
+        // Validar cuando cambia rating
+        const commentLength = (commentRef.current?.value || '').trim().length;
+        setIsFormValid(newRating > 0 && commentLength >= 10);
     }, []);
 
     const handleSubmit = () => {
@@ -97,6 +107,7 @@ const ReviewModal = ({ isOpen, onClose, event, existingReview = null }) => {
                             <ReviewForm 
                                 rating={rating}
                                 onRatingChange={handleRatingChange}
+                                onValidate={validateForm} 
                                 commentRef={commentRef}
                                 loading={loading}
                                 error={error}
@@ -119,7 +130,7 @@ const ReviewModal = ({ isOpen, onClose, event, existingReview = null }) => {
                         <button 
                             className="review-action-button submit-button"
                             onClick={handleSubmit}
-                            disabled={rating === 0 || commentRef.current?.value.trim().length < 10}
+                            disabled={!isFormValid}
                         >
                             <ion-icon name={existingReview ? "checkmark-outline" : "add-outline"}></ion-icon>
                             {existingReview ? 'Actualizar' : 'Publicar'}

@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
-import { authService } from "../services/authService";
+import eventService from "../services/eventService";
+
 
 const useFetchEvents = () => {
     console.log('🔄 useFetchEvents renderizado');
@@ -9,7 +10,6 @@ const useFetchEvents = () => {
     const [loading, setLoading] = useState(false);
     const isMountedRef = useRef(true);
 
-    // Cleanup para evitar actualizaciones después del desmontaje
     useEffect(() => {
         isMountedRef.current = true;
         return () => {
@@ -17,7 +17,6 @@ const useFetchEvents = () => {
         };
     }, []);
 
-    // Función para procesar los eventos recibidos del backend
     const processEvents = useCallback((eventsData) => {
         if (!isMountedRef.current) return;
         
@@ -25,17 +24,15 @@ const useFetchEvents = () => {
 
         const fetchedEvents = eventsData.map((event) => {
             const randomHeight = heights[Math.floor(Math.random() * heights.length)];
+ 
             
-            // Verificar que existan las coordenadas
             if (!event.coordinates || !event.coordinates.lat || !event.coordinates.lng) {
                 console.warn(`Coordenadas inválidas para el evento ${event._id}`);
                 return null;
             }
 
-            // Asegurarse de que las coordenadas estén en el formato correcto
             const coordinates = [parseFloat(event.coordinates.lng), parseFloat(event.coordinates.lat)];
             
-            // Usar la fecha original del evento sin ajustes
             const eventDate = new Date(event.startDate);
 
             return {
@@ -67,7 +64,6 @@ const useFetchEvents = () => {
             setEvents(prevEvents => {
                 const newEvents = fetchedEvents.filter(Boolean);
                 
-                // Comparación eficiente por longitud e IDs
                 if (prevEvents.length !== newEvents.length) return newEvents;
                 if (prevEvents.length === 0 && newEvents.length === 0) return prevEvents; 
                 
@@ -81,50 +77,103 @@ const useFetchEvents = () => {
     }, []);
 
     // Función para buscar eventos por texto
-    const searchEvents = useCallback(async (query, filters = {}) => {
-        if (isMountedRef.current) {
-            setLoading(true);
-        }
+    // const searchEvents = useCallback(async (query, filters = {}) => {
+    //     if (isMountedRef.current) {
+    //         setLoading(true);
+    //     }
         
-        try {
-            // Preparar parámetros de búsqueda
-            const queryParams = new URLSearchParams({ q: query });
+    //     try {
+    //         const queryParams = new URLSearchParams({ q: query });
             
-            // Añadir filtros adicionales
-            if (filters.category) queryParams.append('category', filters.category);
-            if (filters.genre) queryParams.append('genre', filters.genre);
-            if (filters.location) queryParams.append('city', filters.location);
-            if (filters.dateFrom) queryParams.append('startDate', filters.dateFrom);
-            if (filters.dateTo) queryParams.append('endDate', filters.dateTo);
+    //         //  filtros adicionales
+    //         if (filters.category) queryParams.append('category', filters.category);
+    //         if (filters.genre) queryParams.append('genre', filters.genre);
+    //         if (filters.location) queryParams.append('city', filters.location);
+    //         if (filters.dateFrom) queryParams.append('startDate', filters.dateFrom);
+    //         if (filters.dateTo) queryParams.append('endDate', filters.dateTo);
             
-            // Realizar la petición
-            const response = await fetch(`https://pulse-back-qjhc.vercel.app/api/events/search?${queryParams.toString()}`, {
-                credentials: 'include',
-                headers: authService.isAuthenticated() ? { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` } : {}
-            });
+    //         const result = await fetchWithAuth(`/events/search?${queryParams.toString()}`);
             
-            if (!response.ok) throw new Error(`Error en la búsqueda: ${response.status}`);
+    //         if (!result.success || !result.data) throw new Error("Formato de respuesta inesperado");
+
+    //         if (isMountedRef.current) {
+    //             processEvents(result.data);
+    //         }
             
-            const result = await response.json();
-            
-            if (!result.success || !result.data) throw new Error("Formato de respuesta inesperado");
-            
-            // Procesar los eventos recibidos solo si el componente está montado
+    //     } catch (err) {
+    //         if (isMountedRef.current) {
+    //             setError("Error en la búsqueda de eventos");
+    //         }
+    //         console.error('Error details:', err);
+    //     } finally {
+    //         if (isMountedRef.current) {
+    //             setLoading(false);
+    //         }
+    //     }
+    // }, []);
+
+        // Función para buscar eventos por texto
+        const searchEvents = useCallback(async (query, filters = {}) => {
             if (isMountedRef.current) {
-                processEvents(result.data);
+                setLoading(true);
             }
             
-        } catch (err) {
-            if (isMountedRef.current) {
-                setError("Error en la búsqueda de eventos");
+            try {
+                const result = await eventService.searchEvents(query, filters);
+                
+                if (!result.success || !result.data) throw new Error("Formato de respuesta inesperado");
+    
+                if (isMountedRef.current) {
+                    processEvents(result.data);
+                }
+                
+            } catch (err) {
+                if (isMountedRef.current) {
+                    setError("Error en la búsqueda de eventos");
+                }
+                console.error('Error details:', err);
+            } finally {
+                if (isMountedRef.current) {
+                    setLoading(false);
+                }
             }
-            console.error('Error details:', err);
-        } finally {
-            if (isMountedRef.current) {
-                setLoading(false);
-            }
-        }
-    }, []);
+        }, []);
+
+    // const fetchEvents = useCallback(async (params = {}) => {
+    //     if (isMountedRef.current) {
+    //         setLoading(true);
+    //     }
+        
+    //     try {
+    //         const queryParams = new URLSearchParams();
+    //         Object.entries(params).forEach(([key, value]) => {
+    //             queryParams.append(key, value);
+    //         });
+            
+    //         const queryString = queryParams.toString();
+    //         const url = `/events${queryString ? `?${queryString}` : ''}`;
+
+    //         const result = await fetchWithAuth(url);
+            
+    //         if (!result.success || !result.data) {
+    //             throw new Error("Formato de respuesta inesperado");
+    //         }
+            
+    //         if (isMountedRef.current) {
+    //             processEvents(result.data);
+    //         }
+
+    //     } catch (err) {
+    //         if (isMountedRef.current) {
+    //             setError("Error fetching events");
+    //         }
+    //         console.error('Error details:', err);
+    //     } finally {
+    //         if (isMountedRef.current) {
+    //             setLoading(false);
+    //         }
+    //     }
+    // }, []);
 
     const fetchEvents = useCallback(async (params = {}) => {
         if (isMountedRef.current) {
@@ -132,38 +181,12 @@ const useFetchEvents = () => {
         }
         
         try {
-            // Construir la URL con los parámetros
-            const queryParams = new URLSearchParams();
-            Object.entries(params).forEach(([key, value]) => {
-                queryParams.append(key, value);
-            });
-            
-            const queryString = queryParams.toString();
-            const url = `https://pulse-back-qjhc.vercel.app/api/events${queryString ? `?${queryString}` : ''}`;
-            
-            // Preparar headers con token si el usuario está autenticado
-            const headers = {};
-            if (authService.isAuthenticated()) {
-                const token = localStorage.getItem('accessToken');
-                headers['Authorization'] = `Bearer ${token}`;
-            }
-            
-            const response = await fetch(url, { 
-                headers,
-                credentials: 'include'
-            });
-            
-            if (!response.ok) {
-                throw new Error(`Error fetching events: ${response.status}`);
-            }
-
-            const result = await response.json();
+            const result = await eventService.fetchEvents(params);
             
             if (!result.success || !result.data) {
                 throw new Error("Formato de respuesta inesperado");
             }
             
-            // Procesar los eventos recibidos solo si el componente está montado
             if (isMountedRef.current) {
                 processEvents(result.data);
             }
@@ -179,7 +202,6 @@ const useFetchEvents = () => {
             }
         }
     }, []);
-
     return {
     events,
     error,

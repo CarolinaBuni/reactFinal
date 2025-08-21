@@ -7,16 +7,13 @@ export const useMapBounds = ( mapRef, events, showMarkers, showingFavorites ) =>
         if ( showMarkers && mapRef.current && events.length > 0 ) {
             const bounds = new mapboxgl.LngLatBounds();
 
-            // Función para determinar la región principal
 const getMainRegion = (events) => {
     const spain = events.filter(e => e.coordinates[0] > -10 && e.coordinates[0] < 5);
     const usa = events.filter(e => e.coordinates[0] < -50);
     
-    // Devolver la región con más eventos
     return spain.length >= usa.length ? spain : usa;
 };
 
-// Usar solo eventos de la región principal
 const mainRegionEvents = getMainRegion(events);
 console.log(`🗺️ Centrando en: ${mainRegionEvents.length > 0 && mainRegionEvents[0].coordinates[0] > -10 ? 'España' : 'Los Ángeles'} (${mainRegionEvents.length} eventos)`);
 

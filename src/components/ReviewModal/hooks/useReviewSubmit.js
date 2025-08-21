@@ -6,49 +6,23 @@ export const useReviewSubmit = ( event, existingReview, onClose ) => {
      const [ error, setError ] = useState( '' );
      const isMountedRef = useRef( true );
 
-     // Cleanup para evitar actualizaciones después del desmontaje
      const cleanup = useCallback( () => {
           isMountedRef.current = false;
      }, [] );
 
-     // Función de validación
-     const validateReview = useCallback( ( rating, comment ) => {
-          if ( rating === 0 ) {
-               return 'Por favor, selecciona una calificación';
-          }
 
-          if ( !comment || !comment.trim() ) {
-               return 'Por favor, escribe un comentario';
-          }
-
-          if ( comment.trim().length < 10 ) {
-               return 'El comentario debe tener al menos 10 caracteres';
-          }
-
-          return null;
-     }, [] );
-
-     // Función para hacer la llamada a la API usando reviewService
      const makeApiCall = useCallback( async ( eventId, rating, comment ) => {
           if ( existingReview ) {
-               // Actualizar review existente
+
                return await reviewService.updateReview( existingReview._id, rating, comment );
           } else {
-               // Crear nueva review
+               
                return await reviewService.createReview( eventId, rating, comment );
           }
      }, [ existingReview ] );
 
-     // Función principal de envío
      const submitReview = useCallback( async ( rating, comment ) => {
-          // Validar datos
-          const validationError = validateReview( rating, comment );
-          if ( validationError ) {
-               if ( isMountedRef.current ) setError( validationError );
-               return false;
-          }
 
-          // Iniciar loading
           if ( isMountedRef.current ) {
                setLoading( true );
                setError( '' );
@@ -61,7 +35,8 @@ export const useReviewSubmit = ( event, existingReview, onClose ) => {
                const response = await makeApiCall( eventId, rating, trimmedComment );
 
                if ( response.success ) {
-                    onClose();
+                    const reviewData = response.data || { eventId: eventId, rating, comment };
+                    onClose(true, { reviewData, isEdit: !!existingReview });
                     return true;
                } else {
                     if ( isMountedRef.current ) {
@@ -80,7 +55,7 @@ export const useReviewSubmit = ( event, existingReview, onClose ) => {
                     setLoading( false );
                }
           }
-     }, [ event, validateReview, makeApiCall, onClose ] );
+     }, [ event, makeApiCall, onClose ] );
 
      return {
           loading,
