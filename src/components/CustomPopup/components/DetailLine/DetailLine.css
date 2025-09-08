@@ -25,7 +25,7 @@
     text-shadow: var(--neon-primary);
     text-transform: uppercase;
     min-width: 120px;  
-    width: 105px;      
+    /* width: 105px;       */
     flex-shrink: 0;  
 }
 

@@ -1,35 +1,32 @@
-/* src/components/Auth/AuthModal/AuthModal.css */
 .auth-modal-overlay {
-     position: fixed;
-     top: 0;
-     left: 0;
-     right: 0;
-     bottom: 0;
-     background-color: rgba(0, 0, 0, 0.7);
-     display: flex;
      align-items: center;
-     justify-content: center;
-     z-index: 1000;
-     backdrop-filter: blur(5px);
      animation: fadeIn 0.3s ease-out;
+     backdrop-filter: blur(5px);
+     background-color: rgba(0, 0, 0, 0.7);
+     bottom: 0;
+     display: flex;
+     justify-content: center;
+     left: 0;
+     position: fixed;
+     right: 0;
+     top: 0;
+     z-index: 1000;
 }
-   
+
 .auth-modal {
-     background-color: var(--bg-dark);
-     border-radius: var(--border-radius-lg);
-     width: 90%;
-     max-width: 400px;
-     position: relative;
-     box-shadow: var(--shadow-primary);
-     border: var(--border-glow);
      animation: slideIn 0.5s ease-out;
+     background-color: var(--bg-dark);
      background-image: linear-gradient(135deg,
-          var(--gradient-purple),
-          var(--gradient-pink) 15%,
-          var(--bg-dark) 20%,
-          var(--bg-dark) 100%);
+               var(--gradient-purple),
+               var(--gradient-pink) 15%,
+               var(--bg-dark) 20%,
+               var(--bg-dark) 100%);
      background-clip: padding-box;
+     border-radius: var(--border-radius-lg);
+     border: var(--border-glow);
+     box-shadow: var(--shadow-primary);
+     max-width: 400px;
      overflow: hidden;
+     position: relative;
+     width: 90%;
 }
-   
- 

@@ -42,13 +42,6 @@
     background: var(--text-light);
 }
 
-/* Contenido del popup */
-.custom-popup-content {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
 
 @media (max-width: 500px) {
     .custom-popup-container {
@@ -112,10 +105,4 @@
         font-size: 0.85rem;
     }
 
-    /* .popup-link {
-        position: relative;
-        margin: var(--spacing-sm) 0;
-        padding: var(--spacing-xs) var(--spacing-md);
-        bottom: auto;
-    } */
 }

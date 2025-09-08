@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../../Context/AuthContext';
 import { getRandomAvatar } from '../../../utils/avatars';
 import FormField from '../FormField/FormField';
-import './Register.css';
+import '../Auth.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 

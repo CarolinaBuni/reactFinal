@@ -149,6 +149,10 @@
      color: #f8fafc;
 }
 
+.review-rating > span {
+     color: white;
+}
+
 /* Content */
 .reviews-modal-content {
      max-height: 60vh;

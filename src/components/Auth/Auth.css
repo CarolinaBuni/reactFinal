@@ -1,10 +1,9 @@
-/* src/components/Auth/Register/Register.css */
 .auth-form {
      padding: var(--spacing-lg);
      color: var(--text-light);
      font-family: 'Roboto Mono', monospace;
 }
-   
+
 .auth-form h2 {
      margin-bottom: var(--spacing-lg);
      text-align: center;
@@ -13,39 +12,8 @@
      font-size: var(--font-size-lg);
      letter-spacing: 2px;
 }
-   
-.form-group {
-     margin-bottom: var(--spacing-md);
-     position: relative;
-}
-   
-.form-group label {
-     display: block;
-     margin-bottom: var(--spacing-xs);
-     font-weight: 500;
-     color: var(--text-muted);
-     font-size: var(--font-size-sm);
-     letter-spacing: 1px;
-}
-   
-.form-group input {
-     width: 100%;
-     padding: var(--spacing-sm);
-     border: var(--border-glow);
-     border-radius: var(--border-radius-md);
-     font-size: var(--font-size-sm);
-     background-color: rgba(27, 32, 40, 0.7);
-     color: var(--text-light);
-     transition: var(--transition-fast);
-     box-shadow: 0 0 5px rgba(255, 0, 255, 0.2);
-}
 
-.form-group input:focus {
-     outline: none;
-     border-color: var(--color-primary);
-     box-shadow: 0 0 10px var(--color-primary);
-}
-   
+
 .auth-button {
      width: 100%;
      padding: var(--spacing-sm);
@@ -63,13 +31,13 @@
      overflow: hidden;
      text-transform: uppercase;
 }
-   
+
 .auth-button:hover {
      background-color: var(--color-primary-transparent);
      text-shadow: var(--neon-white);
      transform: scale(1.02);
 }
-   
+
 .auth-button:disabled {
      background-color: var(--bg-dark);
      border-color: var(--text-muted);
@@ -77,7 +45,7 @@
      cursor: not-allowed;
      text-shadow: none;
 }
-   
+
 .auth-error {
      background-color: rgba(198, 40, 40, 0.2);
      color: #ff6b6b;
@@ -88,14 +56,14 @@
      text-align: center;
      animation: fadeIn 0.3s ease-out;
 }
-   
+
 .auth-switch {
      margin-top: var(--spacing-md);
      text-align: center;
      color: var(--text-muted);
      font-size: var(--font-size-xs);
 }
-   
+
 .auth-switch button {
      background: none;
      border: none;
@@ -106,9 +74,9 @@
      transition: var(--transition-fast);
      margin-left: var(--spacing-xs);
 }
-   
+
 .auth-switch button:hover {
      color: var(--text-light);
      text-shadow: var(--neon-white);
      transform: scale(1.05);
-} 
+}

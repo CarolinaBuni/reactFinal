@@ -1,6 +1,6 @@
 import React, { useState, useCallback, memo, useRef } from 'react';
 import { useAuth } from '../../../Context/AuthContext';
-import './Login.css';
+import '../Auth.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
