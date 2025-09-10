@@ -76,42 +76,6 @@ const useFetchEvents = () => {
         }
     }, []);
 
-    // Función para buscar eventos por texto
-    // const searchEvents = useCallback(async (query, filters = {}) => {
-    //     if (isMountedRef.current) {
-    //         setLoading(true);
-    //     }
-        
-    //     try {
-    //         const queryParams = new URLSearchParams({ q: query });
-            
-    //         //  filtros adicionales
-    //         if (filters.category) queryParams.append('category', filters.category);
-    //         if (filters.genre) queryParams.append('genre', filters.genre);
-    //         if (filters.location) queryParams.append('city', filters.location);
-    //         if (filters.dateFrom) queryParams.append('startDate', filters.dateFrom);
-    //         if (filters.dateTo) queryParams.append('endDate', filters.dateTo);
-            
-    //         const result = await fetchWithAuth(`/events/search?${queryParams.toString()}`);
-            
-    //         if (!result.success || !result.data) throw new Error("Formato de respuesta inesperado");
-
-    //         if (isMountedRef.current) {
-    //             processEvents(result.data);
-    //         }
-            
-    //     } catch (err) {
-    //         if (isMountedRef.current) {
-    //             setError("Error en la búsqueda de eventos");
-    //         }
-    //         console.error('Error details:', err);
-    //     } finally {
-    //         if (isMountedRef.current) {
-    //             setLoading(false);
-    //         }
-    //     }
-    // }, []);
-
         // Función para buscar eventos por texto
         const searchEvents = useCallback(async (query, filters = {}) => {
             if (isMountedRef.current) {
@@ -139,41 +103,6 @@ const useFetchEvents = () => {
             }
         }, []);
 
-    // const fetchEvents = useCallback(async (params = {}) => {
-    //     if (isMountedRef.current) {
-    //         setLoading(true);
-    //     }
-        
-    //     try {
-    //         const queryParams = new URLSearchParams();
-    //         Object.entries(params).forEach(([key, value]) => {
-    //             queryParams.append(key, value);
-    //         });
-            
-    //         const queryString = queryParams.toString();
-    //         const url = `/events${queryString ? `?${queryString}` : ''}`;
-
-    //         const result = await fetchWithAuth(url);
-            
-    //         if (!result.success || !result.data) {
-    //             throw new Error("Formato de respuesta inesperado");
-    //         }
-            
-    //         if (isMountedRef.current) {
-    //             processEvents(result.data);
-    //         }
-
-    //     } catch (err) {
-    //         if (isMountedRef.current) {
-    //             setError("Error fetching events");
-    //         }
-    //         console.error('Error details:', err);
-    //     } finally {
-    //         if (isMountedRef.current) {
-    //             setLoading(false);
-    //         }
-    //     }
-    // }, []);
 
     const fetchEvents = useCallback(async (params = {}) => {
         if (isMountedRef.current) {
