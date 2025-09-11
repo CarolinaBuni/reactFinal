@@ -18,7 +18,7 @@ export const createClusterData = ( events ) => {
           clusters[ region ].count++;
      } );
 
-     // Calcular centro de masa para cada región
+     // Cálculo del centro de masa para cada región
      Object.keys( clusters ).forEach( region => {
           const cluster = clusters[ region ];
           let totalLng = 0, totalLat = 0;
@@ -34,7 +34,7 @@ export const createClusterData = ( events ) => {
           ];
      } );
 
-     // Convertir a GeoJSON
+     // Convierto a GeoJSON
      const features = Object.entries( clusters ).map( ( [ region, data ] ) => ( {
           type: 'Feature',
           geometry: {

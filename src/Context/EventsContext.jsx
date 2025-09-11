@@ -20,7 +20,7 @@ export const EventsProvider = ( { children } ) => {
           dateTo: ''
      } );
 
-     // Referencia para almacenar el modo de búsqueda (todos, texto, cercanos)
+     // Referencia para almacenar el modo de búsqueda (todos, texto)
      const searchMode = useRef( 'all' );
 
      // cargar eventos al iniciar

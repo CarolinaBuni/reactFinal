@@ -14,7 +14,7 @@ export const useMapNavigation = (map, showMarkers) => {
             return;
         }
 
-        // Detectar si es dispositivo móvil
+        // Detectar si es móvil
         const isMobile = window.innerWidth <= 480;
         
         map.flyTo({

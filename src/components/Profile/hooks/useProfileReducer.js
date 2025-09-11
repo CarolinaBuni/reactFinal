@@ -223,7 +223,7 @@ export const profileReducer = ( state, action ) => {
      }
 };
 
-// Hook personalizado que combina reducer + action creators
+// Hook para combinar reducer + action 
 export const useProfileReducer = () => {
      const [ state, dispatch ] = useReducer( profileReducer, initialState );
 
